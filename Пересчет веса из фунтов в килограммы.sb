@@ -1,0 +1,11 @@
+' Пересчет веса из фунтов в килограммы
+
+' Ввод исходных данных
+TextWindow.Write("Введите вес в фунтах -> ")
+funt = TextWindow.ReadNumber()
+
+' Расчет
+kg = funt * 0.45359
+
+' Вывод результата
+TextWindow.WriteLine(funt + " ф. = " + kg + " кг")

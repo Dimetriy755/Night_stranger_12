@@ -1,0 +1,37 @@
+
+' Ввод массива — Вывод массива (№1)
+
+'Ввод массива
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Ввод массива:")
+TextWindow.WriteLine("")
+TextWindow.Write(" a [1] -> ")
+a[1] = TextWindow.ReadNumber()
+TextWindow.Write(" a [2] -> ")
+a[2] = TextWindow.ReadNumber()
+TextWindow.Write(" a [3] -> ")
+a[3] = TextWindow.ReadNumber()
+TextWindow.Write(" a [4] -> ")
+a[4] = TextWindow.ReadNumber()
+TextWindow.Write(" a [5] -> ")
+a[5] = TextWindow.ReadNumber()
+TextWindow.Write(" a [6] -> ")
+a[6] = TextWindow.ReadNumber()
+TextWindow.Write(" a [7] -> ")
+a[7] = TextWindow.ReadNumber()
+TextWindow.Write(" a [8] -> ")
+a[8] = TextWindow.ReadNumber()
+TextWindow.Write(" a [9] -> ")
+a[9] = TextWindow.ReadNumber()
+TextWindow.Write(" a [10] -> ")
+a[10] = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+
+'Вывод массива
+TextWindow.WriteLine(" Вывод массива:")
+TextWindow.WriteLine("")
+For i=1 To 10
+' Перед каждым значением выводится имя элемента
+TextWindow.WriteLine(" a [" + i + "] = " + a[i])
+EndFor
+TextWindow.WriteLine("")

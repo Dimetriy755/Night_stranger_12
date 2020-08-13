@@ -1,0 +1,145 @@
+
+'Цветокодирование
+TextWindow.ForegroundColor = "White" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран
+
+'Подпрограмма (вызываемая процедура) для обработки исключения (деление на ноль)
+Sub Exception
+  If operation = "/" And Y = 0 Then
+     TextWindow.WriteLine(" Division by zero is impossible!")
+  EndIf
+EndSub 
+
+'Подпрограмма (вызываемая процедура) для обработки исключения (вычислений с числами больще 1 октиллиона)
+Sub Exception1
+  If X >= 1000000000000000000000000000 Or Y >= 1000000000000000000000000000 Then '1 октиллион (octillion - 10 ^ 27)
+     TextWindow.WriteLine("")
+     TextWindow.WriteLine(" All calculations are made up to 1 octillion not stable!")
+  EndIf
+EndSub 
+    
+'Ввод значений для переменных и их назначение 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter operation: ")
+  operation = TextWindow.Read()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  TextWindow.WriteLine("")
+  
+'Выбор и вычисление математической операции
+If operation = "+" Then 
+   result = X + Y
+   TextWindow.WriteLine(" Operation - [+] Result is - " + result)
+Else
+  If operation = "-" Then 
+     result = X - Y
+     TextWindow.WriteLine(" Operation - [-] Result is - " + result)
+     Else
+     Exception1()
+     EndIf
+EndIf
+
+'Все операции с умножением числа и возведением в степень
+If operation = "*" Then 
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+Else
+  If operation = "^" And X <= 1000000000000000000000000000 And Y <= 28 Then  
+     result = Math.Power(X,Y)
+     TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+     Else
+     Exception1()
+     EndIf
+EndIf
+
+'Все операции с делением числа
+If operation = "/" And Y <> 0 Then 
+   result = X / Y
+   TextWindow.WriteLine(" Operation - [/] Result is - " + result)
+Else
+  If operation = "%" And Y <> 0 Then 
+     result = Math.Remainder(X,Y)
+     TextWindow.WriteLine(" Operation - [%] Result is - " + result)
+  Else
+     Exception()
+     EndIf
+EndIf
+
+'Инструкция на ситуацию когда операция не распознана
+If operation <> "+" And operation <> "*" And operation <> "-" And operation <> "/" And operation <> "^" And operation <> "%" Then
+   TextWindow.WriteLine(" Operation not recognized!")
+EndIf       
+
+'Заключение в цикл 
+While result <> 0
+  
+'Ввод значений для переменных и их назначение 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter operation: ")
+  operation = TextWindow.Read()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  TextWindow.WriteLine("")
+  
+'Выбор и вычисление математической операции
+If operation = "+" Then 
+   result = X + Y
+   TextWindow.WriteLine(" Operation - [+] Result is - " + result)
+Else
+  If operation = "-" Then 
+     result = X - Y
+     TextWindow.WriteLine(" Operation - [-] Result is - " + result)
+     Else
+     Exception1()
+     EndIf
+EndIf
+
+'Все операции с умножением числа и возведением в степень
+If operation = "*" Then 
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+Else
+  If operation = "^" And X <= 1000000000000000000000000000 And Y <= 28 Then 
+     result = Math.Power(X,Y)
+     TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+     Else
+     Exception1()
+     EndIf
+EndIf
+   
+'Все операции с делением числа
+If operation = "/" And Y <> 0 Then 
+   result = X / Y
+   TextWindow.WriteLine(" Operation - [/] Result is - " + result)
+Else
+  If operation = "%" And Y <> 0 Then 
+     result = Math.Remainder(X,Y)
+     TextWindow.WriteLine(" Operation - [%] Result is - " + result)
+  Else
+     Exception()
+     EndIf
+EndIf
+
+'Инструкция на ситуацию когда операция не распознана
+If operation <> "+" And operation <> "*" And operation <> "-" And operation <> "/" And operation <> "^" And operation <> "%" Then
+   TextWindow.WriteLine(" Operation not recognized!")
+EndIf 
+
+'Инструкция для очистки экрана
+TextWindow.WriteLine("")
+TextWindow.Write(" Press <1> to clear the screen - ")
+P = TextWindow.ReadNumber()
+If P = 1 Then
+  TextWindow.Clear()
+EndIf
+
+EndWhile

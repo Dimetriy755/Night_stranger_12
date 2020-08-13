@@ -1,0 +1,71 @@
+'Конвертер. Пересчет веса из фунтов в килограммы 
+'или из килограммов в фунты 
+'1 фунт = 453,9 гр.  
+
+'ПОДПРОГРАММЫ  
+
+'Пересчет веса из фунтов в килограммы
+Sub FuntToKg   
+  TextWindow.Clear()   
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" Пересчет веса из фунтов в килограммы") 
+  TextWindow.WriteLine("")  
+  TextWindow.Write(" Вес в фунтах -> ")   
+  fnt = TextWindow.ReadNumber()   
+  kg = fnt * 0.4539     
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" " + fnt + " ф. = ")   
+  TextWindow.WriteLine(" " + kg + " кг.")      
+  TextWindow.WriteLine("")   
+  TextWindow.Write(" Для возврата в меню нажмите <Enter>")   
+  TextWindow.Read() 
+EndSub  
+  
+'Пересчет веса из килограммов в фунты 
+Sub KgToFunt   
+  TextWindow.Clear()  
+  TextWindow.WriteLine("")  
+  TextWindow.WriteLine(" Пересчет веса из килограммов в фунты") 
+  TextWindow.WriteLine("")  
+  TextWindow.Write(" Вес в килограммах -> ")   
+  kg = TextWindow.ReadNumber()   
+  fnt = kg / 0.4539   
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" " + kg + " кг. = ")   
+  TextWindow.WriteLine(" " + fnt + " ф.") 
+  TextWindow.WriteLine("")   
+  TextWindow.Write(" Для возврата в меню нажмите <Enter>")   
+  TextWindow.Read() 
+EndSub 
+
+'ОСНОВНАЯ ПРОГРАММА 
+
+p = 1 'чтобы войти в цикл While 
+
+While (p <> 0)
+  'Меню   
+  TextWindow.Clear()   
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" ==== КОНВЕРТЕР ====") 
+  TextWindow.WriteLine("")   
+  TextWindow.WriteLine(" 1 - фунты -> килограммы")   
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" 2 - килограммы -> фунты")   
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" 0 - выход")   
+  TextWindow.WriteLine("")   
+  TextWindow.Write(" Ваш выбор -> ")   
+  p = TextWindow.ReadNumber()      
+  
+  'Вызвать подпрограмму в соответствии   
+  'с выбором пользователя   
+  If (p = 1) Then     
+    'пересчет веса из фунтов в килограммы     
+    FuntToKg()   
+  else     
+    If (p = 2) Then       
+      'пересчет веса из килограммов в фунты       
+      KgToFunt()     
+    EndIf   
+  Endif 
+EndWhile 

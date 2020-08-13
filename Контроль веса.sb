@@ -1,0 +1,37 @@
+
+' Контроль веса
+TextWindow.ForegroundColor = "Gray" 'цвет текста
+TextWindow.BackgroundColor = "DarkBlue" ' цвет фона
+TextWindow.Clear() ' очистить экран
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Контроль веса.")
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Введите ваш рост и вес:")
+
+' Ввод исходных данных
+TextWindow.Write(" Рост (см.) -> ")
+height = TextWindow.ReadNumber()
+TextWindow.Write(" Вес (кг.) -> ")
+weight = TextWindow.ReadNumber()
+
+' Вычислим оптимальный вес
+optimal = height - 100
+
+' Сравним реальный вес с оптимальным
+If weight = optimal Then
+msg = " Ваш вес оптимален!"
+Else
+  If (weight < optimal) Then 
+    dw = optimal - weight
+    msg = " Вам надо поправиться на " + dw + " кг."
+  Else ' после сравнения условия1 и условия2 понимает, что (weight > optimal)
+    dw = weight - optimal
+    msg = " Вам надо похудеть на " + dw + " кг."
+  EndIf
+EndIf
+
+' Вывод результата
+TextWindow.WriteLine("")
+TextWindow.ForegroundColor = "White" 'цвет текста
+TextWindow.WriteLine(msg)
+TextWindow.WriteLine("")

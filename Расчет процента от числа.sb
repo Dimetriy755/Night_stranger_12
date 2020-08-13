@@ -1,0 +1,25 @@
+'Расчет процента от числа 
+
+'Кодировка цвета
+TextWindow.ForegroundColor = "Green" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран (закрасить цветом фона) 
+
+' Ввод исходных данных
+TextWindow.WriteLine("")
+TextWindow.Write(" Введите первое число - Y, P% от которого далее следует рассчитать; Y = ")
+Y = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+TextWindow.Write(" Введите второе число - P, % который нужно рассчитать от Y; P% = ")
+P = TextWindow.ReadNumber() 
+
+' Формула расчета процента от числа (Расчет)
+X = Y * P / 100 
+
+' Вывод результата
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" X = " + X + "; " + P  + "% от числа " + Y + " составляет " + X)
+TextWindow.WriteLine("")
+
+
+

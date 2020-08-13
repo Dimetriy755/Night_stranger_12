@@ -1,0 +1,31 @@
+'Расчет квадратного корня числа 
+
+'Кодировка цвета
+TextWindow.ForegroundColor = "Green" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран (закрасить цветом фона)
+
+' Ввод исходных данных
+TextWindow.WriteLine("")
+TextWindow.Write(" Введите число для расчета его квадратного корня ")
+x = TextWindow.ReadNumber()
+
+' Расчет
+y = Math.SquareRoot(x)
+
+' Вывод результата
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Квадратный корень из числа " + x + " будет " + y)
+TextWindow.WriteLine("")
+TextWindow.ForegroundColor = "Red" 'цвет символов
+TextWindow.WriteLine(" У лукоморья дуб зеленый;")
+TextWindow.WriteLine(" Златая цепь на дубе том:")
+TextWindow.WriteLine(" И днем и ночью кот ученый")
+TextWindow.WriteLine(" Все ходит по цепи кругом...")
+TextWindow.ForegroundColor = "White" 'цвет символов
+TextWindow.WriteLine("")
+TextWindow.WriteLine("                А. С. Пушкин")
+TextWindow.WriteLine("")
+
+
+

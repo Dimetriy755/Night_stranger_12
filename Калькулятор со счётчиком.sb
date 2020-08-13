@@ -1,0 +1,93 @@
+'Консольный калькулятор со счётчиком (цикл).
+
+'Цветокодирование
+TextWindow.ForegroundColor = "White" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран
+
+'Ввод значений для переменных и их назначение 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter operation: ")
+  operation = TextWindow.Read()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  TextWindow.WriteLine("")
+  
+'Выбор и вычисление математической операции
+If operation = "+" Then
+   result = X + Y
+   TextWindow.WriteLine(" Operation - [+] Result is - " + result)
+Else
+  If operation = "-" Then
+     result = X - Y
+     TextWindow.WriteLine(" Operation - [-] Result is - " + result)
+     Else
+     EndIf
+   EndIf
+
+If operation = "*" Then
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+Else
+  If operation = "/" Then
+     result = X / Y
+     TextWindow.WriteLine(" Operation - [/] Result is - " + result)
+     Else
+     EndIf
+   EndIf
+
+'Инструкция на ситуацию когда операция не распознана
+If operation <> "+" And operation <> "*" And operation <> "-" And operation <> "/" Then
+   TextWindow.WriteLine(" Operation not recognized!")
+Else
+EndIf   
+
+'Заключение в цикл со счётчиком
+For i = 1 To 20
+  
+'Ввод значений для переменных и их назначение 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter operation: ")
+  operation = TextWindow.Read()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  TextWindow.WriteLine("")
+  
+'Выбор и вычисление математической операции
+If operation = "+" Then
+   result = X + Y
+   TextWindow.WriteLine(" Operation - [+] Result is - " + result)
+Else
+  If operation = "-" Then
+     result = X - Y
+     TextWindow.WriteLine(" Operation - [-] Result is - " + result)
+     Else
+     EndIf
+   EndIf
+
+If operation = "*" Then
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+Else
+  If operation = "/" Then
+     result = X / Y
+     TextWindow.WriteLine(" Operation - [/] Result is - " + result)
+     Else
+     EndIf
+   EndIf
+   
+'Инструкция на ситуацию когда операция не распознана
+If operation <> "+" And operation <> "*" And operation <> "-" And operation <> "/" Then
+   TextWindow.WriteLine(" Operation not recognized!")
+Else
+EndIf       
+
+EndFor

@@ -1,0 +1,15 @@
+
+If (Clock.Hour < 12) Then
+TextWindow.BackgroundColor = "Magenta"
+TextWindow.Clear()
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Good Morning World")
+EndIf
+
+If (Clock.Hour >= 12) Then
+TextWindow.BackgroundColor = "DarkBlue"
+TextWindow.Clear()
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Good Evening World")
+TextWindow.WriteLine("")
+EndIf

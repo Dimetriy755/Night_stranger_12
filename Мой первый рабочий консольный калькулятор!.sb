@@ -1,0 +1,57 @@
+'Консольный калькулятор (первый вариант).
+
+'Тренировочная программа №3:
+
+'Цветокодирование
+TextWindow.ForegroundColor = "White" 'цвет текста
+TextWindow.BackgroundColor = "DarkGreen" 'цвет фона
+TextWindow.Clear() 'очистить экран
+
+'Ввод значений для переменных и их назначение 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  result1 = X + Y
+  result2 = X - Y
+  result3 = X * Y
+  result4 = X / Y
+  
+'Вывод результата
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" Operation - [+] - Result1 is - " + result1)
+  TextWindow.WriteLine(" Operation - [-] - Result2 is - " + result2)
+  TextWindow.WriteLine(" Operation - [*] - Result3 is - " + result3)
+  TextWindow.WriteLine(" Operation - [/] - Result4 is - " + result4)  
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" This is not the end! (^_-) ")
+  TextWindow.WriteLine("")
+  
+'Заключение в цикл 
+While result1 <> 0
+  
+'Ввод значений для переменных и их назначение 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  result1 = X + Y
+  result2 = X - Y
+  result3 = X * Y
+  result4 = X / Y
+  
+'Вывод результата
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" Operation - [+] - Result1 is - " + result1)
+  TextWindow.WriteLine(" Operation - [-] - Result2 is - " + result2)
+  TextWindow.WriteLine(" Operation - [*] - Result3 is - " + result3)
+  TextWindow.WriteLine(" Operation - [/] - Result4 is - " + result4) 
+  TextWindow.WriteLine("") 
+  TextWindow.WriteLine(" This is not the end! (^_-) ")
+  TextWindow.WriteLine("")
+
+EndWhile

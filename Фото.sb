@@ -1,0 +1,57 @@
+
+' Фото (множественный выбор)
+TextWindow.ForegroundColor = "Gray"
+TextWindow.BackgroundColor = "DarkGreen" ' цвет фона
+TextWindow.Clear() ' очистить экран
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Фото.")
+TextWindow.WriteLine("")
+
+' Ввод исходных данных
+TextWindow.WriteLine(" Формат фото: ")
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" 1 - 9х12")
+TextWindow.WriteLine(" 2 - 10х15")
+TextWindow.WriteLine(" 3 - 18х24")
+TextWindow.WriteLine("")
+TextWindow.Write(" Выберите формат фото: ")
+format = TextWindow.ReadNumber()
+TextWindow.Write(" Количество (шт.) -> ")
+k = TextWindow.ReadNumber()
+
+'Определить цену одной фотографии
+If format = 1 Then
+  cena = 2.5
+  fname = "9x12"
+Else
+  If format = 2 Then
+   cena = 4
+   fname = "10x15"
+  Else
+   cena = 8
+   fname = "18x24"
+  EndIf
+EndIf
+
+' Расчет
+sum = cena * k
+
+' Скидка 5%, если количество фотографий больше 10
+If k > 10 Then
+discount = sum * 0.05
+Else
+discount = 0
+EndIf
+total = sum - discount
+
+' Вывод результата
+TextWindow.WriteLine("")
+TextWindow.ForegroundColor = "White"
+TextWindow.WriteLine(" Формат: " + fname)
+TextWindow.WriteLine(" Количество: " + k + " шт.")
+TextWindow.WriteLine(" Цена: " + cena + " руб./шт.")
+TextWindow.WriteLine(" Сумма: " + sum + " руб.")
+TextWindow.WriteLine(" Скидка (5%): " + discount + " руб.")
+TextWindow.WriteLine("--------------------------------------")
+TextWindow.WriteLine(" К оплате: " + total + " руб.")
+TextWindow.WriteLine("")

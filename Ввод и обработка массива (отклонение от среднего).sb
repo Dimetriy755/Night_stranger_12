@@ -1,0 +1,40 @@
+'Отклонение от среднего 
+
+'Ввод и обработка массива
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Отклонение от среднего.")
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Введите элементы массива a")
+
+'Ввод массива a
+For i = 1 To 5
+TextWindow.Write(" a [" + i +"] -> ")
+a[i] = TextWindow.ReadNumber()
+EndFor
+
+'Вычисление суммы элементов массива 
+s = 0 'сумма элементов массива
+For i=1 To 5
+s = s + a[i]
+EndFor
+
+'Вычисление среднего арифметического 
+m = s / 5
+
+'Формирование массива b
+For i=1 To 5
+b[i] = a[i] - m
+EndFor
+TextWindow.WriteLine("--------------")
+TextWindow.WriteLine(" Сумма элементов массива a: " + s)
+TextWindow.WriteLine(" Среднее арифметическое: " + m)
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Отклонение от среднего:")
+
+'Вывод массива b
+TextWindow.WriteLine(" Вывод массива b")
+For i = 1 To 5
+TextWindow.Write(" " + b[i])
+TextWindow.WriteLine("")
+EndFor
+TextWindow.WriteLine("")

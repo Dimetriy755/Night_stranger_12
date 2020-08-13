@@ -1,0 +1,11 @@
+
+TextWindow.WriteLine("")
+TextWindow.WriteLine("Multiplication Tables")
+
+For i = 1 To 10
+  TextWindow.WriteLine("")
+  TextWindow.Write(i * 4)
+  TextWindow.WriteLine("")
+  
+EndFor
+TextWindow.WriteLine("")

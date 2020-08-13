@@ -1,0 +1,51 @@
+'Сортировка массива методом перестановки элементов 
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Сортировка массива методом перестановки.") 
+TextWindow.WriteLine("") 
+TextWindow.WriteLine(" Введите элементы массива:") 
+
+'Ввод массива 
+For i = 1 To 5   
+  TextWindow.Write(" a[" + i +"] -> ")   
+  a[i] = TextWindow.ReadNumber() 
+EndFor 
+ 
+'Исходный массив 
+TextWindow.WriteLine("") 
+TextWindow.Write(" Исходный массив: ") 
+ For i=1 To 4   
+   TextWindow.Write(a[i] +", ") 
+ EndFor 
+TextWindow.WriteLine(a[5])
+TextWindow.WriteLine("")   
+
+TextWindow.WriteLine(" Сортировка...") 
+TextWindow.WriteLine("")
+For i = 1 To 4   
+'Поиск минимального элемента в части массива   
+'от i-го элемента массива  
+m = i 'предположим, что i-й элемент массива минимальный   
+'Сравним остальные элементы с минимальным   
+For j = i + 1 To 5     
+  If a[j] < a[m] Then       
+    m = j     
+  EndIf
+EndFor  
+
+'Здесь найден минимальный элемент в области от a[i].   
+'Обменяем местами i-й и минимальный элементы   
+buf = a[i]   
+a[i] = a[m]   
+a[m] = buf  
+
+'Здесь цикл сортировки завершен 
+ 
+'Отладочная "печать" — массив после цикла сортировки   
+For k=1 To 4     
+  TextWindow.Write(" " + a[k] + ", ")   
+EndFor   
+  TextWindow.WriteLine(a[5]) 
+
+EndFor 
+
+TextWindow.WriteLine("")

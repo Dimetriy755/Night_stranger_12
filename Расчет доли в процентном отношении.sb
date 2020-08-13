@@ -1,0 +1,32 @@
+'Расчет доли в процентном отношении 
+
+'Кодировка цвета
+TextWindow.ForegroundColor = "Green" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран (закрасить цветом фона) 
+
+' Ввод исходных данных
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Введите первое число - Y, которое в расчете будет идти за все 100%")
+TextWindow.WriteLine("") 
+TextWindow.Write(" Y = ")
+Y = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Введите второе число - X для вычисисления P% ->")
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" -> P% - это какую долю X в % отношении составляет от первого числа - Y")
+TextWindow.WriteLine("")
+TextWindow.Write(" X = ")
+X = TextWindow.ReadNumber() 
+
+' Формула расчета доли в процентном отношении (Расчет)
+P = X / Y  * 100 
+
+' Вывод результата
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" P% = " + P + "%" )
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Доля числа X = " + X + " от полного числа Y = " + Y + " будет составлять " + P + "%")
+TextWindow.WriteLine("")
+
+

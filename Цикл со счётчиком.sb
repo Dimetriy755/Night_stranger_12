@@ -1,0 +1,10 @@
+
+For i = 0 To 10 Step 1
+  
+  TextWindow.WriteLine("")
+  TextWindow.Write(i)
+  TextWindow.WriteLine("")
+  
+EndFor
+
+TextWindow.WriteLine("")

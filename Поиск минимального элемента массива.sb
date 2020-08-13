@@ -1,0 +1,27 @@
+'Поиск минимального элемента массива
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Поиск минимального элемента массива.")
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Введите элементы массива:")
+
+'Ввод массива
+For i = 1 To 5
+TextWindow.Write(" a[" + i +"] -> ")
+a[i] = TextWindow.ReadNumber()
+EndFor
+
+'Предположим, что первый элемент массива минимальный
+m = 1 'номер минимального элемента (его индекс)
+'Сравним i-й элемент с минимальным
+For i=2 To 5
+If a[i] < a[m] Then 'i-й элемент меньше минимального?
+'да, меньше
+m = i
+EndIf
+EndFor
+
+'Вывод результата
+TextWindow.WriteLine("----------")
+TextWindow.WriteLine(" Номер минимального элемента: " + m)
+TextWindow.WriteLine(" Минимальный элемент массива: " + a[m])
+TextWindow.WriteLine("")

@@ -1,0 +1,21 @@
+
+' Ввод массива — Вывод массива (№2)
+
+'Ввод массива
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Ввод массива:")
+TextWindow.WriteLine("")
+For i = 1 To 10
+TextWindow.Write(" a [" + i +"] -> ")
+a[i] = TextWindow.ReadNumber()
+EndFor
+
+'Вывод массива
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Вывод массива:")
+TextWindow.WriteLine("")
+For i=1 To 10
+' Перед каждым значением выводится имя элемента
+TextWindow.WriteLine(" a [" + i + "] = " + a[i])
+EndFor
+TextWindow.WriteLine("")

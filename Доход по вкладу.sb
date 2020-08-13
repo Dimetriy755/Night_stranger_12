@@ -1,0 +1,38 @@
+
+'Доход по вкладу
+TextWindow.ForegroundColor = "Gray" 'цвет текста
+TextWindow.BackgroundColor = "DarkGreen" 'цвет фона
+TextWindow.Clear() 'очистить экран
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Доход по вкладу.")
+TextWindow.WriteLine("")
+
+'Ввод исходных данных
+TextWindow.Write(" Сумма вклада (руб.) -> ")
+sum = TextWindow.ReadNumber()
+TextWindow.Write(" Срок вклада (мес.) -> ")
+period = TextWindow.ReadNumber()
+
+'Определим величину процентной ставки
+If sum < 10000 Then
+percent = 9.5
+Else
+percent = 11.5
+EndIf
+
+'Расчет
+profit = sum * (percent / 100 / 12) * period
+
+'Вывод результата
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Сумма вклада: " + sum + " руб.")
+TextWindow.WriteLine(" Срок вклада: " + period + " мес.")
+TextWindow.WriteLine(" Годовая процентная ставка: " + percent + "%")
+TextWindow.WriteLine("")
+TextWindow.ForegroundColor = "White" 'цвет текста (доход)
+TextWindow.WriteLine(" Доход: " + Math.Round(profit) + " руб.") 'математическая функция Math.Round() округляет полученное число
+TextWindow.WriteLine("")
+
+
+  
+ 

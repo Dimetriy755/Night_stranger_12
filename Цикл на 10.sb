@@ -1,0 +1,5 @@
+
+For i = 1 to 10
+  Turtle.Move(35) ' Forward 100 pixels
+  Turtle.Turn(35) ' Turn 90 degrees right
+EndFor

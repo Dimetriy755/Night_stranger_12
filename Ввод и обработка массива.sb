@@ -1,0 +1,38 @@
+'Ввод и обработка массива
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Среднее арифметическое элементов массива.")
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Введите элементы массива:")
+TextWindow.WriteLine("")
+
+'Ввод массива
+TextWindow.Write(" a [1] -> ")
+a[1] = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+TextWindow.Write(" a [2] -> ")
+a[2] = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+TextWindow.Write(" a [3] -> ")
+a[3] = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+TextWindow.Write(" a [4] -> ")
+a[4] = TextWindow.ReadNumber()
+TextWindow.WriteLine("")
+TextWindow.Write(" a [5] -> ")
+a[5] = TextWindow.ReadNumber()
+
+'Вычислить сумму элементов
+s = 0 'сумма элементов массива
+For i=1 To 5
+s = s + a[i]
+EndFor
+
+'Вычислить среднее арифметическое
+m = s / 5
+
+'Вывод данных
+TextWindow.WriteLine("-----------") 'пустая строка
+TextWindow.WriteLine(" Сумма элементов массива: " + s)
+TextWindow.WriteLine("")
+TextWindow.WriteLine(" Среднее арифметическое: " + m)
+TextWindow.WriteLine("")
