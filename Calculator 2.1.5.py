@@ -8,6 +8,7 @@ while 1 == 1:
     print("")
     print(" 0 - Operation calculate the root of a number [ √ ]")
     print(" 1 - Operation calculate:[ +, -, *, **, /, //, %, ]\n 2 - Exit")
+    print(" --------------------------------------------------")
 
     while 1 == 1:
         try:
