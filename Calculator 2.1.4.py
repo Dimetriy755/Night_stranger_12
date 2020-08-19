@@ -125,7 +125,7 @@ while 1 == 1:
 
     elif P == 2:
         print("")
-        print(" Program ended. Exit. Bye bye user! See you soon babe! {•_-}")
+        print(" Program ended. Exit. Bye bye user! See you soon baby! {•_-}")
         break
     else:
         print("")
