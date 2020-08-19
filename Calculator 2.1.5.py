@@ -1,4 +1,5 @@
 import math
+import time
 
 while 1 == 1:
 
@@ -137,9 +138,14 @@ while 1 == 1:
             continue
 
     elif P == 2:
+        print("")
+        print(" Bye bye user!{•_-}\n See you soon babe!\n Program ended. Exit.")
+        print(" --------------------------------------------------")
         break
     else:
         print("")
         print(" Wrong way, try entering the number again after looking at the instructions.")
         print(" Look in the menu under this message which of the numbers you need to enter.")
         print(" --------------------------------------------------")
+
+time.sleep(4)
