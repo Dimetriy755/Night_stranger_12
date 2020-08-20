@@ -7,7 +7,7 @@ while 1 == 1:
     print(" ---------------------- MENU ----------------------")
     print("")
     print("")
-    print(" 0 - Operation calculate the root of a number [ √ ]")
+    print(" 0 - Operation calculate the root of a number:[ √ ]")
     print(" 1 - Operation calculate:[ +, -, *, **, /, //, %, ]\n 2 - Exit")
     print(" --------------------------------------------------")
 
