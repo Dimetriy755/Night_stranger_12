@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>Calculator</title>
+<style>
+         body {font-size: 500%; }
+</style>
+</head>
+<body>
+<script>
+
+var X = prompt("Enter number one:");
+var operation = prompt("Enter operation: ");
+var Y = prompt("Enter number two: ");
+var result
+   
+    if (operation == '+') {
+         result = 1 * X + 1 * Y;
+         document.write("result is - " + result); }
+    else if (operation == '-') {
+         result = X - Y;
+         document.write("result is - " + result); }
+    else if (operation == '*') {
+         result = X * Y;
+         document.write("result is - " + result); }
+    else if (operation == '/') {
+         if (Y != 0) {
+             result = X / Y;
+             document.write("result is - " + result); }
+         else {
+             document.write("Division by zero is impossible!");
+             document.write("<img src=https://klike.net/uploads/posts/2019-11/1574336577_1.jpg>"); } }
+    else if (operation == '%') {
+         if (Y != 0) {
+             result = X % Y;
+             document.write("result is - " + result); }
+         else {
+             document.write("Division by zero is impossible!");
+             document.write("<img src=https://klike.net/uploads/posts/2019-11/1574336577_1.jpg>"); } }
+    else if (operation == '^') {
+         result = Math.pow(X,Y);
+         document.write("result is - " + result); }
+    else {
+         document.write("Operation not recognized!"); }
+
+</script>
+</body>
+</html>
