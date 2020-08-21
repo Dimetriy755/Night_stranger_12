@@ -1,0 +1,142 @@
+'Калькулятор 2.0
+
+'Цветокодирование
+TextWindow.ForegroundColor = "White" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран
+
+'Подпрограмма (вызываемая процедура) для обработки исключения (деление на ноль)
+Sub Exception1
+  If operation = "/" And Y = 0 Then
+    TextWindow.WriteLine(" Division by zero is impossible!")
+    TextWindow.WriteLine(" --------------------------------------------------")
+  EndIf
+EndSub 
+
+'Подпрограмма (вызываемая процедура) для обработки исключения (деление на ноль по модулю)
+Sub Exception2
+  If operation = "%" And Y = 0 Then
+    TextWindow.WriteLine(" Division by zero is impossible!")
+    TextWindow.WriteLine(" --------------------------------------------------")
+  EndIf
+EndSub
+
+'Заключение в цикл 
+While P <> 2
+  
+ 'Инструкции в меню калькулятора 
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine(" ---------------------- MENU ----------------------")
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine(" 0 - Operation calculate the root of a number:[ √ ]")
+ TextWindow.WriteLine(" 1 - Operation calculate:[ +, -, *, **, /, //, %, ]")
+ TextWindow.WriteLine(" 2 - Exit")
+ TextWindow.WriteLine(" When you enter another number, return to the menu")
+ TextWindow.WriteLine(" Ignore <1> on screen cleaning, return to the menu")
+ TextWindow.WriteLine(" --------------------------------------------------")
+ 
+ 'Получение переменной "P", нужна для управления меню калькулятора
+ TextWindow.WriteLine("")
+ TextWindow.Write(" Enter the number of your choice: ")
+ P = TextWindow.ReadNumber()
+ 
+'Последняя инструкция перед выходом из программы
+If P = 2 Then
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine(" Program ended. Exit.")
+ TextWindow.WriteLine(" --------------------------------------------------")
+EndIf
+
+'Ввод данных и затем вычисление квадратного корня числа
+if P = 0 Then
+    TextWindow.WriteLine("")
+    TextWindow.Write(" Enter a number to calculate its square root: ")
+    Z = TextWindow.ReadNumber()
+    N = Math.SquareRoot(Z)
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine(" The square root of " + Z + " is " + N)
+    TextWindow.WriteLine(" --------------------------------------------------")
+    
+    'Инструкция для очистки экрана
+    TextWindow.WriteLine("")
+    TextWindow.Write(" Press <1> to clear the screen - ")
+    M = TextWindow.ReadNumber()
+    If M = 1 Then
+    TextWindow.Clear()
+    EndIf
+  EndIf 
+  
+'Ввод значений для переменных и их назначение   
+If P = 1 Then 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter operation: ")
+  operation = TextWindow.Read()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  TextWindow.WriteLine("")
+  
+'Выбор математической операции и далее вычисления по ним
+If operation = "+" Then
+   result = X + Y
+   TextWindow.WriteLine(" Operation - [+] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+  If operation = "-" Then
+     result = X - Y
+     TextWindow.WriteLine(" Operation - [-] Result is - " + result)
+     TextWindow.WriteLine(" --------------------------------------------------")
+     EndIf
+EndIf
+
+'Все операции с умножением числа и возведением в степень
+If operation = "*" Then
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+  If operation = "^" Then
+     result = Math.Power(X,Y)
+     TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+     TextWindow.WriteLine(" --------------------------------------------------")
+     EndIf
+EndIf
+   
+'Все операции с делением числа
+If operation = "/" And Y <> 0 Then
+   result = X / Y
+   TextWindow.WriteLine(" Operation - [/] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   Exception1()
+EndIf
+
+If operation = "%" And Y <> 0 Then
+   result = Math.Remainder(X,Y)
+   TextWindow.WriteLine(" Operation - [%] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   Exception2()
+EndIf
+
+'Инструкция на ситуацию когда операция не распознана
+If operation <> "+" And operation <> "*" And operation <> "-" And operation <> "/" And operation <> "^" And operation <> "%" Then
+  TextWindow.WriteLine(" Operation not recognized, repeat all over again!")
+  TextWindow.WriteLine(" Look on up now at the instructions in the menu->")
+  TextWindow.WriteLine(" --------------------------------------------------")
+EndIf
+
+'Инструкция для очистки экрана
+TextWindow.WriteLine("")
+TextWindow.Write(" Press <1> to clear the screen - ")
+M = TextWindow.ReadNumber()
+If M = 1 Then
+   TextWindow.Clear()
+ EndIf
+  
+EndIf
+EndWhile
