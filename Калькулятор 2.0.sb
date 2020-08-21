@@ -24,7 +24,7 @@ EndSub
 'Заключение в цикл 
 While P <> 2
   
- 'Инструкции в меню калькулятора 
+ 'Инструкции к меню калькулятора 
  TextWindow.WriteLine("")
  TextWindow.WriteLine(" ---------------------- MENU ----------------------")
  TextWindow.WriteLine("")
