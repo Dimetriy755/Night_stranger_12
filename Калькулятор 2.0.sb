@@ -30,7 +30,7 @@ While P <> 2
  TextWindow.WriteLine("")
  TextWindow.WriteLine("")
  TextWindow.WriteLine(" 0 - Operation calculate the root of a number:[ √ ]")
- TextWindow.WriteLine(" 1 - Operation calculate: [ +, -, *, **, /, //, % ]")
+ TextWindow.WriteLine(" 1 - Operation calculate show: [ +, -, *, ^, /, % ]")
  TextWindow.WriteLine(" 2 - Exit")
  TextWindow.WriteLine(" When you enter another number, return to the menu")
  TextWindow.WriteLine(" Ignore <1> on screen cleaning, return to the menu")
