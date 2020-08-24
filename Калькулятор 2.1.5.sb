@@ -1,0 +1,729 @@
+'Калькулятор 2.1.5 (ver. 1.1.2)
+
+'Цветокодирование
+TextWindow.ForegroundColor = "White" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран
+
+'Подпрограмма (вызываемая процедура) для обработки исключения (деление на ноль)
+Sub Exception1
+  If operation = "/" And Y = 0 Then
+    TextWindow.ForegroundColor = "Red" 'цвет символов 
+    TextWindow.WriteLine(" Division by zero is impossible!")
+    TextWindow.ForegroundColor = "White" 'цвет символов
+    TextWindow.WriteLine(" --------------------------------------------------")
+  EndIf
+EndSub 
+
+'Подпрограмма (вызываемая процедура) для обработки исключения (деление на ноль по модулю)
+Sub Exception2
+  If operation = "%" And Y = 0 Then
+    TextWindow.ForegroundColor = "Red" 'цвет символов 
+    TextWindow.WriteLine(" Division by zero is impossible!")
+    TextWindow.ForegroundColor = "White" 'цвет символов
+    TextWindow.WriteLine(" --------------------------------------------------")
+  EndIf
+EndSub
+
+'Подпрограмма (вызываемая процедура) для обработки исключения при возведении числа в степень (на вычисления с числами больше 1 октиллиона)
+Sub Exception3
+   If operation = ("^") And (X >= 38) And (Y >= 21) Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 37) And (Y >= 21) Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 36) And (Y >= 21) Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 35) And (Y >= 21) Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 34) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 33) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 32) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 31) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 30) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 29) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 28) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 27) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 26) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 25) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 24) And (Y >= 21) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 23) And (Y >= 22) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 22) And (Y >= 22) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 21) And (Y >= 22) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 20) And (Y >= 23) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 19) And (Y >= 23) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 18) And (Y >= 24) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 17) And (Y >= 24) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 16) And (Y >= 24) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 15) And (Y >= 25) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 14) And (Y >= 26) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 13) And (Y >= 26) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 12) And (Y >= 27) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 11) And (Y >= 28) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 10) And (Y >= 29) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 9) And (Y >= 30) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 8) And (Y >= 32) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X >= 7) And (Y >= 35) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else 
+   If operation = ("^") And (X >= 6) And (Y >= 38) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else 
+   If operation = ("^") And (X >= 5) And (Y >= 42) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else 
+   If operation = ("^") And (X >= 4) And (Y >= 48) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else 
+   If operation = ("^") And (X >= 3) And (Y >= 61) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else 
+   If operation = ("^") And (X >= 2) And (Y >= 96) Then 
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+    EndIf
+  EndSub
+  
+'Подпрограмма (вызываемая процедура) для обработки исключения (при умножении на большие числа)
+Sub Exception4
+  If operation = ("*") And X >= 1000000000000000 And Y >= 1000000000000000 Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+  EndIf
+EndSub
+
+'Заключение в цикл 
+While P <> 2
+  
+'Цветокодирование
+TextWindow.ForegroundColor = "White" 'цвет символов
+TextWindow.BackgroundColor = "DarkBlue" 'цвет фона
+TextWindow.Clear() 'очистить экран
+  
+ 'Инструкции к меню калькулятора 
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine(" ---------------------- MENU ----------------------")
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine(" 0 - Operation calculate the root of a number:[ √ ]")
+ TextWindow.WriteLine(" 1 - Operation calculate show: [ +, -, *, ^, /, % ]")
+ TextWindow.WriteLine(" 2 - Exit")
+ TextWindow.ForegroundColor = "Yellow" 'цвет символов 
+ TextWindow.WriteLine(" When you enter another number, return to the menu!")
+ TextWindow.WriteLine(" Ignore <1> on screen cleaning, return to the menu!")
+ TextWindow.ForegroundColor = "White" 'цвет символов
+ TextWindow.WriteLine(" --------------------------------------------------")
+ 
+ 'Получение переменной "P", нужна для управления меню калькулятора
+ TextWindow.WriteLine("")
+ TextWindow.Write(" Enter the number of your choice: ")
+ P = TextWindow.ReadNumber()
+ 
+'Последняя инструкция перед выходом из программы
+If P = 2 Then
+ TextWindow.WriteLine("")
+ TextWindow.WriteLine(" Program ended. Exit.")
+ TextWindow.WriteLine(" --------------------------------------------------")
+EndIf
+
+'Ввод данных и затем вычисление квадратного корня числа
+if P = 0 Then
+    TextWindow.WriteLine("")
+    TextWindow.Write(" Enter a number to calculate its square root: ")
+    Z = TextWindow.ReadNumber()
+    N = Math.SquareRoot(Z)
+    TextWindow.WriteLine("")
+    TextWindow.WriteLine(" The square root of " + Z + " is " + N)
+    TextWindow.WriteLine(" --------------------------------------------------")
+    
+    'Инструкция для очистки экрана
+    TextWindow.WriteLine("")
+    TextWindow.Write(" Press <1> to clear the screen - ")
+    M = TextWindow.ReadNumber()
+    If M = 1 Then
+    TextWindow.Clear()
+    EndIf
+    EndIf 
+  
+'Ввод значений для переменных и их назначение   
+If P = 1 Then 
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter first number: ")
+  X = TextWindow.ReadNumber()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter operation: ")
+  operation = TextWindow.Read()
+  TextWindow.WriteLine("") 
+  TextWindow.Write(" Enter second number: ")
+  Y = TextWindow.ReadNumber()
+  TextWindow.WriteLine("")
+  
+'Выбор математической операции и далее вычисления по ним
+If operation = ("+") Then
+   result = X + Y
+   TextWindow.WriteLine(" Operation - [+] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+  If operation = ("-") Then
+     result = X - Y
+     TextWindow.WriteLine(" Operation - [-] Result is - " + result)
+     TextWindow.WriteLine(" --------------------------------------------------")
+  EndIf
+EndIf
+
+'Все операции с умножением числа и возведением в степень
+If operation = ("*") And X < 1000000000000000 And Y < 1000000000000000 Then
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+   Else
+   Exception4()
+   EndIf
+ 
+If operation = ("^") And (X < 39) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 38) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 37) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 36) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 35) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 34) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 33) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 32) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 31) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 30) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 29) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 28) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 27) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 26) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 25) And (Y < 21) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 24) And (Y < 22) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 23) And (Y < 22) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 22) And (Y < 22) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 21) And (Y < 23) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 20) And (Y < 23) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 19) And (Y < 24) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 18) And (Y < 24) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 17) And (Y < 24) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 16) And (Y < 25) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 15) And (Y < 26) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")   
+Else
+   If operation = ("^") And (X < 14) And (Y < 26) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")   
+Else
+   If operation = ("^") And (X < 13) And (Y < 27) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")   
+Else
+   If operation = ("^") And (X < 12) And (Y < 28) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")   
+Else
+   If operation = ("^") And (X < 11) And (Y < 29) Then
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 10) And (Y < 30) Then
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 9) And (Y < 32) Then
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 8) And (Y < 35) Then
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X < 7) And (Y < 38) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------") 
+Else
+   If operation = ("^") And (X < 6) And (Y < 42) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------") 
+Else
+   If operation = ("^") And (X < 5) And (Y < 48) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------") 
+Else
+   If operation = ("^") And (X < 4) And (Y < 61) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------") 
+Else
+   If operation = ("^") And (X < 3) And (Y < 96) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   If operation = ("^") And (X = 1) And (Y <> 0) Then 
+   result = Math.Power(X,Y)
+   TextWindow.WriteLine(" Operation - [^] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+   Else
+   Exception3()
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   EndIf
+   
+'Все операции с делением числа
+If operation = ("/") And (Y <> 0) Then
+   result = X / Y
+   TextWindow.WriteLine(" Operation - [/] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   Exception1()
+EndIf
+
+If operation = ("%") And (Y <> 0) Then
+   result = Math.Remainder(X,Y)
+   TextWindow.WriteLine(" Operation - [%] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+Else
+   Exception2()
+EndIf
+
+'Инструкция на ситуацию когда операция не распознана
+If operation <> ("+") And operation <> ("*") And operation <> ("-") And operation <> ("/") And operation <> ("^") And operation <> ("%") Then
+  TextWindow.ForegroundColor = "Yellow" 'цвет символов 
+  TextWindow.WriteLine(" Operation not recognized, repeat all over again!")
+  TextWindow.WriteLine(" Look on up now at the instructions in the menu->")
+  TextWindow.ForegroundColor = "White" 'цвет символов 
+  TextWindow.WriteLine(" --------------------------------------------------")
+EndIf
+
+'Инструкция для очистки экрана
+TextWindow.WriteLine("")
+TextWindow.Write(" Press <1> to clear the screen - ")
+M = TextWindow.ReadNumber()
+If M = 1 Then
+TextWindow.Clear()
+EndIf
+  
+EndIf
+EndWhile
