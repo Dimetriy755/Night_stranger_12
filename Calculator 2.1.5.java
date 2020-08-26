@@ -17,7 +17,7 @@ public class Main {
             System.out.println("");
             System.out.println("");
             System.out.println(" 1 - Operation calculate the root of a number:[ √ ]");
-            System.out.println(" 2 - Operation calculate: [ +, -, *, **, /, //, % ]\n 3 - Exit");
+            System.out.println(" 2 - Operation calculate show: [ +, -, *, ^, /, % ]\n 3 - Exit");
             System.out.println(" NaN - it means Not-a-Number under math. exceptions");
             System.out.println(" Calculation of the result is more 1E308 - Infinity");
             System.out.println(" --------------------------------------------------");

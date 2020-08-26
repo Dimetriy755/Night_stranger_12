@@ -1,0 +1,1 @@
+cmd /k java -jar Training_program_2.jar
