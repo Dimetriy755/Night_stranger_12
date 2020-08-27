@@ -1,5 +1,5 @@
 # Night_stranger_12
-Any scripts in code on Python or Java
++ Any scripts in code on Python or Java
 + Else scripts JS and HTML/CSS documents
 + Else also any files (.jar) and (.bat)
 
