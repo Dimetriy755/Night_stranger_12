@@ -18,6 +18,7 @@ while 1 == 1:
     print("")
     print(" 0 - Operation calculate the root of a number:[ √ ]")
     print(" 1 - Operation calculate: [ +, -, *, **, /, //, % ]\n 2 - Exit")
+    print(Fore.YELLOW + " Ignore CLS on screen cleaning, return to the menu!")
     print(" --------------------------------------------------")
 
     while 1 == 1:
