@@ -38,12 +38,37 @@
     /* Моё резюме (h1) */
     .letter {font-size: 200%;}
 
-    /* Кнопка */
+    /* Кнопка по умолчанию */
     .b1 {
+    cursor: default;
     background: navy; /* Синий цвет фона */ 
     color: white; /* Белые буквы */ 
     font-size: 15pt; /* Размер шрифта в пунктах */
     border: 5px outset /* Ширина рамки в пикселях */
+    }
+
+    /* Кнопка при наведении на неё фокуса */
+    .b1:hover, .b1:focus {
+    cursor: pointer;
+    background: blue; /* Голубой цвет фона */ 
+    color: white; /* Белые буквы */ 
+    font-size: 16pt; /* Размер шрифта в пунктах */
+    border: 5px outset /* Ширина рамки в пикселях */
+    }
+
+    /* Кнопка при нажатии */
+    .b1:active {
+    color: forestgreen; /* Зелёные буквы */ 
+    background-color: white; /* Белый цвет фона кнопки */
+    box-shadow: -2px 6px 10px blueviolet; /* Добавляет тень */
+    }
+
+    /* Кнопка ждёт нажатия */
+    .b1:disabled {
+    color: gray; /* Серые буквы */
+    box-shadow: none; /* Тени нет */
+    background: none; /* Цвета фона нет*/
+    opacity: 1; /* Уровень непрозрачности */
     }
 	
     .resume-photo_image {
@@ -78,6 +103,8 @@
     padding: 14px;}
 	
     </style>
+
+    <link rel="icon" type="image/png" href="C:\Users\User\Documents\Фото\user.png" />
 
 </head>
 
@@ -393,7 +420,7 @@
     хобби (vb, java, SQL, html/css, js и др.). Увлекаюсь различными видами спорта, боевыми единоборствами, <br/>
     кино, музыкой, книгами, играми, АСМР и много чем другим, также люблю различные каналы на YouTube и Telegram.</p>
     <p><strong><big>Вот моё фото:</big></strong></p>
-    <img border="12" src="https://hhcdn.ru/photo/582848647.jpeg?t=1598079522&h=xAO78zGB4DMdfeKYs-DGFQ">
+    <img border="12" alt="здесь должно быть моё фото" src="C:\Users\User\Documents\Фото\i.jpg"
     <hr/>
 </div>
 <!-- My hobbies + foto section end -->
@@ -406,11 +433,11 @@
     button.onclick = function() {
     page.classList.toggle('light-theme');
     page.classList.toggle('dark-theme');
-    console.log('Кнопка нажата!');
+    console.log('The button is pressed!');
     };
 
 </script>
-
+  
 </body>
 
 </html> 
