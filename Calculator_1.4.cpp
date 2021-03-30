@@ -118,7 +118,10 @@ int main() {
 	        cout <<" Please enter 'CLS' to clear the screen: ";
 	        cin >> CLS;
 			if (CLS == "cls") { system("cls"); }
-	        else if (CLS != "cls") { system("cls"); } }
+	        else if ((CLS != "cls") || (cin.peek() != '\n')) { 
+	        cin.clear();
+	        while (cin.get() != '\n');
+			system("cls"); } }
 	        break;
 	        
 	    case 2: {
@@ -146,7 +149,10 @@ int main() {
 	        cout <<" Please enter 'CLS' to clear the screen: ";
 	        cin >> CLS;
 			if (CLS == "cls") { system("cls"); }
-	        else if (CLS != "cls") { system("cls"); } }
+	        else if ((CLS != "cls") || (cin.peek() != '\n')) { 
+	        cin.clear();
+	        while (cin.get() != '\n');
+			system("cls"); } }
 	        break;
         	
         case 3: {
@@ -210,7 +216,10 @@ int main() {
 			cout <<" Please enter 'CLS' to clear the screen: ";
 			cin >> CLS;
 			if (CLS == "cls") { system("cls"); }
-	        else if (CLS != "cls") { system("cls"); } }
+	        else if ((CLS != "cls") || (cin.peek() != '\n')) { 
+	        cin.clear();
+	        while (cin.get() != '\n');
+			system("cls"); } }
 	        break;
 	        
 	    case 4: {
@@ -266,7 +275,10 @@ int main() {
 			cout <<" Please enter 'CLS' to clear the screen: ";
 			cin >> CLS;
 			if (CLS == "cls") { system("cls"); }
-	        else if (CLS != "cls") { system("cls"); } }
+	        else if ((CLS != "cls") || (cin.peek() != '\n')) { 
+	        cin.clear();
+	        while (cin.get() != '\n');
+			system("cls"); } }
 	        break;
         
         case 5: { break; } }
