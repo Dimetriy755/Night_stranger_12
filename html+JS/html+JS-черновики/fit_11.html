@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Calculator</title>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css"/>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<style type="text/css">
+
+body { 
+background: blue;
+font-family: monospace; }
+
+/* call button for menu dialog-box */
+#showModal {
+height: 50px;
+margin: 0 auto;
+display: block;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+position: relative;
+font-family: monospace; }
+
+#showModal:hover, #showModal:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#showModal:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* dialog-box for сalculator menu */
+dialog {
+font-size: 200%; 
+border-radius: 20px;
+background: blue;}
+
+dialog:hover, dialog:focus {
+cursor: pointer;
+background: blue;
+border-radius: 20px; }
+
+dialog::backdrop {
+background-color: black; }
+
+/* close button for menu dialog-box (also choice mode) */
+#close {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#close:hover, #close:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#close:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* window-box for number of your choice */
+#popupDialog {
+width: 600px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 107%;
+position: relative;
+text-align: left;
+min-height: 150px; 
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#widgetName {
+cursor: default;
+min-height: 20px;
+width: 90%;
+border: 5px inset;
+background: white;
+padding-bottom: 5px; }
+
+#widgetName:hover, #widgetName:focus {
+cursor: pointer;
+font-size: 19pt;
+border: 7px outset; }
+
+/* window-box for first number */
+#popupDialog1 {
+width: 600px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 107%;
+position: relative;
+text-align: left;
+min-height: 150px; 
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#widgetName1 {
+cursor: default;
+min-height: 20px;
+width: 90%;
+border: 5px inset;
+background: white;
+padding-bottom: 5px; }
+
+#widgetName1:hover, #widgetName1:focus {
+cursor: pointer;
+font-size: 19pt;
+border: 7px outset; }
+
+/* window-box for sign of your operation */
+#popupDialog2 {
+width: 600px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 107%;
+position: relative;
+text-align: left;
+min-height: 150px; 
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#widgetName2 {
+cursor: default;
+min-height: 20px;
+width: 90%;
+border: 5px inset;
+background: white;
+padding-bottom: 5px; }
+
+#widgetName2:hover, #widgetName2:focus {
+cursor: pointer;
+font-size: 19pt;
+border: 7px outset; }
+
+/* window-box for number two */
+#popupDialog3 {
+width: 600px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 107%;
+position: relative;
+text-align: left;
+min-height: 150px; 
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#widgetName3 {
+cursor: default;
+min-height: 20px;
+width: 90%;
+border: 5px inset;
+background: white;
+padding-bottom: 5px; }
+
+#widgetName3:hover, #widgetName3:focus {
+cursor: pointer;
+font-size: 19pt;
+border: 7px outset; }
+
+/* window-box for square root of the number */
+#popupDialog4 {
+width: 600px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 123%;
+position: relative;
+text-align: left;
+min-height: 150px; 
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#widgetName4 {
+cursor: default;
+min-height: 20px;
+width: 90%;
+border: 5px inset;
+background: white;
+padding-bottom: 5px; }
+
+#widgetName4:hover, #widgetName4:focus {
+cursor: pointer;
+font-size: 19pt;
+border: 7px outset; }
+
+/* window-box for cube root of the number */
+#popupDialog5 {
+width: 600px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 134%;
+position: relative;
+text-align: left;
+min-height: 150px; 
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#widgetName5 {
+cursor: default;
+min-height: 20px;
+width: 90%;
+border: 5px inset;
+background: white;
+padding-bottom: 5px; }
+
+#widgetName5:hover, #widgetName5:focus {
+cursor: pointer;
+font-size: 19pt;
+border: 7px outset; }
+
+/* window-box for displaying the result */
+#alert_dialog {
+z-index: 999; 
+width: 100%;
+height: 100%;
+position: relative; }
+
+#alert_body {
+z-index: 1001;
+width: 970px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 180%;
+text-align: left;
+min-height: 450px; 
+position: relative;
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#alert_text {
+font-size: 200%;
+display: block;
+min-height: 8px;
+padding-bottom: 5px; }
+
+#alert_button {
+display: block;
+padding-top: 350px;
+text-align: right; }
+
+#alert_close {
+height: 40px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#alert_close:hover, #alert_close:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 17pt;
+border: 5px outset; }
+
+#alert_close:active {
+color: forestgreen;
+background-color: white; }
+
+/* window-box for displaying the square root of the number */
+#alert_dialog4 {
+z-index: 999; 
+width: 100%;
+height: 100%;
+position: relative; }
+
+#alert_body4 {
+z-index: 1001;
+width: 970px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 180%;
+text-align: left;
+min-height: 450px; 
+position: relative;
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#alert_text4 {
+font-size: 200%;
+display: block;
+min-height: 8px;
+padding-bottom: 5px; }
+
+#alert_button4 {
+display: block;
+padding-top: 350px;
+text-align: right; }
+
+#alert_close4 {
+height: 40px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#alert_close4:hover, #alert_close4:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 17pt;
+border: 5px outset; }
+
+#alert_close4:active {
+color: forestgreen;
+background-color: white; }
+
+/* window-box for displaying the cube root of the number */
+#alert_dialog5 {
+z-index: 999; 
+width: 100%;
+height: 100%;
+position: relative; }
+
+#alert_body5 {
+z-index: 1001;
+width: 970px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 180%;
+text-align: left;
+min-height: 450px; 
+position: relative;
+border: 10px outset;
+background-color: navy;
+box-shadow: -20px 16px 10px navy; }
+
+#alert_text5 {
+font-size: 200%;
+display: block;
+min-height: 8px;
+padding-bottom: 5px; }
+
+#alert_button5 {
+display: block;
+padding-top: 350px;
+text-align: right; }
+
+#alert_close5 {
+height: 40px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#alert_close5:hover, #alert_close5:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 17pt;
+border: 5px outset; }
+
+#alert_close5:active {
+color: forestgreen;
+background-color: white; }
+
+/* Alert! Division by zero is impossible! */
+#alert_dialog1 {
+z-index: 999; 
+width: 100%;
+height: 100%;
+position: relative; }
+
+#alert_body1 {
+z-index: 1001;
+width: 1000px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 400%;
+text-align: left;
+min-height: 600px; 
+position: relative;
+border: 10px outset;
+background-color: navy;
+box-shadow: -40px 26px 20px navy; 
+background: url(https://klike.net/uploads/posts/2019-11/1574336577_1.jpg) no-repeat center center fixed;
+background-size: cover; }
+
+#alert_text1 {
+font-size: 200%;
+display: block;
+min-height: 8px;
+padding-bottom: 5px; }
+
+#alert_button1 {
+display: block;
+padding-top: 300px;
+text-align: right; }
+
+#alert_close1 {
+height: 40px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#alert_close1:hover, #alert_close1:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 17pt;
+border: 5px outset; }
+
+#alert_close1:active {
+color: forestgreen;
+background-color: white; }
+
+/* Alert! Wrong way! (alert-box) */
+#alert_dialog2 {
+z-index: 999; 
+width: 100%;
+height: 100%;
+position: relative; }
+
+#alert_body2 {
+z-index: 1001;
+width: 1000px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 200%;
+text-align: left;
+height: 450px; 
+position: relative;
+border: 10px outset;
+background-color: DarkMagenta;
+box-shadow: -40px 26px 20px navy; }
+
+#alert_text2 {
+font-size: 200%;
+display: block;
+min-height: 80px;
+padding-bottom: 5px; }
+
+#alert_button2 {
+display: block;
+padding-top: 222px;
+text-align: right; }
+
+#alert_close2 {
+height: 40px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: DarkMagenta;
+border: 5px outset;
+font-family: monospace; }
+
+#alert_close2:hover, #alert_close2:focus {
+cursor: pointer;
+background: DarkMagenta;
+color: white;
+font-size: 17pt;
+border: 5px outset; }
+
+#alert_close2:active {
+color: DeepSkyBlue;
+background-color: white; }
+
+/* Alert! Operation not recognized! (alert-box) */
+#alert_dialog3 {
+z-index: 999; 
+width: 100%;
+height: 100%;
+position: relative; }
+
+#alert_body3 {
+z-index: 1001;
+width: 1000px;
+padding: 5px;
+margin: 0 auto;
+color: white;
+font-size: 200%;
+text-align: left;
+height: 450px; 
+position: relative;
+border: 10px outset;
+background-color: DarkMagenta;
+box-shadow: -40px 26px 20px navy; }
+
+#alert_text3 {
+font-size: 200%;
+display: block;
+min-height: 80px;
+padding-bottom: 5px; }
+
+#alert_button3 {
+display: block;
+padding-top: 160px;
+text-align: right; }
+
+#alert_close3 {
+height: 40px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: DarkMagenta;
+border: 5px outset;
+font-family: monospace; }
+
+#alert_close3:hover, #alert_close3:focus {
+cursor: pointer;
+background: DarkMagenta;
+color: white;
+font-size: 17pt;
+border: 5px outset; }
+
+#alert_close3:active {
+color: DeepSkyBlue;
+background-color: white; }
+
+/* button «Accept» */
+#button {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#button:hover, #button:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#button:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* button1 «Accept» */
+#button1 {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#button1:hover, #button1:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#button1:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* button2 «Accept» */
+#button2 {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#button2:hover, #button2:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#button2:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* button3 «Accept» */
+#button3 {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#button3:hover, #button3:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#button3:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* button4 «Accept» */
+#button4 {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#button4:hover, #button4:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#button4:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* button5 «Accept» */
+#button5 {
+height: 50px;
+color: white;
+cursor: default;
+font-size: 15pt;
+background: navy;
+border: 5px outset;
+font-family: monospace; }
+
+#button5:hover, #button5:focus {
+cursor: pointer;
+background: blue;
+color: white;
+font-size: 16pt;
+border: 5px outset; }
+
+#button5:active {
+color: forestgreen;
+background-color: white;
+box-shadow: -20px 16px 10px navy; }
+
+/* Hiding controls and editing ui-elements from jQuery */
+.ui-button {
+opacity: 0; 
+visibility: hidden; 
+background: #cccccc; }
+
+.ui-dialog {
+background-color: navy;
+box-shadow: -25px 16px 10px navy; }
+
+.ui-dialog-buttonpane {
+background-color: inherit; }
+
+</style>
+</head>
+<body>
+
+<!-- Invitation button on the menu -->
+<button id="showModal">Click here to enter the web calculator menu</button>
+
+<!-- Calculator menu -->
+<dialog>
+<p>========================== MENU ==========================</p>
+<p>1 - Calculating the square root of a number: [√]  </p>
+<p>2 - Calculating the cube root of a number: [∛]  </p>
+<p>3 - All operations for calculation: [+, -, *, ^, /, %]  </p>
+<p>----------------------------------------------------------</p>
+<p style="color:Maroon">Calculation of the result is more 1E+308 - Infinity [∞]</p>
+<p style="color:Maroon">NaN - it means Not-a-Number under mathematical exceptions</p>
+<p>==========================================================</p>
+<button id="close">Press the button to start working with the calculator</button>
+</dialog>
+
+<!-- Number of your choice (window-box) -->
+<div id="popupDialog" title="Number of your choice" style="display:none;" valign="top">
+<p>
+<label for="widgetName"><small>Enter the number of your choice:</small></label>
+<input type="number" id="widgetName" autocomplete="off" oninput = "value_immediately()" 
+onkeypress="clickPress(event)" placeholder="your choice"/>
+</p>
+<p><button id="button">Here is the timer &#9202;</button></p>
+</div>
+
+<!-- First number (window-box) -->
+<div id="popupDialog1" title="First number" style="display:none;" valign="top">
+<p>
+<label for="widgetName">Enter first number:</label>
+<input type="number" id="widgetName1" autocomplete="off" oninput = "value_immediately1()" 
+onkeypress="clickPress1(event)" placeholder="first number" ng-paste="preventPaste(event)"/>
+</p>
+<p><button id="button1">Accept</button></p>
+</div>
+
+<!-- Sign of your operation (window-box) -->
+<div id="popupDialog2" title="Sign of your operation" style="display:none;" valign="top">
+<p>
+<label for="widgetName">Enter operation:</label>
+<input type="text" id="widgetName2" autocomplete="off" oninput = "value_immediately2()" 
+onkeypress="clickPress2(event)" placeholder="your operation"/>
+</p>
+<p><button id="button2">Here is the timer &#9202;</button></p>
+</div>
+
+<!-- Second number (window-box) -->
+<div id="popupDialog3" title="Second number" style="display:none;" valign="top">
+<p>
+<label for="widgetName">Enter second number:</label>
+<input type="number" id="widgetName3" autocomplete="off" oninput = "value_immediately3()" 
+onkeypress="clickPress3(event)" placeholder="second number" ng-paste="preventPaste(event)"/>
+</p>
+<p><button id="button3">Accept</button></p>
+</div>
+
+<!-- For the square root of the number (window-box) -->
+<div id="popupDialog4" title="Enter a number..." style="display:none;" valign="top">
+<p>
+<label for="widgetName4">...to get its square root:</label>
+<input type="number" id="widgetName4" autocomplete="off" oninput = "value_immediately4()" 
+onkeypress="clickPress4(event)" placeholder="enter number" ng-paste="preventPaste(event)"/>
+</p>
+<p><button id="button4">Accept</button></p>
+</div>
+
+<!-- For the cube root of the number (window-box) -->
+<div id="popupDialog5" title="Enter a number..." style="display:none;" valign="top">
+<p>
+<label for="widgetName5">...to get its cube root:</label>
+<input type="number" id="widgetName5" autocomplete="off" oninput = "value_immediately5()" 
+onkeypress="clickPress5(event)" placeholder="enter number" ng-paste="preventPaste(event)"/>
+</p>
+<p><button id="button5">Accept</button></p>
+</div>
+
+<!-- Show result (alert-box) -->
+<div id="alert_dialog" style="display:none;" valign="top">
+    <div id="alert_body">
+    <span id="alert_text"></span>
+    <span id="alert_button"><button id="alert_close">ОК</button></span>
+    </div>
+</div>
+
+<!-- Alert! Division by zero is impossible! (alert-box) -->
+<div id="alert_dialog1" style="display:none;" valign="top">
+    <div id="alert_body1">
+    <span id="alert_text1"></span>
+    <span id="alert_button1"><button id="alert_close1">NO</button></span>
+    </div>
+</div>
+
+<!-- Alert! Wrong way! (alert-box) -->
+<div id="alert_dialog2" style="display:none;" valign="top">
+    <div id="alert_body2">
+    <span id="alert_text2"></span>
+    <span id="alert_button2"><button id="alert_close2">OK</button></span>
+    </div>
+</div>
+
+<!-- Alert! Operation not recognized! (alert-box) -->
+<div id="alert_dialog3" style="display:none;" valign="top">
+    <div id="alert_body3">
+    <span id="alert_text3"></span>
+    <span id="alert_button3"><button id="alert_close3">OK</button></span>
+    </div>
+</div>
+
+<!-- Square root (alert-box) -->
+<div id="alert_dialog4" style="display:none;" valign="top">
+    <div id="alert_body4">
+    <span id="alert_text4"></span>
+    <span id="alert_button4"><button id="alert_close4">ОК</button></span>
+    </div>
+</div>
+
+<!-- Cube root (alert-box) -->
+<div id="alert_dialog5" style="display:none;" valign="top">
+    <div id="alert_body5">
+    <span id="alert_text5"></span>
+    <span id="alert_button5"><button id="alert_close5">ОК</button></span>
+    </div>
+</div>
+ 
+<script type = "text/javascript">
+
+    // Trick of pasting text!
+    $(document).ready(function() {
+    $('#widgetName1').on("cut copy paste",function(event) {
+    event.preventDefault(); 
+    console.log('Catch the text insertion!'); }); });
+    
+    $(document).ready(function() {
+    $('#widgetName3').on("cut copy paste",function(event) {
+    event.preventDefault(); 
+    console.log('Catch the text insertion!'); }); }); 
+
+    $(document).ready(function() {
+    $('#widgetName4').on("cut copy paste",function(event) {
+    event.preventDefault(); 
+    console.log('Catch the text insertion!'); }); }); 
+
+    // Number of your choice (logic for window-box)
+    function your_choice() {   
+    $(document).ready(function() {
+    $('#popupDialog').dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            'Cancel': function() {
+                    $(this).dialog('close'); },
+            'Accept': function() {
+                    $('#mainForm input#target').val($(this).find('#widgetName').val() );
+                    console.log('The «Accept» is pressed!-[1.0]'); 
+                    $(this).dialog('close'); } } }); 
+                    
+    $('#button').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName').val() );
+    // console.log('The «Accept» is pressed!-[2.0]'); 
+    // $('#popupDialog').dialog('close');
+    }); }); };
+
+    // Binding the «Accept» button to the «Enter» key (0)
+    function clickPress(event) {
+    if (event.keyCode == 13) {
+    $('#mainForm input#target').val($(this).find('#widgetName').val() );
+    // console.log("The button «Enter» is pressed!-[3.0]"); 
+    // $('#popupDialog').dialog('close'); 
+    }; };
+
+    // First number (logic for window-box)
+    function first_number() {   
+    $(document).ready(function() {
+    $('#popupDialog1').dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            'Cancel': function() {
+                    $(this).dialog('close'); },
+            'Accept': function() {
+                    $('#mainForm input#target').val($(this).find('#widgetName1').val() );
+                    console.log('The «Accept» is pressed!-[1.1]'); 
+                    $(this).dialog('close'); } } });
+
+    $('#button1').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName1').val() );
+    console.log("number one = " + typeof(X));
+    console.log('The «Accept» is pressed!-[2.1]');
+    // $('#popupDialog1').dialog('close');
+    }); }); }; 
+
+    // Binding the «Accept» button to the «Enter» key (1)
+    function clickPress1(event) {
+    if (event.keyCode == 13 && X == $('#widgetName1').val()) {
+    $('#mainForm input#target').val($(this).find('#widgetName1').val() );
+    console.log("number one = " + typeof(X));
+    console.log("The button «Enter» is pressed!-[3.1]");
+    $('#popupDialog1').dialog('close'); }; 
+    if (event.keyCode == 13 && X != $('#widgetName1').val()) {
+    console.log("number one = " + typeof(X)); 
+    console.log("The button «Enter» is pressed!-[3.1]"); }; };
+
+    // Sign of your operation (logic for window-box)
+    function your_operation() {   
+    $(document).ready(function() {
+    $('#popupDialog2').dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            'Cancel': function() {
+                    $(this).dialog('close'); },
+            'Accept': function() {
+                    $('#mainForm input#target').val($(this).find('#widgetName2').val() );
+                    console.log('The «Accept» is pressed!-[1.2]'); 
+                    $(this).dialog('close'); } } });
+                    
+    $('#button2').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName2').val() );
+    // console.log('The «Accept» is pressed!-[2.2]'); 
+    // $('#popupDialog2').dialog('close');
+    }); }); }; 
+
+    // Binding the «Accept» button to the «Enter» key (2)
+    function clickPress2(event) {
+    if (event.keyCode == 13) {
+    $('#mainForm input#target').val($(this).find('#widgetName2').val() );
+    // console.log("The button «Enter» is pressed!-[3.2]"); 
+    // $('#popupDialog2').dialog('close'); 
+    }; };
+
+    // Second number (logic for window-box)
+    function second_number() {   
+    $(document).ready(function() {
+    $('#popupDialog3').dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            'Cancel': function() {
+                    $(this).dialog('close'); },
+            'Accept': function() {
+                    $('#mainForm input#target').val($(this).find('#widgetName3').val() );
+                    console.log('The «Accept» is pressed!-[1.3]'); 
+                    $(this).dialog('close'); } } });
+                    
+    $('#button3').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName3').val() );
+    console.log("number two = " + typeof(Y));
+    console.log('The «Accept» is pressed!-[2.3]');
+    // $('#popupDialog3').dialog('close'); 
+    }); }); }; 
+
+    // Binding the «Accept» button to the «Enter» key (3)
+    function clickPress3(event) {
+    if (event.keyCode == 13 && Y == $('#widgetName3').val()) {
+    $('#mainForm input#target').val($(this).find('#widgetName3').val() );
+    console.log("number two = " + typeof(Y));
+    console.log("The button «Enter» is pressed!-[3.3]");
+    $('#popupDialog3').dialog('close'); 
+    Calculation(); }; 
+    if (event.keyCode == 13 && Y != $('#widgetName3').val()) {
+    console.log("number two = " + typeof(Y)); 
+    console.log("The button «Enter» is pressed!-[3.3]"); }; };
+
+    // Square root (logic for window-box)
+    function square_root() {   
+    $(document).ready(function() {
+    $('#popupDialog4').dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            'Cancel': function() {
+                    $(this).dialog('close'); },
+            'Accept': function() {
+                    $('#mainForm input#target').val($(this).find('#widgetName4').val() );
+                    console.log('The «Accept» is pressed!-[1.4]'); 
+                    $(this).dialog('close'); } } });
+                    
+    $('#button4').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName4').val() );
+    console.log("number three = " + typeof(Z));
+    console.log('The «Accept» is pressed!-[2.4]');
+    // $('#popupDialog4').dialog('close'); 
+    }); }); }; 
+
+    // Binding the «Accept» button to the «Enter» key (4)
+    function clickPress4(event) {
+    if (event.keyCode == 13 && Z == $('#widgetName4').val()) {
+    $('#mainForm input#target').val($(this).find('#widgetName4').val() );
+    console.log("number three = " + typeof(Z));
+    console.log("The button «Enter» is pressed!-[3.4]");
+    $('#popupDialog4').dialog('close'); 
+    N = Math.sqrt(Z);
+    console.log("number four = " + N);
+    console.log("number four = " + typeof(N));
+    warning(); 
+    alert_result4(); }; 
+    if (event.keyCode == 13 && Z != $('#widgetName4').val()) {
+    console.log("number three = " + typeof(Z)); 
+    console.log("The button «Enter» is pressed!-[3.4]"); }; };
+
+    // Cube root (logic for window-box)
+    function cube_root() {   
+    $(document).ready(function() {
+    $('#popupDialog5').dialog({
+        modal: true,
+        autoOpen: true,
+        buttons: {
+            'Cancel': function() {
+                    $(this).dialog('close'); },
+            'Accept': function() {
+                    $('#mainForm input#target').val($(this).find('#widgetName5').val() );
+                    console.log('The «Accept» is pressed!-[1.5]'); 
+                    $(this).dialog('close'); } } });
+                    
+    $('#button5').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName5').val() );
+    console.log("number five = " + typeof(Z));
+    console.log('The «Accept» is pressed!-[2.5]');
+    // $('#popupDialog5').dialog('close'); 
+    }); }); }; 
+
+    // Binding the «Accept» button to the «Enter» key (5)
+    function clickPress5(event) {
+    if (event.keyCode == 13 && Z == $('#widgetName5').val()) {
+    $('#mainForm input#target').val($(this).find('#widgetName5').val() );
+    console.log("number five = " + typeof(Z));
+    console.log("The button «Enter» is pressed!-[3.5]");
+    $('#popupDialog5').dialog('close'); 
+    N = Math.cbrt(Z);
+    console.log("number six = " + N);
+    console.log("number six = " + typeof(N));
+    warning(); 
+    alert_result5(); }; 
+    if (event.keyCode == 13 && Z != $('#widgetName5').val()) {
+    console.log("number five = " + typeof(Z)); 
+    console.log("The button «Enter» is pressed!-[3.5]"); }; };
+
+// Declaring variables
+let dialog = document.querySelector('dialog');
+let button1 = document.querySelector('#showModal');
+let button2 = document.querySelector('#close');
+let choice;
+let timer;
+
+var X;
+var operation;
+var Y;
+var result;
+var Z;
+var N;
+
+    // Invitation button on the menu
+    button1.onclick = function() {
+    console.log('The button one is pressed!');
+    dialog.showModal(); };
+
+    // Exit button of the menu (and start choice mode)
+    button2.onclick = function() {
+    console.log('The button two is pressed!');
+    dialog.close(your_choice()); };
+
+    // Get immediate value for choice mode (window-box)
+    function value_immediately() { 
+    $(document).ready(function() {
+    choice = $('#widgetName').val();
+    console.log("choice = " + choice); 
+    if (choice == '1') {
+    timer = setTimeout(() => $('#popupDialog').dialog('close'), 1000); 
+    timer = setTimeout(() => square_root(), 1000); }
+    if (choice == '2') {
+    timer = setTimeout(() => $('#popupDialog').dialog('close'), 1000); 
+    timer = setTimeout(() => cube_root(), 1000); }
+    if (choice == '3') { 
+    timer = setTimeout(() => $('#popupDialog').dialog('close'), 1000);
+    timer = setTimeout(() => Calculation(), 1000); }
+    if (choice != '1' && choice != '2' && choice != '3') {
+    $('#popupDialog').dialog('close'); 
+    alert_result2(); } }); }; 
+
+    // Get immediate value for number one (window-box)
+    function value_immediately1(){
+    $(document).ready(function() {
+    X = $('#widgetName1').val();
+    X = Number(X);
+    console.log("number one = " + X);
+    $('#button1').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName1').val() );
+    $('#popupDialog1').dialog('close'); }); }); };
+
+    // Get an immediate value for the sign of an operation (window-box)
+    function value_immediately2(){
+    $(document).ready(function() {
+    operation = $('#widgetName2').val();
+    console.log("operation = " + operation);
+    timer = setTimeout(() => $('#popupDialog2').dialog('close'), 2000);
+    if(operation != ("+") && operation != ("-") 
+    && operation != ("*") && operation != ("^") 
+    && operation != ("/") && operation != ("%")) { 
+    $('#popupDialog2').dialog('close'); 
+    alert_result3(); } }); };
+
+    // Get immediate value for number two (window-box)
+    function value_immediately3(){
+    $(document).ready(function() {
+    Y = $('#widgetName3').val();
+    Y = Number(Y);
+    console.log("number two = " + Y);
+    $('#button3').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName3').val() );
+    $('#popupDialog3').dialog('close'); 
+    Calculation(); }); }); };
+
+    // Get the immediate value of a number
+    // and fast calculate its square root
+    function value_immediately4(){
+    $(document).ready(function() {
+    Z = $('#widgetName4').val();
+    Z = Number(Z);
+    console.log("number three = " + Z);
+    $('#button4').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName4').val() );
+    $('#popupDialog4').dialog('close'); 
+    N = Math.sqrt(Z);
+    console.log("number four = " + N);
+    console.log("number four = " + typeof(N)); 
+    warning();
+    alert_result4(); }); }); };
+
+    // Get the immediate value of a number
+    // and fast calculate its cube root
+    function value_immediately5(){
+    $(document).ready(function() {
+    Z = $('#widgetName5').val();
+    Z = Number(Z);
+    console.log("number five = " + Z);
+    $('#button5').click(function() {
+    $('#mainForm input#target').val($(this).find('#widgetName5').val() );
+    $('#popupDialog5').dialog('close'); 
+    N = Math.cbrt(Z);
+    console.log("number six = " + N);
+    console.log("number six = " + typeof(N)); 
+    warning();
+    alert_result5(); }); }); };
+
+// Show the result of calculating 
+// the square root of a number 
+function alert_result4() {
+$(document).ready(function() {
+alert("The square root from the number: " + Z + " will be like this - " + N + " [result]");
+
+function alert(alert_text) {
+$("#alert_dialog4").show();
+$("#alert_text4").text(alert_text); }
+
+$("#alert_close4").click(function() {
+$("#alert_dialog4").hide(); 
+window.location.reload(); }); }); }
+
+// Show the result of calculating 
+// the cube root of a number 
+function alert_result5() {
+$(document).ready(function() {
+alert("The cube root from the number: " + Z + " will be like this - " + N + " [result]");
+
+function alert(alert_text) {
+$("#alert_dialog5").show();
+$("#alert_text5").text(alert_text); }
+
+$("#alert_close5").click(function() {
+$("#alert_dialog5").hide(); 
+window.location.reload(); }); }); }
+
+// Alert! Wrong way! (alert-box)
+function alert_result2() {
+$(document).ready(function() {
+alert("Completely wrong way, try entering the number again after looking at the instructions in menu mode!");
+
+function alert(alert_text) {
+$("#alert_dialog2").show();
+$("#alert_text2").text(alert_text); }
+
+$("#alert_close2").click(function() {
+$("#alert_dialog2").hide(); 
+window.location.reload(); }); }); }
+
+// Alert! Operation not recognized! (alert-box)
+function alert_result3() {
+$(document).ready(function() {
+alert("Operation not recognized, try entering the sign again after looking at the instructions in menu mode!");
+
+function alert(alert_text) {
+$("#alert_dialog3").show();
+$("#alert_text3").text(alert_text); }
+
+$("#alert_close3").click(function() {
+$("#alert_dialog3").hide(); 
+window.location.reload(); }); }); }
+
+//Warning! Incorrect input!
+function warning() {
+if (X == 0 || Y == 0) {
+alert("You entered either the first or the second number incorrectly," 
++ "\nor you entered both numbers incorrectly at once! You may" 
++ "\nalso have entered zero or both numbers as zeros!") }
+else if (X == 0 && Y == 0) {
+alert("You entered either the first or the second number incorrectly," 
++ "\nor you entered both numbers incorrectly at once! You may" 
++ "\nalso have entered zero or both numbers as zeros!") } 
+else if (Z == 0 && N == 0) {
+alert("You entered either the first or the second number incorrectly," 
++ "\nor you entered both numbers incorrectly at once! You may" 
++ "\nalso have entered zero or both numbers as zeros!") } }
+
+// Function for calculation     
+function Calculation() {  
+
+// Show result (logic for alert-box)
+function alert_result() {
+$(document).ready(function() {
+alert(X + " " + operation + " " + Y + " = " + result + " [result]");
+if (operation == undefined) {
+$("#alert_dialog3").hide(); };
+
+function alert(alert_text) {
+$("#alert_dialog").show();
+$("#alert_text").text(alert_text); }
+
+$("#alert_close").click(function() {
+$("#alert_dialog").hide(); 
+window.location.reload(); }); }); }
+
+// Alert! Division by zero is impossible! (logic for alert-box)
+function alert_result1() {
+$(document).ready(function() {
+if (result == undefined) {
+alert("Division by zero is impossible!"); };
+
+function alert(alert_text) {
+$("#alert_dialog1").show();
+$("#alert_text1").text(alert_text); }
+
+$("#alert_close1").click(function() {
+$("#alert_dialog1").hide(); 
+window.location.reload(); }); }); }
+
+// Obtaining data for calculations
+second_number();
+your_operation();
+first_number();
+warning();
+
+    // All calculations
+    if (operation == '+') {
+         result = 1 * X + 1 * Y;
+         alert_result();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); }
+    else if (operation == '-') {
+         result = X - Y;
+         alert_result();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); }
+    else if (operation == '*') {
+         result = X * Y;
+         alert_result();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); }
+    else if (operation == '^') {
+         result = Math.pow(X,Y);
+         alert_result();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); }
+    else if (operation == '/') {
+         if (Y != 0) {
+         result = X / Y;
+         alert_result();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); }
+         else {
+         alert_result1();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); } }
+    else if (operation == '%') {
+         if (Y != 0) {
+         result = X % Y;
+         alert_result();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); }
+         else {
+         alert_result1();
+         console.log("result = " + result);
+         console.log("result = " + typeof(result)); } } };
+
+</script>
+</body>
+</html>

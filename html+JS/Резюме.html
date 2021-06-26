@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-    <title>Резюме</title>
-
-    <style>
+<title>Резюме</title>
+<link rel="icon" type="image/png" href="C:\Users\User\Documents\Фото\user.png"/>
+<style type="text/css">
 
     h1 {color: blue;}
     h2 {color: magenta; font-size: 300%;}
@@ -21,7 +18,7 @@
 
     #hello {text-shadow: 10px 10px 10px black, 10px 10px 10px black, 10px 10px 10px black;}
 
-    body {font-family: monospace; background-color: blue;}
+    body {font-family: Сomic Sans MS, cursive; background-color: blue;}
 
     /* Светлая тема */
     .light-theme {
@@ -38,12 +35,37 @@
     /* Моё резюме (h1) */
     .letter {font-size: 200%;}
 
-    /* Кнопка */
+    /* Кнопка по умолчанию */
     .b1 {
+    cursor: default;
     background: navy; /* Синий цвет фона */ 
     color: white; /* Белые буквы */ 
     font-size: 15pt; /* Размер шрифта в пунктах */
     border: 5px outset /* Ширина рамки в пикселях */
+    }
+
+    /* Кнопка при наведении на неё фокуса */
+    .b1:hover, .b1:focus {
+    cursor: pointer;
+    background: blue; /* Голубой цвет фона */ 
+    color: white; /* Белые буквы */ 
+    font-size: 16pt; /* Размер шрифта в пунктах */
+    border: 5px outset /* Ширина рамки в пикселях */
+    }
+
+    /* Кнопка при нажатии */
+    .b1:active {
+    color: forestgreen; /* Зелёные буквы */ 
+    background-color: white; /* Белый цвет фона кнопки */
+    box-shadow: -2px 6px 10px blueviolet; /* Добавляет тень */
+    }
+
+    /* Кнопка ждёт нажатия */
+    .b1:disabled {
+    color: gray; /* Серые буквы */
+    box-shadow: none; /* Тени нет */
+    background: none; /* Цвета фона нет*/
+    opacity: 1; /* Уровень непрозрачности */
     }
 	
     .resume-photo_image {
@@ -77,10 +99,8 @@
     border: 12px dashed SteelBlue;
     padding: 14px;}
 	
-    </style>
-
+</style>
 </head>
-
 <body class="page dark-theme">
 
     <!-- header start -->
@@ -88,7 +108,7 @@
         <h1 align="center" id="hello" style="font-size: 60px; color: Lime">Hello, world! {•_-}</h1>
         <h1 align="center"><span class="letter">Моё резюме</span></h1>
         <form>
-        <p><input type="button" class="b1" value="Нажать для смены фона"></p>
+        <p><input type="button" class="b1" value="Нажать для смены фона" onkeypress="clickPress(event)"/></p>
         </form>
         <hr/>
     </div>
@@ -102,7 +122,7 @@
             <li><big>Мой профессиональный опыт</big></li>
             <li><big>Какой у меня уровень знаний ЯП</big></li>
             <li><big>Таблица моего желаемого рабочего графика</big></li>
-	        <li><big>Мои хобби и увлечения</big></li>
+	    <li><big>Мои хобби и увлечения</big></li>
         </ul>
     </div>
     <!-- skills list end -->
@@ -137,8 +157,8 @@
 Я ответственный, легко обучаемый, крайне внимательный, аккуратный, педантичный, 
 немного перфекционист, весьма точный, организованный, коммуникабельный, </br>
 в меру стрессоустойчивый, решительный, целеустремленный, порядочный, 
-доброжелательный, неконфликтный, весёлый, альтруистичный, обладаю 
-высокой </br> работоспособностью. Веду здоровый образ жизни, 
+доброжелательный, неконфликтный, весёлый, альтруистичный, 
+обладаю высокой работоспособностью. Веду здоровый образ жизни, 
 занимаюсь различными видами спорта, вредных привычек не имею.
 </p>
 <hr/>
@@ -160,9 +180,8 @@
 1. Системное тестирование (System testing) (часто) </br>
 2. Модульное тестирование (Component/Unit testing) (программисты) </br>
 3. Интеграционное тестирование (Integration testing) (часто) </br>
-4. Тестирование безопасности (немного: тестирование на проникновение, SQL инъекции и пр.) </br>
-5. Приёмочное тестирование (Acceptance testing) (в компании это было как более расширенная </br> 
-версия СМОК, проверка основного функционала продукта) </br>
+4. Приёмочное тестирование (Acceptance testing) (в компании это было как более расширенная версия СМОК, проверка основного функционала продукта) </br>
+5. Тестирование безопасности (немного: тестирование на проникновение, SQL инъекции и пр.) </br>
 </p>
 <p>
 • Нефункциональное </br>
@@ -232,12 +251,11 @@
 — Понимание общих этапов разработки ПО и роли тестирования на этих этапах (была Каскадная модель англ. waterfall model)
 </p>
 <p>
-— Умение четко и понятно описывать различные проблемы и недоработки в системе, </br>
-а также найденные дефекты ПО как в письменной, так и в устной форме
+— Умение четко и понятно описывать различные проблемы и недоработки в системе, а также найденные дефекты ПО как в письменной, так и в устной форме
 </p>
 <p>
-— Умение при выявлении предполагаемого дефекта и некорректного поведения системы </br> 
-проводить глубокий анализ возникшей проблемы (локализация дефектов и недоработок)
+— Умение при выявлении предполагаемого дефекта и некорректного поведения системы проводить </br> 
+глубокий анализ возникшей проблемы (локализация дефектов и недоработок)
 </p>
 <p>
 — Опыт работы с базами данных (MS SQL Server, PostgreSQL)
@@ -395,12 +413,12 @@
     хобби (vb, java, SQL, html/css, js и др.). Увлекаюсь различными видами спорта, боевыми единоборствами, <br/>
     кино, музыкой, книгами, играми, АСМР и много чем другим, также люблю различные каналы на YouTube и Telegram.</p>
     <p><strong><big>Вот моё фото:</big></strong></p>
-    <img border="12" src="https://hhcdn.ru/photo/582848647.jpeg?t=1598079522&h=xAO78zGB4DMdfeKYs-DGFQ">
+    <img border="12" alt="здесь должно быть моё фото" src="C:\Users\User\Documents\Фото\i.jpg"
     <hr/>
 </div>
 <!-- My hobbies + foto section end -->
 
-<script>
+<script type = "text/javascript">
 
     let page = document.querySelector('.page');
     let button = document.querySelector('.b1');
@@ -408,11 +426,21 @@
     button.onclick = function() {
     page.classList.toggle('light-theme');
     page.classList.toggle('dark-theme');
-    console.log('Кнопка нажата!');
-    };
+    console.log('The button is pressed!'); };
+
+    function clickPress(event) {
+    if (event.keyCode == 13) {
+    button.onclick();
+    page.classList.toggle('light-theme');
+    page.classList.toggle('dark-theme');
+    console.log("The button Enter is pressed!") }; };
+
+    try {
+    $(document).ready(function() {
+    clickPress(event) }); } 
+    catch (ReferenceError) { 
+    console.log('Catch Error!'); }
 
 </script>
-
 </body>
-
 </html> 
