@@ -1,6 +1,6 @@
 # Night_stranger_12
 + Any scripts in code on Python or Java
-+ Else scripts JS and HTML/CSS documents
++ Else scripts JS and HTML/CSS documents 1
 + Else many programs on Small Basic 
 + Else also any files (.jar) and (.bat)
 + Else little programs on C++
