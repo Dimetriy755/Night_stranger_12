@@ -23,14 +23,32 @@ EndSub
 
 'Подпрограмма (вызываемая процедура) для обработки исключения (при умножении на большие числа)
 Sub Exception3
-  If operation = ("*") And X >= 1000000000000000 And Y >= 1000000000000000 Then
+   If operation = ("*") And X >= 1000000000000000 And Y >= 1000000000000000 Then
    TextWindow.ForegroundColor = "Red" 'цвет символов 
    TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
    TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
    TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
    TextWindow.ForegroundColor = "White" 'цвет символов
    TextWindow.WriteLine(" --------------------------------------------------")
-  EndIf
+ Else
+   If operation = ("*") And X >= 10000000000000000000000000000 And Y <> 0 Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+ Else
+   If operation = ("*") And X <> 0 And Y >= 10000000000000000000000000000 Then
+   TextWindow.ForegroundColor = "Red" 'цвет символов 
+   TextWindow.WriteLine(" Sorry, but your calculation result is too HUGE!!!!")
+   TextWindow.WriteLine(" This number is even more than one octillion(10^27)") '1 октиллион (octillion - 10 ^ 27)
+   TextWindow.WriteLine(" Сalculator on Small Basic is not ready for this!!!")
+   TextWindow.ForegroundColor = "White" 'цвет символов
+   TextWindow.WriteLine(" --------------------------------------------------")
+ EndIf
+ EndIf
+ EndIf
 EndSub
 
 'Заключение в цикл 
@@ -110,8 +128,20 @@ If operation = ("*") And X < 1000000000000000 And Y < 1000000000000000 Then
    result = X * Y
    TextWindow.WriteLine(" Operation - [*] Result is - " + result)
    TextWindow.WriteLine(" --------------------------------------------------")
+ Else
+   If operation = ("*") And X < 10000000000000000000000000000 And Y <> 0 Then
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
+ Else
+   If operation = ("*") And X <> 0 And Y < 10000000000000000000000000000 Then
+   result = X * Y
+   TextWindow.WriteLine(" Operation - [*] Result is - " + result)
+   TextWindow.WriteLine(" --------------------------------------------------")
    Else
    Exception3()
+   EndIf
+   EndIf
    EndIf
    
 If operation = "^" Then

@@ -20,13 +20,14 @@ TextWindow.Write(" X = ")
 X = TextWindow.ReadNumber() 
 
 ' Формула расчета доли в процентном отношении (Расчет)
-P = X / Y  * 100 
+P = X / Y * 100 
+P = Math.Round(P)
 
 ' Вывод результата
 TextWindow.WriteLine("")
 TextWindow.WriteLine(" P% = " + P + "%" )
 TextWindow.WriteLine("")
-TextWindow.WriteLine(" Доля числа X = " + X + " от полного числа Y = " + Y + " будет составлять " + P + "%")
+TextWindow.WriteLine(" Доля (число X = " + X + ") от полного числа (Y = " + Y + ") будет составлять " + P + "%")
 TextWindow.WriteLine("")
 
 
