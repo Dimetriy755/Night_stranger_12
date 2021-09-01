@@ -409,7 +409,7 @@ while 1 == 1:
                     print(Fore.YELLOW + " You entered a string characters or whitespaces, but you need numeric!")
                     continue
                 math_expression = (math_expression).replace(" ","")
-                result = round(eval(math_expression),7) 
+                result = round(eval(math_expression),2) 
                 print("")
                 print(" Result of %s is %s" % (math_expression, result))
                 print(" ------------------------------------------------------------")
