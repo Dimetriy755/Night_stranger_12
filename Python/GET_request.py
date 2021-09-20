@@ -1,4 +1,8 @@
 import requests
+import time
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 while 1 == 1:
     try:
@@ -18,6 +22,8 @@ response = requests.request("GET", url, headers=headers, data=payload)
 
 print(response.text.encode('utf8'))
 print("Status Code:", response.status_code)
+
+time.sleep(100)
 
 
 
