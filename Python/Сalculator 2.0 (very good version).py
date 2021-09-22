@@ -279,9 +279,18 @@ while 1 == 1:
                 continue
 
         # getting the sign of the operation
-        print("")
-        operation = str(input(" Enter operation: "))
-
+        while 1 == 1:
+            print("")
+            operation = str(input(" Enter operation: "))
+            if (operation == ("+")) and (operation == ("-")) and (operation == ("*")) and (operation == ("^")) and (operation == ("/")) and (operation == ("%")) and (operation == ("//")):
+                break
+            elif (operation != ("+")) and (operation != ("-")) and (operation != ("*")) and (operation != ("^")) and (operation != ("/")) and (operation != ("%")) and (operation != ("//")):
+                print("")
+                print(Fore.YELLOW + " Operation not recognized, enter operation again.")
+                continue
+            else:
+                break
+            
         # getting a variable «‎Y»‎ and catching an input error in the loop
         while 1 == 1:
             try:
@@ -379,7 +388,7 @@ while 1 == 1:
                     C = os.system('cls')
             else:
                 print("")
-                print(Fore.YELLOW + " Operation not recognized[?] please try all over again.")
+                print(Fore.YELLOW + " Operation not recognized, please try all over again.")
                 print(Fore.YELLOW + " Look in the menu above on instructions for operations.")
                 print(" ------------------------------------------------------------")
                 C = str(input(" Please enter 'CLS' to clear the screen: "))
@@ -388,8 +397,9 @@ while 1 == 1:
             print("")
             print(Fore.RED + " Your result is too HUGE this number is much higher than the last")
             print(Fore.RED + " number that has a name in science as quadragintillion (1E123)!!!")
+            print("")
             print(Fore.GREEN + " Python calculator is not ready for this, we apologize¯\_{•_•}_/¯")
-            print(" ------------------------------------------------------------")
+            print(" ----------------------------------------------------------------")
             C = str(input(" Please enter 'CLS' to clear the screen: "))
             C = os.system('cls')
             continue
