@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "4c3b54c4-4e74-4d38-943c-803626c7e061",
+		"name": "ApiLeads Advert Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create-action",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"api_key\": \"502e4a16930e414107ee22b6198c578f\",\n    \"lead_id\": 77504\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/create-action",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"create-action"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-export-status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"api_key\": \"502e4a16930e414107ee22b6198c578f\",\n    \"lead_id\":73343,\n    \"sale_status_advert\": \"newStatus\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/update-export-status",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"update-export-status"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://advert.apileads.tech"
+		}
+	]
+}

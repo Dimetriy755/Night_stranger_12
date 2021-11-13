@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "37554ff5-8007-4f20-9ecb-3ae04e31c9ba",
+		"name": "ApiLeads Advert Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create-action (formData)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "api_key",
+							"value": "502e4a16930e414107ee22b6198c578f",
+							"type": "text"
+						},
+						{
+							"key": "lead_id",
+							"value": "009e9a8a6450cb5ce4b53ac75674fe78",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://advert.apileads.tech/api/create-action",
+					"protocol": "http",
+					"host": [
+						"advert",
+						"apileads",
+						"tech"
+					],
+					"path": [
+						"api",
+						"create-action"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-export-status (formData)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "api_key",
+							"value": "502e4a16930e414107ee22b6198c578f",
+							"type": "text"
+						},
+						{
+							"key": "lead_id",
+							"value": "009e9a8a6450cb5ce4b53ac75674fe78",
+							"type": "text"
+						},
+						{
+							"key": "sale_status_advert",
+							"value": "newStatus",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://advert.apileads.tech/api/update-export-status",
+					"protocol": "http",
+					"host": [
+						"advert",
+						"apileads",
+						"tech"
+					],
+					"path": [
+						"api",
+						"update-export-status"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://advert.apileads.tech"
+		}
+	]
+}
