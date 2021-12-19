@@ -1,1 +1,0 @@
-cmd /k java -jar "Calculator 2.1.7.jar"
