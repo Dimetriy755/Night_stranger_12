@@ -922,7 +922,7 @@ color: forestgreen;
 background-color: white; }
 
 /*========================================================================================================================*/
-/* Calculating proportion of the total number as a ratio percentage */
+/* Finding a percentage of a number */
 
 /* extra-box for first extra number */ 
 #number1 {
@@ -1029,7 +1029,7 @@ color: red;
 background-color: white; }
 
 /*========================================================================================================================*/
-/* Calculating number as a ratio percentage from another number */
+/* How many percent is the number of the number */
 
 /* extra number-1 */ 
 #number3 {
@@ -1881,7 +1881,7 @@ onkeypress="clickPress5(event)" placeholder="enter number" ng-paste="preventPast
 </div>
 
 <!----------------------------------------------------------------------------------------------------------------------->
-<!-- Calculating proportion of the total number as a ratio percentage -->
+<!-- Finding a percentage of a number -->
 
 <!-- First extra number (Extra-box) -->
 <div id="number1" title="Enter first number Y" style="display:none;" valign="top">
@@ -1912,7 +1912,7 @@ onkeypress="clickPress8(event)" placeholder="P% = " ng-paste="preventPaste(event
 </div>
 
 <!----------------------------------------------------------------------------------------------------------------------->
-<!-- Calculating number as a ratio percentage from another number -->
+<!-- How many percent is the number of the number -->
 
 <!-- extra number-1 (extra-box1) -->
 <div id="number3" title="Enter first number Y" style="display:none;" valign="top">
@@ -2588,7 +2588,7 @@ $("#alert_dialog5").hide();
 window.location.reload(); }); }); }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
-// Calculating proportion of the total number as a ratio percentage 
+// How many percent is the number of the number 
 
 // extra number-1 (logic for extra-box1)
 function extra_number_1() {   
@@ -2715,7 +2715,7 @@ $('#number3').show(function() {
 $('.ui-dialog').css({'background-color' : 'maroon', 'box-shadow': '-25px 16px 10px maroon'}); }) }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
-// Calculating number as a ratio percentage from another number
+// Finding a percentage of a number
 
 // First extra number (logic for extra-box)
 function first_extra_number() {   
@@ -3195,6 +3195,13 @@ $("#alert_dialog8").hide(); }); }); }
     $('#Number_Box3').on("cut copy paste",function(event) {
     event.preventDefault(); 
     console.log('Catch the text insertion!-[11]'); }); }); 
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+// Tracking an event such as a key press - [esc] (escape)
+
+    $(document).keyup(function(e) {
+    if (e.keyCode == 27) { window.location.reload(); }
+});
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 </script>
 </body>
