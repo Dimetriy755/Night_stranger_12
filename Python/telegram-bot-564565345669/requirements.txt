@@ -1,0 +1,4 @@
+PyAutoGUI==0.9.52
+pyowm==3.3.0
+pyTelegramBotAPI==4.5.0
+
