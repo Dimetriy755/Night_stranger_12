@@ -119,7 +119,8 @@ class BuyLeads(unittest.TestCase):
 
             try:
                 # write script
-                script = "alert('10 - секунд вам даётся на проверку всех параметров вашего заказа! Если что-то пошло не так, то остановите выполнение программы.')"
+                script = """alert(`10 - секунд вам даётся на проверку всех параметров вашего заказа!
+            Если что-то пошло не так, то остановите выполнение программы.`)"""
                 # generate a alert via javascript
                 driver.execute_script(script)
                 time.sleep(10)
@@ -147,7 +148,9 @@ class BuyLeads(unittest.TestCase):
                 if element is True:
                     try:
                         # write script
-                        script = "alert('Если вы нажали кнопку - [Подтвердить], то ваш заказ уже был создан и вы видите его ID. Вам осталось только оплатить ваш заказ, сейчас он находится в статусе: «Ожидает оплаты».')"
+                        script = """alert(`Если вы нажали кнопку - [Подтвердить], то ваш заказ уже был
+                    создан и вы видите его ID. Вам осталось только оплатить ваш
+                    заказ, сейчас он находится в статусе: «Ожидает оплаты».`)"""
                         # generate a alert via javascript
                         driver.execute_script(script)
                         time.sleep(10)
