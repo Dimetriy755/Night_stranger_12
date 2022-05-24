@@ -1,0 +1,8 @@
+1 - first check = error! (quantity does not match stated)
+2 - second check = done! (order has been created and product is in basket)
+3 - third check = done! (product was remove from basket / same quantity)
+
+What values were used:
+product = Nissan NS-3 CVT, 5ë
+quantity-1 = 2 (first check)
+quantity-2 = 1 (third check)
