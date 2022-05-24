@@ -262,9 +262,9 @@ Error! Error! Такого не должно быть, данный тест н�
             # 4 - fourth check (that again, counter was removed)
             while 1==1:
         
-                counter1 = check_exists_by_xpath("//span[@class='tsCaptionBold l0c']")
+                counter_1 = check_exists_by_xpath("//span[@class='tsCaptionBold l0c']")
 
-                if counter1 is False:
+                if counter_1 is False:
                     try:
                         # write script
                         script = """alert(`После нажатия btn - [delete] счётчик для количества товара пропал.
@@ -413,9 +413,9 @@ Error! Error! Такого не должно быть, данный тест н�
             # 6 - sixth check (that again-again, counter was removed)
             while 1==1:
         
-                counter1 = check_exists_by_xpath("//span[@class='tsCaptionBold l0c']")
+                counter_2 = check_exists_by_xpath("//span[@class='tsCaptionBold l0c']")
 
-                if counter1 is False:
+                if counter_2 is False:
                     try:
                         # write script
                         script = """alert(`После нажатия btn - [delete] счётчик для количества товара пропал.
