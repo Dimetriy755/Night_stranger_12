@@ -3,7 +3,9 @@ import sys
 import traceback
 from time import sleep
 import unittest, time, re
+from colorama import init
 from selenium import webdriver
+from colorama import Fore, Back, Style
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -18,6 +20,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
+
+# use Colorama to make Termcolor work on Windows too
+init (autoreset = True)
 
 sys.tracebacklimit = 0
 options = webdriver.ChromeOptions() 
@@ -34,7 +39,7 @@ options = webdriver.ChromeOptions()
 
 # use for bat:
 # echo.
-# echo..START order-order
+# echo..START: order-order.py
 # CMD /c > ./my_test-order_results.txt "C:\Users\User\Desktop\2\test-automation (Selenium+Python)\0\order-order.py"
 
 s = Service('C:\\chromedriver\\chromedriver.exe')
@@ -79,9 +84,11 @@ class ProductStore(unittest.TestCase):
 
             # явное ожидание (когда нужно дождаться выполнения неких условий прежде чем идти дальше)
             wait = WebDriverWait(driver, 5)
+            
             # product name + URL
-            product = str("Nissan NS-3 CVT, 5л")
+            product = str("NISSAN  NS-2 CVT Fluid, 5л")
             driver.get("https://www.ozon.ru/")
+            
             # how to deploy screen
             driver.maximize_window()
             time.sleep(2)
@@ -114,7 +121,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # highlighting - [search] + [enter]
-            search = driver.find_element(By.CLASS_NAME,"z1u")
+            search = driver.find_element(By.CLASS_NAME,"wv8")
             driver.execute_script("arguments[0].scrollIntoView();", search)
             highlight(search)
             ActionChains(driver).key_down(Keys.ENTER).perform()
@@ -127,27 +134,46 @@ class ProductStore(unittest.TestCase):
 
             # down + down + down
             actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 5)
+            actions.send_keys(Keys.ARROW_DOWN * 8)
             actions.perform()
             time.sleep(2)
 
             # select necessary check-box
-            check_box = driver.find_element(By.XPATH,"//div[@class='z0t']//span[contains(text(),'NISSAN')]")
+            check_box = driver.find_element(By.XPATH,"//div[@class='u7v']//span[contains(text(),'NISSAN')]")
             highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
+            time.sleep(2)
+            
+            # down + down + down
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.perform()
             time.sleep(2)
 
             # select necessary toggle-switch (two elements are specially selected)
             toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
             highlight(toggle)
             time.sleep(2)
-            driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-a6b']").click()
+            driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-ba6']").click()
             time.sleep(2)
 
             # select necessary toggle-switch
             # другой вариант как можно выполнить это 
             # driver.get("https://www.ozon.ru/search/?from_global=true&isdiscount=t&text=Nissan+NS-3+CVT%2C+5л")
+            
+            # down + down + down
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.perform()
+            time.sleep(2)
+
+            # select another one necessary toggle-switch (here needed two elements)
+            toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
+            highlight(toggle_1)
+            time.sleep(2)
+            driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']//div[@class='ui-ba6']").click()
+            time.sleep(2)
 
             # down + down + down
             downs = ActionChains(driver) 
@@ -160,13 +186,19 @@ class ProductStore(unittest.TestCase):
             highlight(add)
             driver.execute_script("arguments[0].click();", add)
             time.sleep(2)
-
-            # button add more - [+] (XPATH - very difficult)
-            # plus = driver.find_element(by=By.XPATH, value="(.//*[normalize-space(text()) and normalize-space(.)='Масло трансмиссионное Nissan NS-3 CVT, 5л'])[2]/following::*[name()='svg'][2]")
+            
+            # button add more - [+] (XPATH - very difficult and was found only with Katalin Recorder)
+            plus = driver.find_element(by=By.XPATH, value="(.//*[normalize-space(text()) and normalize-space(.)='−44%'])[1]/following::*[name()='svg'][3]")
+            highlight(plus)
+            plus.click()
+            time.sleep(2)
+            
+            # button add more - [+] (CSS SELECTOR - if you go another way, but then there will be no highlighting of the element)
+            # plus = driver.find_element(by=By.CSS_SELECTOR, value="#layoutPage > div.gy4 > div.container.gy5 > div:nth-child(2) > div:nth-child(2) > div.xi1 > div > div > div > div.iv0.v0i > div.i1v > div.iu5.i6u > div > div > div:nth-child(3) > div > button > span > svg > path")
             # highlight(plus)
             # plus.click()
             # time.sleep(2)
-
+            
             """ Далее идёт своего рода защита от несанкционированного попадания скрипта в пустую корзину, т. к.
             далее будет иметь место проверка на наличие в корзине определённого товара по его html-элементу, то
             возможен и такой вариант при котором, этот html-элемент всё же может присутствовать в корзине в виде
@@ -175,16 +207,19 @@ class ProductStore(unittest.TestCase):
             то и дальше скрипт никуда более не пойдёт и поэтому поводу можно будет уже больше не переживать. """
 
             # quantity highlighting (1)
-            quantity = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold l0c']")
-            highlight(quantity)
+            quantity_1 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold cl6']")
+            highlight(quantity_1)
             time.sleep(2)
 
             # checking that product is in basket by necessary quantity
             # 1 - first check (checking quantity)
-            if quantity.text == "2":
-                print("1 - first check = done! (necessary quantity product is in basket)")
+            if quantity_1.text == "2":
+                print("")
+                print("")
+                print(Fore.GREEN + "1 - first check  = done! (necessary quantity product is in basket)")
             else:
-                print("1 - first check = error! (quantity does not match stated)")
+                print("")
+                print(Fore.RED + "1 - first check  = error! (quantity does not match stated)")
 
             # button - [basket] + highlighting
             basket = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Корзина')]")
@@ -217,10 +252,12 @@ class ProductStore(unittest.TestCase):
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                     except UnexpectedAlertPresentException as e:
                         pass
-                    print("2 - second check = done! (order has been created and product is in basket)")
+                    print("")
+                    print(Fore.GREEN + "2 - second check = done! (order has been created and product is in basket)")
                     break
                 else:
-                    print("2 - second check = error! (order has not been created and product is not in basket)")
+                    print("")
+                    print(Fore.RED + "2 - second check = error! (order has not been created and product is not in basket)")
                     break
 
             # clicking on combo-box + highlighting + select
@@ -228,43 +265,51 @@ class ProductStore(unittest.TestCase):
             highlight(combo_box)
             combo_box.click()
             time.sleep(2)
-            # ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
+            # ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # alternative (2)
             # time.sleep(1)
-            ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
+            # ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # alternative (2)
+            # time.sleep(1)
+            ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # (1)
             time.sleep(1)
-            ActionChains(driver).key_down(Keys.ARROW_UP).perform()
+            ActionChains(driver).key_down(Keys.ARROW_UP).perform() # (1)
             time.sleep(1)
-            ActionChains(driver).key_down(Keys.ENTER).perform()
+            ActionChains(driver).key_down(Keys.ENTER).perform() # (1)
             time.sleep(2)
 
             # quantity highlighting (2)
-            quantity1 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold l0c']")
-            highlight(quantity1)
+            quantity_2 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold cl6']")
+            highlight(quantity_2)
             time.sleep(2)
 
             # checking that product was added in basket (or was remove from basket)
             # 3 - third check (changing quantity in fact)
-            if quantity1.text == "1":
-                print("3 - third check = done! (product was remove from basket / same quantity)")
+            if quantity_2.text == "1":
                 print("")
-                print("What values were used:")
+                print(Fore.GREEN + "3 - third check  = done! (product was remove from basket / same quantity)")
+                print("")
+                print("")
+                print(Fore.RESET + "What values were used:")
                 print(f"product = {product}") 
                 print("quantity-1 = 2 (first check)")
                 print("quantity-2 = 1 (third check)")
-            # elif quantity1.text == "3":
-            #     print("3 - third check = done! (product was added from in basket)")
-            #     print("")
-            #     print("What values were used:")
-            #     print(f"product = {product}") 
-            #     print("quantity-1 = 2 (first check)")
-            #     print("quantity-2 = 1 (third check)")
+            elif quantity_2.text == "3":
+                print("")
+                print(Fore.GREEN + "3 - third check  = done! (product was added from in basket / alternative)")
+                print("")
+                print("")
+                print(Fore.RESET + "What values were used:")
+                print(f"product = {product}") 
+                print("quantity-1 = 2 (first check)")
+                print("quantity-2 = 3 (third check)")
             else:
-                print("3 - third check = error! (quantity does not match stated)")
                 print("")
-                print("What values were used:")
-                print(f"product = {product}") 
-                print("quantity-1 = 2 (first check)")
-                print("quantity-2 = 1 (third check)")
+                print(Fore.RED + "3 - third check  = error! (quantity does not match stated)")
+                print("")
+                print("")
+                print(Fore.RESET + "What values were used:")
+                print(f"product = {product}")
+                print("it is expected that quantity-1 = 2 (first check)")
+                print(f"it is expected that quantity-2 = 1 or 3,\nbut quantity-2 = {quantity_2.text} and it error (third check)")
 
             # transition buying product
             execute = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Перейти к оформлению')]")

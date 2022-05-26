@@ -192,6 +192,7 @@ class ProductStore(unittest.TestCase):
             # 1 - first check (checking quantity)
             if quantity.text == "1":
                 print("")
+                print("")
                 print(Fore.GREEN + "1 - first check  = done! (necessary quantity product is in basket)")
             else:
                 print("")
@@ -492,6 +493,7 @@ Error! Error! Такого не должно быть, данный тест н�
                         pass
                     print("")
                     print(Fore.RED + "6 - sixth check  = error! (counter was not removed)")
+                    print(Fore.RESET + "")
                     break
         
             ############################################################################################################################
