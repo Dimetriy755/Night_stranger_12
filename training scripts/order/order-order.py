@@ -187,7 +187,7 @@ class ProductStore(unittest.TestCase):
             driver.execute_script("arguments[0].click();", add)
             time.sleep(2)
             
-            # button add more - [+] (XPATH - very difficult and was found only with Katalin Recorder)
+            # button add more - [+] (XPATH - very difficult and was found only with Katalon Recorder)
             plus = driver.find_element(by=By.XPATH, value="(.//*[normalize-space(text()) and normalize-space(.)='−44%'])[1]/following::*[name()='svg'][3]")
             highlight(plus)
             plus.click()
