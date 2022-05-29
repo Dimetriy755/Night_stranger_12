@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import sys
 from tkinter import E
 import keyboard
@@ -42,7 +42,7 @@ class BuyLeads(unittest.TestCase):
             def check_exists_by_xpath(xpath):
                 try:
                     wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
-                except NoSuchElementException as e: return False
+                except (NoSuchElementException, TimeoutException) as e: return False
                 return True
 
             # brand selection
@@ -216,21 +216,29 @@ class BuyLeads(unittest.TestCase):
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
+        except (NoSuchElementException, TimeoutException) as e: return False
         return True
-
-    def exception_handler(exception_type, exception, traceback):
-            # All your trace are belong to us!
-            # your format
-            print(exception_type.__name__, exception)
-            
-    sys.excepthook = exception_handler   
+    
+    def is_alert_present(self):
+        try: self.driver.switch_to_alert()
+        except (NoSuchElementException, TimeoutException) as e: return False
+        return True
+    
+    def close_alert_and_get_its_text(self):
+        try:
+            alert = self.driver.switch_to_alert()
+            alert_text = alert.text
+            if self.accept_next_alert:
+                alert.accept()
+            else:
+                alert.dismiss()
+            return alert_text
+        finally: self.accept_next_alert = True
     
     def tearDown(self):
-        self.driver.close()
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
+        # time.sleep(14)
 
 if __name__ == "__main__":
     unittest.main()
-
