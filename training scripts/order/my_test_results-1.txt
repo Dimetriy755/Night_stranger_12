@@ -1,0 +1,12 @@
+
+Error! The requested HTML-element was not found on the HTML-page!
+
+EXCEPTION IN: =>
+PATH / FILE: C:\Users\User\Desktop\2\my_experiments\0-1.py =>
+LINE NUMBER: 137 =>
+VARIABLE / ELEMENT: search = driver.find_element(By.CLASS_NAME,"wv8")
+
+Exception type: NoSuchElementException
+
+Exception message: no such element: Unable to locate element: {"method":"css selector","selector":".wv8"}
+  (Session info: chrome=102.0.5005.63)
