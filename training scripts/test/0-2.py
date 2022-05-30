@@ -226,7 +226,9 @@ class ProductStore(unittest.TestCase):
         # FUNCTION STARTING
         # first starting
         test_order() 
-            
+        
+        ####################################################################################################################################################
+        # ALL MAIN CHECKS START    
         try:  
             # driver again    
             driver = self.driver
