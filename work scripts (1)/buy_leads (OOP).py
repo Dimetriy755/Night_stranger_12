@@ -1,11 +1,15 @@
 ﻿# -*- coding: utf-8 -*-
+from asyncio import log
+import linecache
 import sys
 from tkinter import E
 import keyboard
 from time import sleep
 from pathlib import Path
 import unittest, time, re 
+from colorama import init
 from selenium import webdriver
+from colorama import Fore, Back, Style
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -22,23 +26,38 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 options = webdriver.ChromeOptions() 
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 s = Service('C:\\chromedriver\\chromedriver.exe')
+sys.tracebacklimit = 0
+init (autoreset = True) # use Colorama to make Termcolor work on Windows too
 
 class BuyLeads(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome(service=s, options=options)
-        self.driver.implicitly_wait(2) # for so many seconds, he searches for the HTML element
+        self.driver.implicitly_wait(4) # for so many seconds, he searches for the HTML element
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
+        
+    # method (function) for printing filename, linenumber,
+    # line itself and exception descrpition (if exception)
+    def PrintException(self):
+        exc_type, exc_obj, tb = sys.exc_info()
+        f = tb.tb_frame
+        lineno = tb.tb_lineno
+        filename = f.f_code.co_filename
+        linecache.checkcache(filename)
+        line = linecache.getline(filename, lineno, f.f_globals)
+        # print("")
+        print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
     
     def test_buy_leads(self):
         try:
             driver = self.driver
             # Go to the page to buy leads
             driver.get("https://advert.apileads.tech/lead/")
-            wait = WebDriverWait(driver, 10)
+            wait = WebDriverWait(driver, 4)
             time.sleep(1)
     
+            # function used for checking is there element on page
             def check_exists_by_xpath(xpath):
                 try:
                     wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
@@ -136,9 +155,12 @@ class BuyLeads(unittest.TestCase):
             # checking that the order has been created
             # 1 - first check
             if driver.find_element(by=By.XPATH, value="//button[contains(text(),'Оплатить')]").text == "Оплатить":
-                print("1 - first check = done! (order has been created)")
+                print("----------------------------------------------------------------------")
+                print("")
+                print(Fore.GREEN + "1 - first check  = done! (order has been created)")
             else:
-                print("1 - first check = error!")
+                print("")
+                print(Fore.RED + "1 - first check  = error!")
         
             # 2 - second check
             while 1==1:
@@ -157,10 +179,12 @@ class BuyLeads(unittest.TestCase):
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                     except UnexpectedAlertPresentException as e:
                         pass
-                    print("2 - second check = done! (order has been created)")
+                    print("")
+                    print(Fore.GREEN + "2 - second check = done! (order has been created)")
                     break
                 else:
-                    print("2 - second check = error!")
+                    print("")
+                    print(Fore.RED + "2 - second check = error!")
                     break
 
             # switching payment
@@ -176,9 +200,11 @@ class BuyLeads(unittest.TestCase):
             # all the necessary checks are on the last page (order payment verification)
             # 3 - third check
             if driver.find_element(by=By.XPATH, value="//*[contains(text(),'Заказ оплачен')]").text == "Заказ оплачен":
-                print("3 - third check = done! (order is paid)")
+                print("")
+                print(Fore.GREEN + "3 - third check  = done! (order is paid)")
             else:
-                print("3 - third check = error!")
+                print("")
+                print(Fore.RED + "3 - third check  = error!")
         
             # 4 - fourth check
             while 1==1:
@@ -195,24 +221,35 @@ class BuyLeads(unittest.TestCase):
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                     except UnexpectedAlertPresentException as e:
                         pass
-                    print("4 - fourth check = done! (order is paid)")
+                    print("")
+                    print(Fore.GREEN + "4 - fourth check = done! (order is paid)")
                     break
                 else:
-                    print("4 - fourth check = error!")
+                    print("")
+                    print(Fore.RED + "4 - fourth check = error!")
                     break
 
-        except (NoSuchElementException, TimeoutException):
+        except (NoSuchElementException, TimeoutException) as ex:
             try:
                 # write script
-                script = "alert('Error! The requested element was not found on the HTML-page!')"
+                script = "alert('Error! The requested HTML-element was not found on the HTML-page!')"
                 # generate a alert via javascript
                 driver.execute_script(script)
                 time.sleep(4)
                 ActionChains(driver).key_down(Keys.ENTER).perform()
             except UnexpectedAlertPresentException as e:
                 pass
+            print("----------------------------------------------------------------------")
+            print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
+            print(Fore.RESET + "")
+            self.PrintException()
             print("")
-            print("Error! The requested element was not found on the HTML-page!")
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+            print("Exception type: %s" %ex_type.__name__)
+            print("")
+            print(f"Exception message: {ex.msg}")
+            # print("")
+            # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -238,7 +275,7 @@ class BuyLeads(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-        # time.sleep(14)
 
 if __name__ == "__main__":
     unittest.main()
+

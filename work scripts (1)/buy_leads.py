@@ -1,11 +1,15 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
+from asyncio import log
+import linecache
 import sys
 from tkinter import E
 import keyboard
 from time import sleep
 from pathlib import Path
 import unittest, time, re 
+from colorama import init
 from selenium import webdriver
+from colorama import Fore, Back, Style
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -19,30 +23,38 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import UnexpectedAlertPresentException
 
-def exception_handler(exception_type, exception, traceback):
-    # All your trace are belong to us!
-    # your format
-    print(exception_type.__name__, exception)
-
-sys.excepthook = exception_handler
-
 options = webdriver.ChromeOptions() 
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 s = Service('C:\\chromedriver\\chromedriver.exe')
 driver = webdriver.Chrome(service=s, options=options)
-driver.implicitly_wait(2) # for so many seconds, he searches for the HTML element
+driver.implicitly_wait(4) # for so many seconds, he searches for the HTML element
 base_url = "https://www.google.com/"
 verificationErrors = []
 accept_next_alert = True
-wait = WebDriverWait(driver, 10)
+wait = WebDriverWait(driver, 4)
+sys.tracebacklimit = 0
+init (autoreset = True) # use Colorama to make Termcolor work on Windows too
 
 try:
 
+    # function used for checking is there element on page
     def check_exists_by_xpath(xpath):
         try:
             wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
-        except NoSuchElementException as e: return False
+        except (NoSuchElementException, TimeoutException) as e: return False
         return True
+    
+    # function for printing filename, linenumber, line
+    # itself and exception descrpition (if exception)
+    def PrintException():
+        exc_type, exc_obj, tb = sys.exc_info()
+        f = tb.tb_frame
+        lineno = tb.tb_lineno
+        filename = f.f_code.co_filename
+        linecache.checkcache(filename)
+        line = linecache.getline(filename, lineno, f.f_globals)
+        # print("")
+        print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
 
     # Go to the page to buy leads
     driver.get("https://advert.apileads.tech/lead/")
@@ -139,9 +151,12 @@ try:
     # checking that the order has been created
     # 1 - first check
     if driver.find_element(by=By.XPATH, value="//button[contains(text(),'Оплатить')]").text == "Оплатить":
-        print("1 - first check = done! (order has been created)")
+        print("----------------------------------------------------------------------")
+        print("")
+        print(Fore.GREEN + "1 - first check  = done! (order has been created)")
     else:
-        print("1 - first check = error!")
+        print("")
+        print(Fore.RED + "1 - first check  = error!")
    
     # 2 - second check
     while 1==1:
@@ -160,10 +175,12 @@ try:
                 ActionChains(driver).key_down(Keys.ENTER).perform()
             except UnexpectedAlertPresentException as e:
                 pass
-            print("2 - second check = done! (order has been created)")
+            print("")
+            print(Fore.GREEN + "2 - second check = done! (order has been created)")
             break
         else:
-            print("2 - second check = error!")
+            print("")
+            print(Fore.RED + "2 - second check = error!")
             break
 
     # switching payment
@@ -179,9 +196,11 @@ try:
     # all the necessary checks are on the last page (order payment verification)
     # 3 - third check
     if driver.find_element(by=By.XPATH, value="//*[contains(text(),'Заказ оплачен')]").text == "Заказ оплачен":
-        print("3 - third check = done! (order is paid)")
+        print("")
+        print(Fore.GREEN + "3 - third check  = done! (order is paid)")
     else:
-        print("3 - third check = error!")
+        print("")
+        print(Fore.RED + "3 - third check  = error!")
    
     # 4 - fourth check
     while 1==1:
@@ -198,25 +217,35 @@ try:
                 ActionChains(driver).key_down(Keys.ENTER).perform()
             except UnexpectedAlertPresentException as e:
                 pass
-            print("4 - fourth check = done! (order is paid)")
+            print("")
+            print(Fore.GREEN + "4 - fourth check = done! (order is paid)")
             break
         else:
-            print("4 - fourth check = error!")
+            print("")
+            print(Fore.RED + "4 - fourth check = error!")
             break
 
-except (NoSuchElementException, TimeoutException):
+except (NoSuchElementException, TimeoutException) as ex:
     try:
         # write script
-        script = "alert('Error! The requested element was not found on the HTML-page!')"
+        script = "alert('Error! The requested HTML-element was not found on the HTML-page!')"
         # generate a alert via javascript
         driver.execute_script(script)
         time.sleep(4)
         ActionChains(driver).key_down(Keys.ENTER).perform()
     except UnexpectedAlertPresentException as e:
         pass
+    print("----------------------------------------------------------------------")
+    print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
+    print(Fore.RESET + "")
+    PrintException()
     print("")
-    print("Error! The requested element was not found on the HTML-page!")
+    ex_type, ex_value, ex_traceback = sys.exc_info()
+    print("Exception type: %s" %ex_type.__name__)
+    print("")
+    print(f"Exception message: {ex.msg}")
+    # print("")
+    # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
 
-driver.close()
 driver.quit()
 

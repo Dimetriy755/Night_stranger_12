@@ -2,13 +2,7 @@ import sys
 import random
 import requests
 from requests.models import HTTPError
-
-def exception_handler(exception_type, exception, traceback):
-    # All your trace are belong to us!
-    # your format
-    print(exception_type.__name__, exception)
-
-sys.excepthook = exception_handler
+sys.tracebacklimit = 0
 
 url = "https://affiliate.apileads.tech/api/lead-create"
 requests.post(url)
@@ -19,7 +13,7 @@ while i <= 24:
 
     ip = ".".join(map(str, (random.randint(0, 255) for _ in range(4))))
 
-    #b = ['loan', 'general', 'crypto', 'loan', 'general', 'crypto', 'loan', 'general', 'crypto', 'loan', 'general', 'crypto']
+    # b = ['loan', 'general', 'crypto', 'loan', 'general', 'crypto', 'loan', 'general', 'crypto', 'loan', 'general', 'crypto']
 
     c = ['Mozilla/5.0 (Windows NT 6.3; WOW64)', 'AppleWebKit/537.36 (KHTML, like Gecko)', 'Chrome/94.0.4606.71 Safari/537.36']
 
@@ -52,5 +46,7 @@ while i <= 24:
 
     try:
         assert response.status_code == 200
+        assert response.status_code != 404
+        assert response.status_code != 500
     except (BaseException, HTTPError):
         print("Status Code not 200! Error! Status Code:", response.status_code)

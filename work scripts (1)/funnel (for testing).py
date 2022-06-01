@@ -33,11 +33,11 @@ options = webdriver.ChromeOptions()
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 s = Service('C:\\chromedriver\\chromedriver.exe')
 driver = webdriver.Chrome(service=s, options=options)
-driver.implicitly_wait(2) # for so many seconds, he searches for the HTML element
+driver.implicitly_wait(4) # for so many seconds, he searches for the HTML element
 base_url = "https://www.google.com/"
 verificationErrors = []
 accept_next_alert = True
-wait = WebDriverWait(driver, 10)
+wait = WebDriverWait(driver, 4)
 
 n = ['Alejandro','Ariel','Ignatius','Louis','Miguel','Pedro','Francisco','Gunnar','Bjorn','Ulf','Fyalar','Musasi','Takeshi','Yasuharu']
 l = ['Aksenov','Frolov','Tretyakov','Panov','Belousov','Abramov','Voronov','Saveliev','Yudin','Kabanov','Kalashnikov','Nikonov','Bulls']

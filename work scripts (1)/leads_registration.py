@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from dataclasses import field
 import sys
 import random
@@ -58,7 +58,7 @@ try:
     def check_exists_by_xpath(xpath):
         try:
             wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
-        except NoSuchElementException as e: return False
+        except (NoSuchElementException, TimeoutException) as e: return False
         return True
 
     ##################################################################################################

@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 from asyncio import log
 import linecache
+import os
 import sys
 import traceback
 from time import sleep
@@ -46,25 +47,33 @@ from selenium.common.exceptions import ElementClickInterceptedException
 # echo..START 0-2
 # CMD /c > ./my_test_results.txt "C:\Users\User\Desktop\2\my_experiments\0-2.py"
 
+s = Service('C:\\chromedriver\\chromedriver.exe')
+options = webdriver.ChromeOptions()
+
+# product name
+product = str('Трансмиссионное масло NISSAN CVT NS-2, 5л')
+
+# verifiable counter
+counter = str("//span[@class='tsCaptionBold o7c']")
+
+# removing extra traceback
+sys.tracebacklimit = 0
+
+# use Colorama to make Termcolor work on Windows too
+init (autoreset = True)
+
 class ProductStore(unittest.TestCase):
     def setUp(self):
-        s = Service('C:\\chromedriver\\chromedriver.exe')
-        options = webdriver.ChromeOptions()
         self.driver = webdriver.Chrome(service=s, options=options)
-        
-        # неявное ожидание (когда страница ещё только загружается и элемента на ней может ещё не быть)
-        self.driver.implicitly_wait(3) 
-        
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
-        sys.tracebacklimit = 0
         
-        # use Colorama to make Termcolor work on Windows too
-        init (autoreset = True)
+        # неявное ожидание (когда страница ещё только загружается и элемента на ней может ещё не быть)
+        self.driver.implicitly_wait(3)
         
         # явное ожидание (когда нужно дождаться выполнения неких условий прежде чем идти дальше)
-        self.wait = WebDriverWait(self.driver, 3)
+        self.wait = WebDriverWait(self.driver, 3) 
         
     # method (function) for highlighting elements
     def highlight(self, element):
@@ -75,7 +84,7 @@ class ProductStore(unittest.TestCase):
         def apply_style(s):
             self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, s)
         original_style = element.get_attribute('style')
-        apply_style("background: yellow; border: 2px solid red;")
+        apply_style("background: yellow; border: 4px solid red;")
         time.sleep(2)
         apply_style(original_style)
         
@@ -88,7 +97,7 @@ class ProductStore(unittest.TestCase):
         filename = f.f_code.co_filename
         linecache.checkcache(filename)
         line = linecache.getline(filename, lineno, f.f_globals)
-        print("")
+        # print("")
         print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
         
     # method (function) used for checking is there element on page
@@ -108,8 +117,7 @@ class ProductStore(unittest.TestCase):
                 # driver-driver    
                 driver = self.driver
 
-                # product name + URL
-                product = str("NISSAN  NS-2 CVT Fluid, 5л")
+                # necessary URL
                 driver.get("https://www.ozon.ru/")
 
                 # how to deploy screen
@@ -144,7 +152,7 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # highlighting - [search] + [enter]
-                search = driver.find_element(By.CLASS_NAME,"x1w")
+                search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
                 driver.execute_script("arguments[0].scrollIntoView();", search)
                 self.highlight(search)
                 ActionChains(driver).key_down(Keys.ENTER).perform()
@@ -157,7 +165,7 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # select necessary check-box
-                check_box = driver.find_element(By.XPATH,"//div[@class='z5u']//span[contains(text(),'NISSAN')]")
+                check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
                 self.highlight(check_box)
                 time.sleep(2)
                 driver.execute_script("arguments[0].click();", check_box)
@@ -200,7 +208,6 @@ class ProductStore(unittest.TestCase):
                 self.highlight(add)
                 driver.execute_script("arguments[0].click();", add)
                 time.sleep(2)
-            
             ###############################################################################################################################################
             except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
                 try:
@@ -213,13 +220,18 @@ class ProductStore(unittest.TestCase):
                 except UnexpectedAlertPresentException as e:
                     pass
                 print("")
-                print("Error! The requested HTML-element was not found on the HTML-page!")
+                print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
+                print(Fore.RESET + "")
                 self.PrintException()
                 print("")
                 ex_type, ex_value, ex_traceback = sys.exc_info()
                 print("Exception type: %s" %ex_type.__name__)
                 print("")
                 print(f"Exception message: {ex.msg}")
+                self.tearDown()
+                # driver.quit()
+                # sys.exit()
+                os._exit(0) # comment in PyCharm
             ###############################################################################################################################################
             # FUNCTION END
             
@@ -232,19 +244,16 @@ class ProductStore(unittest.TestCase):
         try:  
             # driver again    
             driver = self.driver
-
-            # product name again
-            product = str("NISSAN  NS-2 CVT Fluid, 5л")
             
             # quantity highlighting (1)
-            quantity = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']") 
+            quantity = driver.find_element(by=By.XPATH, value=counter)
             self.highlight(quantity)
             time.sleep(2)
 
             # checking that product is in basket by necessary quantity
             # 1 - first check (checking quantity)
             if quantity.text == "1":
-                print("")
+                print("----------------------------------------------------------------------")
                 print("")
                 print(Fore.GREEN + "1 - first check  = done! (necessary quantity product is in basket)")
             else:
@@ -252,7 +261,7 @@ class ProductStore(unittest.TestCase):
                 print(Fore.RED + "1 - first check  = error! (quantity does not match stated)")
 
             # button minus - [-] (remove product)
-            minus = driver.find_element(By.XPATH,"//div[@class='cz8']//button[@type='button']")
+            minus = driver.find_element(By.XPATH,"//div[@data-widget='megaPaginator']//div[@data-widget='searchResultsV2']//button[@type='button']")
             self.highlight(minus)
             minus.click()
             time.sleep(2)
@@ -260,9 +269,9 @@ class ProductStore(unittest.TestCase):
             # 2 - second check (that, counter was removed)
             while 1==1:
         
-                counter = self.check_exists_by_xpath("//span[@class='tsCaptionBold co0']")
+                counter_1 = self.check_exists_by_xpath(counter)
 
-                if counter is False:
+                if counter_1 is False:
                     try:
                         # write script
                         script = """alert(`После нажатия кнопки - [ - ] счётчик для количества товара пропал.
@@ -279,7 +288,7 @@ class ProductStore(unittest.TestCase):
                     break
                 else:
                     try:
-                        qty_1 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+                        qty_1 = driver.find_element(by=By.XPATH, value=counter)
                         self.highlight(qty_1)
                         # write script
                         script = """alert(`После нажатия btn - [ - ] счётчик количества товара не пропал.
@@ -302,7 +311,7 @@ Error! Error! Такого не должно быть, данный тест н�
             time.sleep(2)
 
             # quantity highlighting (2)
-            quantity_1 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+            quantity_1 = driver.find_element(by=By.XPATH, value=counter)
             self.highlight(quantity_1)
             time.sleep(2)
 
@@ -329,23 +338,23 @@ Error! Error! Такого не должно быть, данный тест н�
             self.highlight(item)
 
             # button - [delete] (open modal window)
-            delete = driver.find_element(By.XPATH,"//div[@class='s0a']//span[text()='Удалить']")
+            delete = driver.find_element(By.XPATH,"//div[@data-widget='split']//button[@type='button']//span[text()='Удалить']")
             self.highlight(delete)
             delete.click()
             time.sleep(2)
 
             # button - [delete] (remove product and counter)
-            delete1 = driver.find_element(By.XPATH,"//div[@class='qa ui-c1']//span[text()='Удалить']")
-            self.highlight(delete1)
-            delete1.click()
+            delete_1 = driver.find_element(By.XPATH,"//div[@class='vue-portal-target']//button[@type='button']//span[text()='Удалить']")
+            self.highlight(delete_1)
+            delete_1.click()
             time.sleep(2)            
 
             # 4 - fourth check (that again, counter was removed)
             while 1==1:
         
-                counter_1 = self.check_exists_by_xpath("//span[@class='tsCaptionBold co0']")
+                counter_2 = self.check_exists_by_xpath(counter)
 
-                if counter_1 is False:
+                if counter_2 is False:
                     try:
                         # write script
                         script = """alert(`После нажатия btn - [delete] счётчик для количества товара пропал.
@@ -362,7 +371,7 @@ Error! Error! Такого не должно быть, данный тест н�
                     break
                 else:
                     try:
-                        qty_2 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+                        qty_2 = driver.find_element(by=By.XPATH, value=counter)
                         self.highlight(qty_2)
                         # write script
                         script = """alert(`После нажатия - [удалить] счётчик количества товара не пропал.
@@ -370,7 +379,7 @@ Error! Error! Такого не должно быть, данный тест н�
 Счётчик для количества товара на странице был найден. Failure!`)"""
                         # generate a alert via javascript
                         driver.execute_script(script)
-                        time.sleep(80)
+                        time.sleep(8)
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                     except UnexpectedAlertPresentException as e:
                         pass
@@ -385,7 +394,7 @@ Error! Error! Такого не должно быть, данный тест н�
             test_order()
 
             # quantity highlighting (3)
-            quantity_2 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+            quantity_2 = driver.find_element(by=By.XPATH, value=counter)
             self.highlight(quantity_2)
             time.sleep(2)
 
@@ -419,7 +428,7 @@ Error! Error! Такого не должно быть, данный тест н�
             time.sleep(2)
 
             # button - [delete] (remove all products and counter) (2)
-            delete_2 = driver.find_element(By.XPATH,"//div[@class='qa ui-c1']//span[text()='Удалить']")
+            delete_2 = driver.find_element(By.XPATH,"//div[@class='ui-i1']//span[text()='Удалить']")
             self.highlight(delete_2)
             delete_2.click()
             time.sleep(2)
@@ -427,9 +436,9 @@ Error! Error! Такого не должно быть, данный тест н�
             # 6 - sixth check (that again-again, counter was removed)
             while 1==1:
         
-                counter_2 = self.check_exists_by_xpath("//span[@class='tsCaptionBold co0']")
+                counter_3 = self.check_exists_by_xpath(counter)
 
-                if counter_2 is False:
+                if counter_3 is False:
                     try:
                         # write script
                         script = """alert(`После нажатия btn - [delete] счётчик для количества товара пропал.
@@ -445,7 +454,7 @@ Error! Error! Такого не должно быть, данный тест н�
                     print(Fore.GREEN + "6 - sixth check  = done! (counter was removed again-again)")
                     break
                 else:
-                    quantity_3 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+                    quantity_3 = driver.find_element(by=By.XPATH, value=counter)
                     self.highlight(quantity_3)
                     try:
                         # write script
@@ -462,7 +471,6 @@ Error! Error! Такого не должно быть, данный тест н�
                     print(Fore.RED + "6 - sixth check  = error! (counter was not removed)")
                     print(Fore.RESET + "")
                     break
-        
         ###############################################################################################################################################
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
             try:
@@ -474,8 +482,9 @@ Error! Error! Такого не должно быть, данный тест н�
                 ActionChains(driver).key_down(Keys.ENTER).perform()
             except UnexpectedAlertPresentException as e:
                 pass
-            print("")
-            print("Error! The requested HTML-element was not found on the HTML-page!")
+            print("----------------------------------------------------------------------")
+            print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
+            print(Fore.RESET + "")
             # print(str(ex))
 
             # `Get current system exception

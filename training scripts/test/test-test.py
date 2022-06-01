@@ -493,11 +493,9 @@ Error! Error! Такого не должно быть, данный тест н�
                         pass
                     print("")
                     print(Fore.RED + "6 - sixth check  = error! (counter was not removed)")
-                    print(Fore.RESET + "")
                     break
         
-            ############################################################################################################################
-
+        ############################################################################################################################################### 
         except (NoSuchElementException, TimeoutException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException) as ex:
             try:
                 # write script
@@ -509,7 +507,8 @@ Error! Error! Такого не должно быть, данный тест н�
             except UnexpectedAlertPresentException as e:
                 pass
             print("")
-            print("Error! The requested element was not found on the HTML-page!")
+            print(Fore.RED + "Error! The requested element was not found on the HTML-page!")
+            print(Fore.RESET + "")
             print("")
             # print(str(ex))
 

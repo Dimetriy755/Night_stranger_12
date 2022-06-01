@@ -3,13 +3,7 @@ import time
 import random
 import requests
 from requests.models import HTTPError
-
-def exception_handler(exception_type, exception, traceback):
-    # All your trace are belong to us!
-    # your format
-    print(exception_type.__name__, exception)
-
-sys.excepthook = exception_handler
+sys.tracebacklimit = 0
 
 url = "https://affiliate.apileads.tech/api/lead-create"
 

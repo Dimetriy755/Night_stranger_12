@@ -22,6 +22,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import ElementNotInteractableException
 
 # if you authorized somewhere, then launch browser with your user session (just close your Chrome)
 # options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
@@ -43,22 +44,31 @@ from selenium.common.exceptions import ElementClickInterceptedException
 # echo..START: 0-1.py
 # CMD /c > ./my_test_results.txt "C:\Users\User\Desktop\2\my_experiments\0-1.py"
 
+s = Service('C:\\chromedriver\\chromedriver.exe')
+options = webdriver.ChromeOptions()
+
+# product name
+product = str('Трансмиссионное масло NISSAN CVT NS-2, 5л')
+
+# verifiable counter
+counter = str("//span[@class='tsCaptionBold o7c']")
+
+# removing extra traceback
+sys.tracebacklimit = 0
+
+# use Colorama to make Termcolor work on Windows too
+init (autoreset = True)
+
 class ProductStore(unittest.TestCase):
     def setUp(self):
-        s = Service('C:\\chromedriver\\chromedriver.exe')
-        options = webdriver.ChromeOptions()
-        self.driver = webdriver.Chrome(service=s, options=options)
-        
-        # неявное ожидание (когда страница ещё только загружается и элемента на ней может ещё не быть)
-        self.driver.implicitly_wait(3) 
-        
+        self.driver = webdriver.Chrome(service=s, options=options) 
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
         sys.tracebacklimit = 0
         
-        # use Colorama to make Termcolor work on Windows too
-        init (autoreset = True)
+        # неявное ожидание (когда страница ещё только загружается и элемента на ней может ещё не быть)
+        self.driver.implicitly_wait(3)
         
         # явное ожидание (когда нужно дождаться выполнения неких условий прежде чем идти дальше)
         self.wait = WebDriverWait(self.driver, 3)
@@ -72,7 +82,7 @@ class ProductStore(unittest.TestCase):
         def apply_style(s):
             self.driver.execute_script("arguments[0].setAttribute('style', arguments[1]);", element, s)
         original_style = element.get_attribute('style')
-        apply_style("background: yellow; border: 2px solid red;")
+        apply_style("background: yellow; border: 4px solid red;")
         time.sleep(2)
         apply_style(original_style)
         
@@ -85,7 +95,7 @@ class ProductStore(unittest.TestCase):
         filename = f.f_code.co_filename
         linecache.checkcache(filename)
         line = linecache.getline(filename, lineno, f.f_globals)
-        print("")
+        # print("")
         print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
         
     # method (function) used for checking is there element on page
@@ -100,8 +110,7 @@ class ProductStore(unittest.TestCase):
             # driver-driver
             driver = self.driver
             
-            # product name + URL
-            product = str("NISSAN  NS-2 CVT Fluid, 5л")
+             # necessary URL
             driver.get("https://www.ozon.ru/")
             
             # how to deploy screen
@@ -136,7 +145,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # highlighting - [search] + [enter]
-            search = driver.find_element(By.CLASS_NAME,"x1w")
+            search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
             driver.execute_script("arguments[0].scrollIntoView();", search)
             self.highlight(search)
             ActionChains(driver).key_down(Keys.ENTER).perform()
@@ -154,7 +163,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # select necessary check-box
-            check_box = driver.find_element(By.XPATH,"//div[@class='z5u']//span[contains(text(),'NISSAN')]")
+            check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
@@ -203,13 +212,13 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
             
             # button add more - [+] (XPATH - very difficult and was found only with Katalon Recorder)
-            plus = driver.find_element(by=By.XPATH, value="(.//*[normalize-space(text()) and normalize-space(.)='−50%'])[1]/following::*[name()='svg'][3]")
+            plus = driver.find_element(by=By.XPATH, value="//div[@data-widget='megaPaginator']//div[@data-widget='searchResultsV2']//button[@type='button']/span[@style='border-radius: 6px;']/following::*[name()='svg'][1]")
             self.highlight(plus)
             plus.click()
             time.sleep(2)
             
             # button add more - [+] (CSS SELECTOR - if you go another way, but then there will be no highlighting of the element)
-            # plus = driver.find_element(by=By.CSS_SELECTOR, value="#layoutPage > div.gy4 > div.container.gy5 > div:nth-child(2) > div:nth-child(2) > div.xi1 > div > div > div > div.iv0.v0i > div.i1v > div.iu5.i6u > div > div > div:nth-child(3) > div > button > span > svg > path")
+            # plus = driver.find_element(by=By.CSS_SELECTOR, value="#layoutPage > div.ih9 > div.container.hj0 > div:nth-child(2) > div:nth-child(2) > div.jl > div > div.widget-search-result-container.l2j > div > div.i3z.iz4 > div.zi4 > div.i8y.yi9 > div > div > div:nth-child(3) > div > button > span > svg > path")
             # self.highlight(plus)
             # plus.click()
             # time.sleep(2)
@@ -222,14 +231,14 @@ class ProductStore(unittest.TestCase):
             то и дальше скрипт никуда более не пойдёт и поэтому поводу можно будет уже больше не переживать. """
 
             # quantity highlighting (1)
-            quantity_1 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+            quantity_1 = driver.find_element(by=By.XPATH, value=counter)
             self.highlight(quantity_1)
             time.sleep(2)
 
             # checking that product is in basket by necessary quantity
             # 1 - first check (checking quantity)
             if quantity_1.text == "2":
-                print("")
+                print("----------------------------------------------------------------------")
                 print("")
                 print(Fore.GREEN + "1 - first check  = done! (necessary quantity product is in basket)")
             else:
@@ -284,19 +293,19 @@ class ProductStore(unittest.TestCase):
             # time.sleep(1)
             # ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # alternative (2)
             # time.sleep(1)
-            ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # alternative (2)
-            time.sleep(1)
+            # ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # alternative (2)
+            # time.sleep(1)
             ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # alternative (2)
             time.sleep(1)
             ActionChains(driver).key_down(Keys.ARROW_DOWN).perform() # (1)
             time.sleep(1)
-            ActionChains(driver).key_down(Keys.ARROW_UP).perform() # (1)
-            time.sleep(1)
+            # ActionChains(driver).key_down(Keys.ARROW_UP).perform() # (1)
+            # time.sleep(1)
             ActionChains(driver).key_down(Keys.ENTER).perform() # (1)
             time.sleep(2)
 
             # quantity highlighting (2)
-            quantity_2 = driver.find_element(by=By.XPATH, value="//span[@class='tsCaptionBold co0']")
+            quantity_2 = driver.find_element(by=By.XPATH, value=counter)
             self.highlight(quantity_2)
             time.sleep(2)
 
@@ -336,7 +345,7 @@ class ProductStore(unittest.TestCase):
             execute.click()
             time.sleep(4)
 
-        except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
+        except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException, ElementNotInteractableException) as ex:
             try:
                 # write script
                 script = "alert('Error! The requested HTML-element was not found on the HTML-page!')"
@@ -346,8 +355,9 @@ class ProductStore(unittest.TestCase):
                 ActionChains(driver).key_down(Keys.ENTER).perform()
             except UnexpectedAlertPresentException as e:
                 pass
-            print("")
-            print("Error! The requested HTML-element was not found on the HTML-page!")
+            print("----------------------------------------------------------------------")
+            print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
+            print(Fore.RESET + "")
             # print(str(ex))
 
             # `Get current system exception
