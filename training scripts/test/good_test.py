@@ -40,12 +40,12 @@ from selenium.common.exceptions import ElementClickInterceptedException
 
 # use for cmd:
 # cd C:\Users\User\Desktop\2\experiments
-# 0-2.py > ./my_test_results-2.txt
+# good_test.py > ./my_good_test_results.txt
 
 # use for bat:
 # echo.
-# echo..START 0-2.py
-# CMD /c > ./my_test_results-2.txt "C:\Users\User\Desktop\2\my_experiments\0-2.py"
+# echo..START good_test.py
+# CMD /c > ./my_good_test_results.txt "C:\Users\User\Desktop\2\my_experiments\good_test.py"
 
 s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
@@ -106,140 +106,140 @@ class ProductStore(unittest.TestCase):
             self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
         except (NoSuchElementException, TimeoutException) as e: return False
         return True
+       
+    # method (function) for creating ordering
+    def creating_order(self):
+        try: 
+            # driver-driver    
+            driver = self.driver
+
+            # necessary URL
+            driver.get("https://www.ozon.ru/")
+
+            # how to deploy screen
+            driver.maximize_window()
+            time.sleep(2)
+
+            # enter select product category mode (open modal window)
+            select = driver.find_element(By.XPATH,"//span[@title='Везде']")
+            driver.execute_script("arguments[0].scrollIntoView();", select)
+            self.highlight(select)
+            select.click()
+            time.sleep(2)
+
+            # going down up to highlighted categories
+            discount = driver.find_element(By.XPATH,"//div[contains(text(),'Уценённые товары')]")
+            driver.execute_script("arguments[0].scrollIntoView();", discount)
+            self.highlight(discount)
+            time.sleep(2)
+
+            # select specific category
+            category = driver.find_element(By.XPATH,"//div[contains(text(),'Автотовары')]")
+            driver.execute_script("arguments[0].scrollIntoView();", category)
+            self.highlight(category)
+            category.click()
+            time.sleep(2)
+
+            # text-box + variable
+            text_box = driver.find_element(By.NAME,"text")
+            text_box.click()
+            self.highlight(text_box)
+            text_box.send_keys(product)
+            time.sleep(2)
+
+            # highlighting - [search] + [enter]
+            search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
+            driver.execute_script("arguments[0].scrollIntoView();", search)
+            self.highlight(search)
+            ActionChains(driver).key_down(Keys.ENTER).perform()
+            time.sleep(2)
+
+            # down + down + down
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.perform()
+            time.sleep(2)
+
+            # select necessary check-box
+            check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
+            self.highlight(check_box)
+            time.sleep(2)
+            driver.execute_script("arguments[0].click();", check_box)
+            time.sleep(2)
+
+            # down + down + down
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.perform()
+            time.sleep(2)
+
+            # select necessary toggle-switch (two elements are specially selected)
+            toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
+            self.highlight(toggle)
+            time.sleep(2)
+            driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-ba6']").click()
+            time.sleep(2)
+
+            # down + down + down
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.perform()
+            time.sleep(2)
+
+            # select another one necessary toggle-switch (here needed two elements)
+            toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
+            self.highlight(toggle_1)
+            time.sleep(2)
+            driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']//div[@class='ui-ba6']").click()
+            time.sleep(2)
+
+            # down + down + down
+            downs = ActionChains(driver) 
+            downs.send_keys(Keys.ARROW_DOWN * 12)
+            downs.perform()
+            time.sleep(2)
+
+            # add to product basket
+            add = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
+            self.highlight(add)
+            driver.execute_script("arguments[0].click();", add)
+            time.sleep(2)
+        ###############################################################################################################################################
+        except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
+            try:
+                # write script
+                script = "alert('Error! The requested HTML-element was not found on the HTML-page!')"
+                # generate a alert via javascript
+                driver.execute_script(script)
+                time.sleep(5)
+                ActionChains(driver).key_down(Keys.ENTER).perform()
+            except UnexpectedAlertPresentException as e:
+                pass
+            print("----------------------------------------------------------------------")
+            print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
+            print(Fore.RESET + "")
+            self.PrintException()
+            print("")
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+            print("Exception type: %s" %ex_type.__name__)
+            print("")
+            print(f"Exception message: {ex.msg}")
+            print("----------------------------------------------------------------------")
+            self.tearDown()
+            # driver.quit()
+            # sys.exit()
+            os._exit(0) # comment in PyCharm
+        ###############################################################################################################################################
+        # FUNCTION END (method for creating ordering)
     
-    # method of checking that
+    # test method of checking that
     # counter is being deleted
     def test_check(self):
-        
-        # function for ordering
-        def test_order():
-            try: 
-                # driver-driver    
-                driver = self.driver
-
-                # necessary URL
-                driver.get("https://www.ozon.ru/")
-
-                # how to deploy screen
-                driver.maximize_window()
-                time.sleep(2)
-
-                # enter select product category mode (open modal window)
-                select = driver.find_element(By.XPATH,"//span[@title='Везде']")
-                driver.execute_script("arguments[0].scrollIntoView();", select)
-                self.highlight(select)
-                select.click()
-                time.sleep(2)
-
-                # going down up to highlighted categories
-                discount = driver.find_element(By.XPATH,"//div[contains(text(),'Уценённые товары')]")
-                driver.execute_script("arguments[0].scrollIntoView();", discount)
-                self.highlight(discount)
-                time.sleep(2)
-
-                # select specific category
-                category = driver.find_element(By.XPATH,"//div[contains(text(),'Автотовары')]")
-                driver.execute_script("arguments[0].scrollIntoView();", category)
-                self.highlight(category)
-                category.click()
-                time.sleep(2)
-
-                # text-box + variable
-                text_box = driver.find_element(By.NAME,"text")
-                text_box.click()
-                self.highlight(text_box)
-                text_box.send_keys(product)
-                time.sleep(2)
-
-                # highlighting - [search] + [enter]
-                search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
-                driver.execute_script("arguments[0].scrollIntoView();", search)
-                self.highlight(search)
-                ActionChains(driver).key_down(Keys.ENTER).perform()
-                time.sleep(2)
-
-                # down + down + down
-                actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_DOWN * 8)
-                actions.perform()
-                time.sleep(2)
-
-                # select necessary check-box
-                check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
-                self.highlight(check_box)
-                time.sleep(2)
-                driver.execute_script("arguments[0].click();", check_box)
-                time.sleep(2)
-
-                # down + down + down
-                actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_DOWN * 8)
-                actions.perform()
-                time.sleep(2)
-
-                # select necessary toggle-switch (two elements are specially selected)
-                toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
-                self.highlight(toggle)
-                time.sleep(2)
-                driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-ba6']").click()
-                time.sleep(2)
-
-                # down + down + down
-                actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_DOWN * 8)
-                actions.perform()
-                time.sleep(2)
-
-                # select another one necessary toggle-switch (here needed two elements)
-                toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
-                self.highlight(toggle_1)
-                time.sleep(2)
-                driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']//div[@class='ui-ba6']").click()
-                time.sleep(2)
-
-                # down + down + down
-                downs = ActionChains(driver) 
-                downs.send_keys(Keys.ARROW_DOWN * 12)
-                downs.perform()
-                time.sleep(2)
-
-                # add to product basket
-                add = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
-                self.highlight(add)
-                driver.execute_script("arguments[0].click();", add)
-                time.sleep(2)
-            ###############################################################################################################################################
-            except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
-                try:
-                    # write script
-                    script = "alert('Error! The requested HTML-element was not found on the HTML-page!')"
-                    # generate a alert via javascript
-                    driver.execute_script(script)
-                    time.sleep(5)
-                    ActionChains(driver).key_down(Keys.ENTER).perform()
-                except UnexpectedAlertPresentException as e:
-                    pass
-                print("")
-                print(Fore.RED + "Error! The requested HTML-element was not found on the HTML-page!")
-                print(Fore.RESET + "")
-                self.PrintException()
-                print("")
-                ex_type, ex_value, ex_traceback = sys.exc_info()
-                print("Exception type: %s" %ex_type.__name__)
-                print("")
-                print(f"Exception message: {ex.msg}")
-                self.tearDown()
-                # driver.quit()
-                # sys.exit()
-                os._exit(0) # comment in PyCharm
-            ###############################################################################################################################################
-            # FUNCTION END
             
-        # FUNCTION STARTING
-        # first starting
-        test_order() 
+        # FUNCTION STARTING (method for creating ordering)
+        self.creating_order() # first starting
         
-        ####################################################################################################################################################
+        ###############################################################################################################################################
         # ALL MAIN CHECKS START    
         try:  
             # driver again    
@@ -388,10 +388,9 @@ Error! Error! Такого не должно быть, данный тест н�
                     break
 
             # Now to do everything is everything again is again!!!
-            ############################################################################################################################
-            # FUNCTION STARTING
-            # second starting
-            test_order()
+            ###############################################################################################################################################
+            # FUNCTION STARTING (method for creating ordering)
+            self.creating_order() # second starting
 
             # quantity highlighting (3)
             quantity_2 = driver.find_element(by=By.XPATH, value=counter)
@@ -508,6 +507,7 @@ Error! Error! Такого не должно быть, данный тест н�
             # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
             # print("")
             # print("Stack trace: %s" %stack_trace)
+        ###############################################################################################################################################
             
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -533,7 +533,7 @@ Error! Error! Такого не должно быть, данный тест н�
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-        # time.sleep(14)
+        # time.sleep(14) # for CMD
 
 if __name__ == "__main__":
     unittest.main()
