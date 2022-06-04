@@ -1,8 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 from asyncio import log
 import linecache
-import os
 import sys
+import os
 import traceback
 from time import sleep
 import unittest, time, re
@@ -53,14 +53,14 @@ options = webdriver.ChromeOptions()
 # product name
 product = str("Трансмиссионное масло NISSAN CVT NS-2, 5л")
 
-# verifiable counter
-counter = str("//span[@class='tsCaptionBold o7c']")
+# verifiable counter (in this test always must quantity counter = 1)
+counter = str("//a[@href='/cart']//span[contains(@class,'tsCaptionBold') and contains(text(),'1')]")
 
 # removing extra traceback
 sys.tracebacklimit = 0
 
 # use Colorama to make Termcolor work on Windows too
-init (autoreset = True)
+init(autoreset = True)
 
 class ProductStore(unittest.TestCase):
     def setUp(self):
@@ -303,6 +303,8 @@ Error! Error! Такого не должно быть, данный тест н�
                     print("")
                     print(Fore.RED + "2 - second check = error! (counter was not removed)")
                     break
+                
+            time.sleep(1)
 
             # add to product basket (2)
             add_1 = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
@@ -336,6 +338,7 @@ Error! Error! Такого не должно быть, данный тест н�
             # product highlighting 
             item = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{product}')]")
             self.highlight(item)
+            time.sleep(1)
 
             # button - [delete] (open modal window)
             delete = driver.find_element(By.XPATH,"//div[@data-widget='split']//button[@type='button']//span[text()='Удалить']")
@@ -386,6 +389,8 @@ Error! Error! Такого не должно быть, данный тест н�
                     print("")
                     print(Fore.RED + "4 - fourth check = error! (counter was not removed)")
                     break
+                
+            time.sleep(1)
 
             # Now to do everything is everything again is again!!!
             ############################################################################################################################
@@ -420,6 +425,7 @@ Error! Error! Такого не должно быть, данный тест н�
             # product highlighting (2)
             item_1 = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{product}')]")
             self.highlight(item_1)
+            time.sleep(1)
 
             # delete ALL!!! (open modal window)
             delete_ALL = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Удалить выбранные')]")
@@ -452,6 +458,8 @@ Error! Error! Такого не должно быть, данный тест н�
                         pass
                     print("")
                     print(Fore.GREEN + "6 - sixth check  = done! (counter was removed again-again)")
+                    print(Fore.RESET + "")
+                    # print("----------------------------------------------------------------------") # for (.bat) file start
                     break
                 else:
                     quantity_3 = driver.find_element(by=By.XPATH, value=counter)
@@ -470,6 +478,7 @@ Error! Error! Такого не должно быть, данный тест н�
                     print("")
                     print(Fore.RED + "6 - sixth check  = error! (counter was not removed)")
                     print(Fore.RESET + "")
+                    # print("----------------------------------------------------------------------") # for (.bat) file start
                     break
         ###############################################################################################################################################
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
@@ -508,6 +517,7 @@ Error! Error! Такого не должно быть, данный тест н�
             # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
             # print("")
             # print("Stack trace: %s" %stack_trace)
+            # print("----------------------------------------------------------------------") # for (.bat) file start
             
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)

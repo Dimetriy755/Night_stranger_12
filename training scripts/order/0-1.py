@@ -48,16 +48,18 @@ s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
 
 # product name
-product = str('Трансмиссионное масло NISSAN CVT NS-2, 5л')
+product = str("Трансмиссионное масло NISSAN CVT NS-2, 5л")
 
-# verifiable counter
-counter = str("//span[@class='tsCaptionBold o7c']")
+# verifiable counter (can have any number, but will be
+# caught if 0, and if not 1 or 3, then it will be an error)
+# counter = str("//span[@class='tsCaptionBold cq3']") # just in case
+counter = str("//a[@href='/cart']//span[contains(@class,'tsCaptionBold')]")
 
 # removing extra traceback
 sys.tracebacklimit = 0
 
 # use Colorama to make Termcolor work on Windows too
-init (autoreset = True)
+init(autoreset = True)
 
 class ProductStore(unittest.TestCase):
     def setUp(self):
@@ -230,10 +232,17 @@ class ProductStore(unittest.TestCase):
             реклама и т. д.). Но если сейчас html-элемент значка количества товара в корзине найден не будет,
             то и дальше скрипт никуда более не пойдёт и поэтому поводу можно будет уже больше не переживать. """
 
-            # quantity highlighting (1)
+           # сhecking what quantity is not zero + highlighting if qty > 0 (1)
             quantity_1 = driver.find_element(by=By.XPATH, value=counter)
-            self.highlight(quantity_1)
-            time.sleep(2)
+            if quantity_1.text == "0":
+                print("----------------------------------------------------------------------")
+                print(f"Undetected element it is verifiable counter\nand obviously that quantity counter = {quantity_1.text}")
+                print(f"counter = '{counter}'")
+                raise NoSuchElementException
+            else:
+                pass
+                self.highlight(quantity_1)
+                time.sleep(2)
 
             # checking that product is in basket by necessary quantity
             # 1 - first check (checking quantity)
@@ -314,30 +323,33 @@ class ProductStore(unittest.TestCase):
             if quantity_2.text == "1":
                 print("")
                 print(Fore.GREEN + "3 - third check  = done! (product was remove from basket / same quantity)")
-                print("")
+                print(Fore.RESET + "----------------------------------------------------------------------")
                 print("")
                 print(Fore.RESET + "What values were used:")
                 print(f"product = {product}") 
                 print("it is expected that quantity-1 = 2 (first check)")
                 print("it is expected that quantity-2 = 1 (third check)")
+                # print("----------------------------------------------------------------------") # for (.bat) file start 
             elif quantity_2.text == "3":
                 print("")
                 print(Fore.GREEN + "3 - third check  = done! (product was added from in basket / alternative)")
-                print("")
+                print(Fore.RESET + "----------------------------------------------------------------------")
                 print("")
                 print(Fore.RESET + "What values were used:")
                 print(f"product = {product}") 
                 print("it is expected that quantity-1 = 2 (first check)")
                 print("it is expected that quantity-2 = 3 (third check)")
+                # print("----------------------------------------------------------------------") # for (.bat) file start 
             else:
                 print("")
                 print(Fore.RED + "3 - third check  = error! (quantity does not match stated)")
+                print(Fore.RESET + "----------------------------------------------------------------------")
                 print("")
-                print("")
-                print(Fore.RESET + "What values were used:")
+                print("What values were used:")
                 print(f"product = {product}")
                 print("it is expected that quantity-1 = 2 (first check)")
                 print(f"it is expected that quantity-2 = 1 or 3,\nbut quantity-2 = {quantity_2.text} and it error (third check)")
+                # print("----------------------------------------------------------------------") # for (.bat) file start 
 
             # transition buying product
             execute = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Перейти к оформлению')]")
@@ -381,6 +393,7 @@ class ProductStore(unittest.TestCase):
             # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
             # print("")
             # print("Stack trace: %s" %stack_trace)
+            # print("----------------------------------------------------------------------") # for (.bat) file start
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -406,7 +419,7 @@ class ProductStore(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-        # time.sleep(14)
+        # time.sleep(14) # for CMD
 
 if __name__ == "__main__":
     unittest.main()
