@@ -113,7 +113,7 @@ class ProductStore(unittest.TestCase):
             # driver-driver
             driver = self.driver
             
-             # necessary URL
+            # necessary URL
             driver.get("https://www.ozon.ru/")
             
             # how to deploy screen
