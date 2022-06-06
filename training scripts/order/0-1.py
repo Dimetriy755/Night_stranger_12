@@ -2,6 +2,7 @@
 from asyncio import log
 import linecache
 import sys
+import os
 import traceback
 from time import sleep
 import unittest, time, re
@@ -164,7 +165,7 @@ class ProductStore(unittest.TestCase):
             actions.perform()
             time.sleep(2)
 
-            # select necessary check-box
+            # select necessary check-box №1
             check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
             self.highlight(check_box)
             time.sleep(2)
@@ -173,8 +174,15 @@ class ProductStore(unittest.TestCase):
             
             # down + down + down
             actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.send_keys(Keys.ARROW_DOWN * 12)
             actions.perform()
+            time.sleep(2)
+
+            # select necessary check-box №2
+            check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'Ойл бар')]")
+            self.highlight(check_box)
+            time.sleep(2)
+            driver.execute_script("arguments[0].click();", check_box)
             time.sleep(2)
 
             # select necessary toggle-switch (two elements are specially selected)
@@ -187,12 +195,6 @@ class ProductStore(unittest.TestCase):
             # select necessary toggle-switch
             # другой вариант как можно выполнить это 
             # driver.get("https://www.ozon.ru/search/?from_global=true&isdiscount=t&text=Nissan+NS-3+CVT%2C+5л")
-            
-            # down + down + down
-            actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 8)
-            actions.perform()
-            time.sleep(2)
 
             # select another one necessary toggle-switch (here needed two elements)
             toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
@@ -202,10 +204,19 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # down + down + down
-            downs = ActionChains(driver) 
-            downs.send_keys(Keys.ARROW_DOWN * 12)
-            downs.perform()
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 13)
+            actions.perform()
             time.sleep(2)
+            
+            choice_1 = driver.find_element(By.XPATH,"//button[@type='button']//span[contains(text(),'Бренды: NISSAN')]")
+            self.highlight(choice_1)
+            choice_2 = driver.find_element(By.XPATH,"//button[@type='button']//span[contains(text(),'Высокий рейтинг')]")
+            self.highlight(choice_2)
+            choice_3 = driver.find_element(By.XPATH,"//button[@type='button']//span[contains(text(),'Товары со скидкой')]")
+            self.highlight(choice_3)
+            choice_4 = driver.find_element(By.XPATH,"//button[@type='button']//span[contains(text(),'Продавец: Ойл бар')]")
+            self.highlight(choice_4)
 
             # add to product basket
             add = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
@@ -356,7 +367,7 @@ class ProductStore(unittest.TestCase):
             self.highlight(execute)
             execute.click()
             time.sleep(4)
-
+        ################################################################################################################################################################################
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException, ElementNotInteractableException) as ex:
             try:
                 # write script
@@ -393,7 +404,16 @@ class ProductStore(unittest.TestCase):
             # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
             # print("")
             # print("Stack trace: %s" %stack_trace)
-            # print("----------------------------------------------------------------------") # for (.bat) file start
+            
+            # for (.bat) file start / or alternative
+            print("----------------------------------------------------------------------") 
+            print("TEST FAILED (requested element was not found on page)") 
+            self.tearDown()
+            os._exit(0)
+            
+            # to see how test falls
+            # sys.exit()
+        ################################################################################################################################################################################
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)

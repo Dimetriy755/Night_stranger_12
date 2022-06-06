@@ -160,17 +160,24 @@ class ProductStore(unittest.TestCase):
             actions.perform()
             time.sleep(2)
 
-            # select necessary check-box
+            # select necessary check-box №1
             check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
             time.sleep(2)
-
+            
             # down + down + down
             actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 8)
+            actions.send_keys(Keys.ARROW_DOWN * 12)
             actions.perform()
+            time.sleep(2)
+
+            # select necessary check-box №2
+            check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'Ойл бар')]")
+            self.highlight(check_box)
+            time.sleep(2)
+            driver.execute_script("arguments[0].click();", check_box)
             time.sleep(2)
 
             # select necessary toggle-switch (two elements are specially selected)
@@ -178,12 +185,6 @@ class ProductStore(unittest.TestCase):
             self.highlight(toggle)
             time.sleep(2)
             driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-ba6']").click()
-            time.sleep(2)
-
-            # down + down + down
-            actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 8)
-            actions.perform()
             time.sleep(2)
 
             # select another one necessary toggle-switch (here needed two elements)
@@ -194,9 +195,9 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # down + down + down
-            downs = ActionChains(driver) 
-            downs.send_keys(Keys.ARROW_DOWN * 12)
-            downs.perform()
+            actions = ActionChains(driver) 
+            actions.send_keys(Keys.ARROW_DOWN * 13)
+            actions.perform()
             time.sleep(2)
 
             # add to product basket
@@ -224,11 +225,15 @@ class ProductStore(unittest.TestCase):
             print("Exception type: %s" %ex_type.__name__)
             print("")
             print(f"Exception message: {ex.msg}")
-            print("----------------------------------------------------------------------")
+            
+            # for (.bat) file start / or alternative
+            print("----------------------------------------------------------------------") 
+            print("TEST FAILED (requested element was not found on page)") 
             self.tearDown()
-            # driver.quit()
+            os._exit(0)
+            
+            # to see how test falls
             # sys.exit()
-            os._exit(0) # comment in PyCharm / or comment to see how test falls
         ###############################################################################################################################################
         # FUNCTION END (method for creating ordering)
     
@@ -516,7 +521,15 @@ Error! Error! Такого не должно быть, данный тест н�
             # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
             # print("")
             # print("Stack trace: %s" %stack_trace)
-            # print("----------------------------------------------------------------------") # for (.bat) file start
+            
+            # for (.bat) file start / or alternative
+            print("----------------------------------------------------------------------") 
+            print("TEST FAILED (requested element was not found on page)") 
+            self.tearDown()
+            os._exit(0)
+            
+            # to see how test falls
+            # sys.exit()
         ###############################################################################################################################################
             
     def is_element_present(self, how, what):
