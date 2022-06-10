@@ -25,9 +25,6 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import ElementNotInteractableException
 
-# if you authorized somewhere, then launch browser with your user session (just close your Chrome)
-# options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
-
 # how to deploy screen (all variants)
 # options.add_argument("--start-maximized") # другой вариант как можно выполнить это (через опции)
 # driver.set_window_size(1366, 768) # другой вариант как можно выполнить это (указав размер окна)
@@ -47,6 +44,9 @@ from selenium.common.exceptions import ElementNotInteractableException
 
 s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
+
+# if you authorized somewhere, then launch browser with your user session (just close your Chrome)
+options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 
 # product name
 product = str("Трансмиссионное масло NISSAN CVT NS-2, 5л")
@@ -68,7 +68,6 @@ class ProductStore(unittest.TestCase):
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
-        sys.tracebacklimit = 0
         
         # неявное ожидание (когда страница ещё только загружается и элемента на ней может ещё не быть)
         self.driver.implicitly_wait(3)
@@ -121,7 +120,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # enter select product category mode (open modal window)
-            select = driver.find_element(By.XPATH,"//span[@title='Везде']")
+            select = driver.find_element(By.XPATH,"//form[@action='/search']//span[@title='Везде']")
             driver.execute_script("arguments[0].scrollIntoView();", select)
             self.highlight(select)
             select.click()
@@ -166,7 +165,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # select necessary check-box №1
-            check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'NISSAN')]")
+            check_box = driver.find_element(By.XPATH,"//div[@class='ui-w9']//span[contains(text(),'NISSAN')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
@@ -179,7 +178,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # select necessary check-box №2
-            check_box = driver.find_element(By.XPATH,"//div[@class='ui-ba5']//span[contains(text(),'Ойл бар')]")
+            check_box = driver.find_element(By.XPATH,"//div[@class='ui-w9']//span[contains(text(),'Ойл бар')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
@@ -189,7 +188,7 @@ class ProductStore(unittest.TestCase):
             toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
             self.highlight(toggle)
             time.sleep(2)
-            driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-ba6']").click()
+            driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-w9']").click()
             time.sleep(2)
 
             # select necessary toggle-switch
@@ -200,7 +199,7 @@ class ProductStore(unittest.TestCase):
             toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
             self.highlight(toggle_1)
             time.sleep(2)
-            driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']//div[@class='ui-ba6']").click()
+            driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']//div[@class='ui-w9']").click()
             time.sleep(2)
 
             # down + down + down
