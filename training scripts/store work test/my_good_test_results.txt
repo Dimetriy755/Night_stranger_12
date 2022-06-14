@@ -1,4 +1,4 @@
-----------------------------------------------------------------------
+ï»¿----------------------------------------------------------------------
 
 1 - first check  = done!  (necessary quantity product is in basket)
 
@@ -19,10 +19,10 @@ from basket also delete quantity counter of the item.
 
 
 What values were used:
-product = Òðàíñìèññèîííîå ìàñëî NISSAN CVT NS-2, 5ë
+product = Ð¢Ñ€Ð°Ð½ÑÐ¼Ð¸ÑÑÐ¸Ð¾Ð½Ð½Ð¾Ðµ Ð¼Ð°ÑÐ»Ð¾ NISSAN CVT NS-2, 5Ð»
 
 + What was checked:
 2 - second check => checked was button - [-] (minus)
-4 - fourth check => checked was button - [delete] (Óäàëèòü)
-6 - sixth check  => checked was button - [delete ALL] (Óäàëèòü âûáðàííûå)
+4 - fourth check => checked was button - [delete] (Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ)
+6 - sixth check  => checked was button - [delete ALL] (Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ñ‹Ðµ)
 ----------------------------------------------------------------------
