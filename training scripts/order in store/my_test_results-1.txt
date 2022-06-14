@@ -1,12 +1,15 @@
+----------------------------------------------------------------------
 
-Error! The requested HTML-element was not found on the HTML-page!
+1 - first check  = done!  (necessary quantity product is in basket)
 
-EXCEPTION IN: =>
-PATH / FILE: C:\Users\User\Desktop\2\my_experiments\0-1.py =>
-LINE NUMBER: 137 =>
-VARIABLE / ELEMENT: search = driver.find_element(By.CLASS_NAME,"wv8")
+2 - second check = done!  (order has been created and product is in basket)
 
-Exception type: NoSuchElementException
+3 - third check  = done!  (product was added from in basket / alternative)
+----------------------------------------------------------------------
 
-Exception message: no such element: Unable to locate element: {"method":"css selector","selector":".wv8"}
-  (Session info: chrome=102.0.5005.63)
+What values were used:
+product = Трансмиссионное масло Nissan CVT NS-2
+it is expected that quantity-1 = 2 (first check)
+it is expected that quantity-2 = 3 (third check)
+----------------------------------------------------------------------
+TEST SUCCESSFULLY (all checks were successful)

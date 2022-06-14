@@ -1,10 +1,10 @@
 ﻿# -*- coding: utf-8 -*-
-from asyncio import log
-import linecache
 import sys
-from tkinter import E
 import keyboard
+import linecache
+from tkinter import E
 from time import sleep
+from asyncio import log
 from pathlib import Path
 import unittest, time, re 
 from colorama import init
@@ -15,13 +15,17 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.common.exceptions import JavascriptException
 from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import TimeoutException 
 from selenium.common.exceptions import NoAlertPresentException 
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import UnexpectedAlertPresentException
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.common.exceptions import ElementClickInterceptedException
 
 options = webdriver.ChromeOptions() 
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
@@ -229,13 +233,14 @@ class BuyLeads(unittest.TestCase):
                     print(Fore.RED + "4 - fourth check = error!")
                     break
 
-        except (NoSuchElementException, TimeoutException) as ex:
+        ################################################################################################################################################################################
+        except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException, ElementNotInteractableException) as ex:
             try:
                 # write script
                 script = "alert('Error! The requested HTML-element was not found on the HTML-page!')"
                 # generate a alert via javascript
                 driver.execute_script(script)
-                time.sleep(4)
+                time.sleep(5)
                 ActionChains(driver).key_down(Keys.ENTER).perform()
             except UnexpectedAlertPresentException as e:
                 pass
@@ -250,7 +255,17 @@ class BuyLeads(unittest.TestCase):
             print(f"Exception message: {ex.msg}")
             # print("")
             # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
-    
+            
+            # for (.bat) file start / or alternative
+            print("----------------------------------------------------------------------") 
+            print("TEST FAILED (requested element was not found on page)") 
+            self.tearDown()
+            os._exit(0)
+            
+            # to see how test falls
+            # sys.exit()
+        ################################################################################################################################################################################
+        
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except (NoSuchElementException, TimeoutException) as e: return False
@@ -273,6 +288,7 @@ class BuyLeads(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
+        self.driver.close()
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
 

@@ -24,34 +24,18 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
 
-# if you authorized somewhere, then launch browser with your user session (just close your Chrome)
-# options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
-
-# how to deploy screen (all variants)
-# options.add_argument("--start-maximized") # другой вариант как можно выполнить это (через опции)
-# driver.set_window_size(1366, 768) # другой вариант как можно выполнить это (указав размер окна)
-
-# hidden browser mode (suitable!!!)
-# options.add_argument('--headless') 
-# options.add_argument('--disable-gpu')
-
-# t = time.time()
-# driver.set_page_load_timeout(10)
-
-# use for cmd:
-# cd C:\Users\User\Desktop\2\experiments
-# good_test.py > ./my_good_test_results.txt
-
-# use for bat:
-# echo.
-# echo..START good_test.py
-# CMD /c > ./my_good_test_results.txt "C:\Users\User\Desktop\2\my_experiments\good_test.py"
-
+# ChromiumService
 s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
 
+# if you authorized somewhere, then launch browser with your user session (just close your Chrome)
+options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
+
 # product name
 product = str("Трансмиссионное масло NISSAN CVT NS-2, 5л")
+
+# changing class
+changing_class = str("ui-w9")
 
 # verifiable counter (in this test always must quantity counter = 1)
 counter = str("//a[@href='/cart']//span[contains(@class,'tsCaptionBold') and contains(text(),'1')]")
@@ -160,8 +144,8 @@ class ProductStore(unittest.TestCase):
             actions.perform()
             time.sleep(2)
 
-            # select necessary check-box №1
-            check_box = driver.find_element(By.XPATH,"//div[@class='ui-w9']//span[contains(text(),'NISSAN')]")
+           # select necessary check-box №1
+            check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
@@ -174,7 +158,7 @@ class ProductStore(unittest.TestCase):
             time.sleep(2)
 
             # select necessary check-box №2
-            check_box = driver.find_element(By.XPATH,"//div[@class='ui-w9']//span[contains(text(),'Ойл бар')]")
+            check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'Ойл бар')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
@@ -184,19 +168,29 @@ class ProductStore(unittest.TestCase):
             toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
             self.highlight(toggle)
             time.sleep(2)
-            driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']//div[@class='ui-w9']").click()
+            driver.find_element(By.XPATH,f"//div[@value='Товары со скидкой']//div[@class='{changing_class}']").click()
             time.sleep(2)
+            
+            # select another one necessary toggle-switch (here needed two elements) / extra toggle-switch (optional)
+            while 1==1:
+                try:
+                    toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
+                    self.highlight(toggle_1)
+                    time.sleep(2)
+                    driver.find_element(By.XPATH,f"//div[@value='Высокий рейтинг']//div[@class='{changing_class}']").click()
+                    time.sleep(2)
+                    break
+                except NoSuchElementException:
+                    pass
+                    break
+                
+            # down to this element:
+            deliver = driver.find_element(By.XPATH,"//*[contains(text(),'доставит')]")
+            driver.execute_script("arguments[0].scrollIntoView();", deliver)
 
-            # select another one necessary toggle-switch (here needed two elements)
-            toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
-            self.highlight(toggle_1)
-            time.sleep(2)
-            driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']//div[@class='ui-w9']").click()
-            time.sleep(2)
-
-            # down + down + down
+            # up + up + up
             actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 13)
+            actions.send_keys(Keys.ARROW_UP * 14)
             actions.perform()
             time.sleep(2)
 
@@ -260,7 +254,7 @@ class ProductStore(unittest.TestCase):
             if quantity.text == "1":
                 print("----------------------------------------------------------------------")
                 print("")
-                print(Fore.GREEN + "1 - first check  = done! (necessary quantity product is in basket)")
+                print(Fore.GREEN + "1 - first check  = done!  (necessary quantity product is in basket)")
             else:
                 print("")
                 print(Fore.RED + "1 - first check  = error! (quantity does not match stated)")
@@ -289,7 +283,8 @@ class ProductStore(unittest.TestCase):
                     except UnexpectedAlertPresentException as e:
                         pass
                     print("")
-                    print(Fore.GREEN + "2 - second check = done! (counter was removed)")
+                    print(Fore.GREEN + "2 - second check = done!  (counter was removed)")
+                    result_1 = True
                     break
                 else:
                     try:
@@ -301,12 +296,13 @@ Error! Error! Такого не должно быть, данный тест н�
 Счётчик для количества товара на странице был найден. Failure!`)"""
                         # generate a alert via javascript
                         driver.execute_script(script)
-                        time.sleep(80)
+                        time.sleep(8)
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                     except UnexpectedAlertPresentException as e:
                         pass
                     print("")
                     print(Fore.RED + "2 - second check = error! (counter was not removed)")
+                    result_1 = False
                     break
                 
             time.sleep(1)
@@ -325,7 +321,7 @@ Error! Error! Такого не должно быть, данный тест н�
             # 3 - third check (one more checking quantity) (2)
             if quantity_1.text == "1":
                 print("")
-                print(Fore.GREEN + "3 - third check  = done! (necessary quantity product is in basket)")
+                print(Fore.GREEN + "3 - third check  = done!  (necessary quantity product is in basket)")
             else:
                 print("")
                 print(Fore.RED + "3 - third check  = error! (quantity does not match stated)")
@@ -375,7 +371,8 @@ Error! Error! Такого не должно быть, данный тест н�
                     except UnexpectedAlertPresentException as e:
                         pass
                     print("")
-                    print(Fore.GREEN + "4 - fourth check = done! (counter was removed again)")
+                    print(Fore.GREEN + "4 - fourth check = done!  (counter was removed again)")
+                    result_2 = True
                     break
                 else:
                     try:
@@ -393,6 +390,7 @@ Error! Error! Такого не должно быть, данный тест н�
                         pass
                     print("")
                     print(Fore.RED + "4 - fourth check = error! (counter was not removed)")
+                    result_2 = False
                     break
             
             time.sleep(1)
@@ -411,7 +409,7 @@ Error! Error! Такого не должно быть, данный тест н�
             # 5 - fifth check (checking quantity)
             if quantity_2.text == "1":
                 print("")
-                print(Fore.GREEN + "5 - fifth check  = done! (necessary quantity product is in basket)")
+                print(Fore.GREEN + "5 - fifth check  = done!  (necessary quantity product is in basket)")
             else:
                 print("")
                 print(Fore.RED + "5 - fifth check  = error! (quantity does not match stated)")
@@ -461,9 +459,10 @@ Error! Error! Такого не должно быть, данный тест н�
                     except UnexpectedAlertPresentException as e:
                         pass
                     print("")
-                    print(Fore.GREEN + "6 - sixth check  = done! (counter was removed again-again)")
+                    print(Fore.GREEN + "6 - sixth check  = done!  (counter was removed again-again)")
                     print(Fore.RESET + "")
-                    # print("----------------------------------------------------------------------") # for (.bat) file start 
+                    print("----------------------------------------------------------------------") # for (.bat) file start 
+                    result_3 = True
                     break
                 else:
                     quantity_3 = driver.find_element(by=By.XPATH, value=counter)
@@ -482,8 +481,27 @@ Error! Error! Такого не должно быть, данный тест н�
                     print("")
                     print(Fore.RED + "6 - sixth check  = error! (counter was not removed)")
                     print(Fore.RESET + "")
-                    # print("----------------------------------------------------------------------") # for (.bat) file start
+                    print("----------------------------------------------------------------------") # for (.bat) file start
+                    result_3 = False
                     break
+            
+            if (result_1 == True and result_2 == True and result_3 == True):
+                print("TEST SUCCESSFULLY (all checks were successful)")
+                print("All control elements (UI) for removing an item\nfrom basket also delete quantity counter of the item.")
+            elif (result_1 == False or result_2 == False or result_3 == False):
+                print("TEST FAILURE (some of checks were not passed)")
+                print("Some control elements (UI) for removing an item\nfrom basket not delete quantity counter of the item.")
+            
+            print("")
+            print("")        
+            print("What values were used:")
+            print(f"product = {product}")
+            print("")
+            print("+ What was checked:") 
+            print("2 - second check => checked was button - [-] (minus)")
+            print("4 - fourth check => checked was button - [delete] (Удалить)")
+            print("6 - sixth check  => checked was button - [delete ALL] (Удалить выбранные)")
+            print("----------------------------------------------------------------------") # for (.bat) file start
         ###############################################################################################################################################
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException) as ex:
             try:
@@ -554,9 +572,9 @@ Error! Error! Такого не должно быть, данный тест н�
         finally: self.accept_next_alert = True
     
     def tearDown(self):
+        self.driver.close()
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-        # time.sleep(14) # for CMD
 
 if __name__ == "__main__":
     unittest.main()

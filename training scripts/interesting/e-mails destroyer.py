@@ -24,6 +24,7 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import ElementNotInteractableException
 
+# ChromiumService
 s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
@@ -41,8 +42,8 @@ class SpamDestroy(unittest.TestCase):
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
-        self.driver.implicitly_wait(3)
-        self.wait = WebDriverWait(self.driver, 3) 
+        self.driver.implicitly_wait(5)
+        self.wait = WebDriverWait(self.driver, 5) 
         
     def PrintException(self):
         exc_type, exc_obj, tb = sys.exc_info()
@@ -60,7 +61,7 @@ class SpamDestroy(unittest.TestCase):
         except (NoSuchElementException, TimeoutException) as e: return False
         return True
        
-    def test_killers(self):
+    def test_killers_email(self):
         while 1==1:
             try: 
                 driver = self.driver
@@ -87,7 +88,32 @@ class SpamDestroy(unittest.TestCase):
                 search = driver.find_element(By.XPATH,"//div[@aria-label='Поиск почты']")
                 search.click()
                 time.sleep(2)
+                
+                # Здесь вот имеется странная ошибка из-за режима - [Расширенный поиск].
+                # Без его включения всё отлично работает (с ним нет, но мне он нужен).
+                # Exception type: ElementNotInteractableException (тип этой ошибки)
+                # Exception message: element not interactable (сообщение что не так)
+                # while 1==1:
+                #     try:
+                #         empty = driver.find_element(By.XPATH,"//tr[@class='TD']//a[@ghelpcontext='broaden_search']")
+                #         driver.execute_script("arguments[0].scrollIntoView();", empty)
+                #         break
+                #     except NoSuchElementException:
+                #         pass
+                
+                #         # check checkbox = [ALL] (necessary choice)
+                #         checkbox = driver.find_element(By.CSS_SELECTOR,"span[style='user-select: none;']")
+                #         checkbox.click()
+                #         time.sleep(2)
+                        
+                #         # press button - [delete] (main functionality)
+                #         delete = driver.find_element(By.CSS_SELECTOR,"div[aria-label='Удалить']")
+                #         delete.click()
+                #         time.sleep(2) 
+                #         break
             
+                # И мне пришлось прибегнуть к помощи pyautogui (my experiments).
+                # Однако, такой вот необычный способ здесь вот отлично работает. 
                 while 1==1:
                     try:
                         empty = driver.find_element(By.XPATH,"//tr[@class='TD']//a[@ghelpcontext='broaden_search']")
@@ -259,9 +285,9 @@ class SpamDestroy(unittest.TestCase):
         finally: self.accept_next_alert = True
     
     def tearDown(self):
+        self.driver.close()
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-        # time.sleep(14) # for CMD
 
 if __name__ == "__main__":
     unittest.main()

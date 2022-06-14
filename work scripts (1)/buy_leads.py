@@ -247,5 +247,6 @@ except (NoSuchElementException, TimeoutException) as ex:
     # print("")
     # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
 
+driver.close()
 driver.quit()
 

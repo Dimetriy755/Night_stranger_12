@@ -1,0 +1,28 @@
+----------------------------------------------------------------------
+
+1 - first check  = done!  (necessary quantity product is in basket)
+
+2 - second check = done!  (counter was removed)
+
+3 - third check  = done!  (necessary quantity product is in basket)
+
+4 - fourth check = done!  (counter was removed again)
+
+5 - fifth check  = done!  (necessary quantity product is in basket)
+
+6 - sixth check  = done!  (counter was removed again-again)
+
+----------------------------------------------------------------------
+TEST SUCCESSFULLY (all checks were successful)
+All control elements (UI) for removing an item
+from basket also delete quantity counter of the item.
+
+
+What values were used:
+product = Трансмиссионное масло NISSAN CVT NS-2, 5л
+
++ What was checked:
+2 - second check => checked was button - [-] (minus)
+4 - fourth check => checked was button - [delete] (Удалить)
+6 - sixth check  => checked was button - [delete ALL] (Удалить выбранные)
+----------------------------------------------------------------------
