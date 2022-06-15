@@ -203,7 +203,7 @@ class ProductStore(unittest.TestCase):
             input.click()
             
             actions = ActionChains(driver) 
-            actions.send_keys(Keys.BACKSPACE * 4)
+            actions.send_keys(Keys.BACKSPACE * 5)
             actions.perform()
             
             input.send_keys('8000')
