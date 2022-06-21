@@ -59,7 +59,7 @@ class ProductStore(unittest.TestCase):
         # явное ожидание (когда нужно дождаться выполнения неких условий прежде чем идти дальше)
         self.wait = WebDriverWait(self.driver, 3) 
         
-    # method (function) for highlighting elements
+    # function for highlighting elements
     def highlight(self, element):
         # highlights (it blinks) selenium webdriver element
         # if element was not highlighted before click, it means
@@ -72,8 +72,8 @@ class ProductStore(unittest.TestCase):
         time.sleep(2)
         apply_style(original_style)
         
-    # method (function) for printing filename, linenumber,
-    # line itself and exception descrpition (if exception)
+    # function for printing filename, linenumber, line itself, 
+    # exceptions descriptions (if suddenly will be exceptions)
     def PrintException(self):
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame
@@ -84,14 +84,14 @@ class ProductStore(unittest.TestCase):
         # print("")
         print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
         
-    # method (function) used for checking is there element on page
+    # function used for checking is there element on page
     def check_exists_by_xpath(self, xpath):
         try:
             self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
         except (NoSuchElementException, TimeoutException) as e: return False
         return True
        
-    # method (function) for creating ordering
+    # function for creating ordering
     def creating_order(self):
         try: 
             # driver-driver    
@@ -104,34 +104,34 @@ class ProductStore(unittest.TestCase):
             driver.maximize_window()
             time.sleep(2)
 
-            # enter select product category mode (open modal window)
+            # enters select product category mode (opens modal window)
             select = driver.find_element(By.XPATH,"//span[@title='Везде']")
             driver.execute_script("arguments[0].scrollIntoView();", select)
             self.highlight(select)
             select.click()
             time.sleep(2)
 
-            # going down up to highlighted categories
+            # goes down up to highlighted categories
             discount = driver.find_element(By.XPATH,"//div[contains(text(),'Уценённые товары')]")
             driver.execute_script("arguments[0].scrollIntoView();", discount)
             self.highlight(discount)
             time.sleep(2)
 
-            # select specific category
+            # selects specific category
             category = driver.find_element(By.XPATH,"//div[contains(text(),'Автотовары')]")
             driver.execute_script("arguments[0].scrollIntoView();", category)
             self.highlight(category)
             category.click()
             time.sleep(2)
 
-            # text-box + variable
+            # text-box + variable (product)
             text_box = driver.find_element(By.NAME,"text")
             text_box.click()
             self.highlight(text_box)
             text_box.send_keys(product)
             time.sleep(2)
 
-            # highlighting - [search] + [enter]
+            # button highlighting - [search] + presses key - [enter]
             search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
             driver.execute_script("arguments[0].scrollIntoView();", search)
             self.highlight(search)
@@ -144,7 +144,7 @@ class ProductStore(unittest.TestCase):
             actions.perform()
             time.sleep(2)
 
-           # select necessary check-box №1
+           # selects necessary check-box №1
             check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")
             self.highlight(check_box)
             time.sleep(2)
@@ -153,25 +153,25 @@ class ProductStore(unittest.TestCase):
             
             # down + down + down
             actions = ActionChains(driver) 
-            actions.send_keys(Keys.ARROW_DOWN * 12)
+            actions.send_keys(Keys.ARROW_DOWN * 14)
             actions.perform()
             time.sleep(2)
 
-            # select necessary check-box №2
+            # selects necessary check-box №2
             check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'Ойл бар')]")
             self.highlight(check_box)
             time.sleep(2)
             driver.execute_script("arguments[0].click();", check_box)
             time.sleep(2)
 
-            # select necessary toggle-switch (two elements are specially selected)
+            # selects necessary toggle-switch №1
             toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
             self.highlight(toggle)
             time.sleep(2)
             driver.find_element(By.XPATH,f"//div[@value='Товары со скидкой']//div[@class='{changing_class}']").click()
             time.sleep(2)
             
-            # select another one necessary toggle-switch (here needed two elements) / extra toggle-switch (optional)
+            # selects one more toggle-switch №2 / this is extra toggle-switch (selects his optional)
             while 1==1:
                 try:
                     toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
@@ -180,6 +180,7 @@ class ProductStore(unittest.TestCase):
                     driver.find_element(By.XPATH,f"//div[@value='Высокий рейтинг']//div[@class='{changing_class}']").click()
                     time.sleep(2)
                     break
+                # if missing toggle-switch, then script goes on
                 except NoSuchElementException:
                     pass
                     break
@@ -194,7 +195,7 @@ class ProductStore(unittest.TestCase):
             actions.perform()
             time.sleep(2)
 
-            # add to product basket
+            # adds to product basket (1)
             add = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
             self.highlight(add)
             driver.execute_script("arguments[0].click();", add)
@@ -256,10 +257,11 @@ class ProductStore(unittest.TestCase):
                 print("")
                 print(Fore.GREEN + "1 - first check  = done!  (necessary quantity product is in basket)")
             else:
+                print("----------------------------------------------------------------------")
                 print("")
                 print(Fore.RED + "1 - first check  = error! (quantity does not match stated)")
 
-            # button minus - [-] (remove product)
+            # presses button minus - [-] (removes product)
             minus = driver.find_element(By.XPATH,"//div[@data-widget='megaPaginator']//div[@data-widget='searchResultsV2']//button[@type='button']")
             self.highlight(minus)
             minus.click()
@@ -307,7 +309,7 @@ Error! Error! Такого не должно быть, данный тест н�
                 
             time.sleep(1)
 
-            # add to product basket (2)
+            # adds to product basket (2)
             add_1 = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
             self.highlight(add_1)
             driver.execute_script("arguments[0].click();", add_1)
@@ -326,28 +328,28 @@ Error! Error! Такого не должно быть, данный тест н�
                 print("")
                 print(Fore.RED + "3 - third check  = error! (quantity does not match stated)")
 
-            # button - [basket] + highlighting
+            # presses button - [basket] + highlighting (1)
             basket = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Корзина')]")
             self.highlight(basket)
             basket.click()
             time.sleep(2)
 
-            # remove modal window + highlighting product on page
+            # removes extra modal window (if advertisement) (1)
             ActionChains(driver).key_down(Keys.ESCAPE).perform()
             time.sleep(2)
 
-            # product highlighting 
+            # product highlighting on page (1)
             item = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{product}')]")
             self.highlight(item)
             time.sleep(1)
 
-            # button - [delete] (open modal window)
+            # presses button - [delete] (opens modal window)
             delete = driver.find_element(By.XPATH,"//div[@data-widget='split']//button[@type='button']//span[text()='Удалить']")
             self.highlight(delete)
             delete.click()
             time.sleep(2)
 
-            # button - [delete] (remove product and counter)
+            # presses button - [delete] (removes product and counter) (1)
             delete_1 = driver.find_element(By.XPATH,"//div[@class='vue-portal-target']//button[@type='button']//span[text()='Удалить']")
             self.highlight(delete_1)
             delete_1.click()
@@ -414,28 +416,28 @@ Error! Error! Такого не должно быть, данный тест н�
                 print("")
                 print(Fore.RED + "5 - fifth check  = error! (quantity does not match stated)")
 
-            # button - [basket] + highlighting (2)
+            # presses button - [basket] + highlighting (2)
             basket_1 = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Корзина')]")
             self.highlight(basket_1)
             basket_1.click()
             time.sleep(2)
 
-            # remove modal window + highlighting product on page
+            # removes extra modal window (if advertisement) (2)
             # ActionChains(driver).key_down(Keys.ESCAPE).perform()
             # time.sleep(2)
 
-            # product highlighting (2)
+            # product highlighting on page (2)
             item_1 = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{product}')]")
             self.highlight(item_1)
             time.sleep(1)
 
-            # delete ALL!!! (open modal window)
+            # presses button - [delete ALL] (opens modal window)
             delete_ALL = driver.find_element(by=By.XPATH, value="//*[contains(text(),'Удалить выбранные')]")
             self.highlight(delete_ALL)
             delete_ALL.click()
             time.sleep(2)
 
-            # button - [delete] (remove all products and counter) (2)
+            # presses button - [delete] (removes all products and counter) (2)
             delete_2 = driver.find_element(By.XPATH,"//div[@class='ui-i1']//span[text()='Удалить']")
             self.highlight(delete_2)
             delete_2.click()
@@ -485,6 +487,7 @@ Error! Error! Такого не должно быть, данный тест н�
                     result_3 = False
                     break
             
+            # test results (will be selected by script)
             if (result_1 == True and result_2 == True and result_3 == True):
                 print("TEST SUCCESSFULLY (all checks were successful)")
                 print("All control elements (UI) for removing an item\nfrom basket also delete quantity counter of the item.")
@@ -492,6 +495,7 @@ Error! Error! Такого не должно быть, данный тест н�
                 print("TEST FAILURE (some of checks were not passed)")
                 print("Some control elements (UI) for removing an item\nfrom basket not delete quantity counter of the item.")
             
+            # test data / all checks
             print("")
             print("")        
             print("What values were used:")

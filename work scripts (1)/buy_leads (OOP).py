@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+import os
 import sys
 import keyboard
 import linecache
@@ -27,22 +28,34 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import ElementClickInterceptedException
 
-options = webdriver.ChromeOptions() 
-options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
+# ChromiumService
 s = Service('C:\\chromedriver\\chromedriver.exe')
+options = webdriver.ChromeOptions() 
+
+# if you authorized somewhere, then launch browser with your user session (just close your Chrome)
+options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
+
+# removing extra traceback
 sys.tracebacklimit = 0
-init (autoreset = True) # use Colorama to make Termcolor work on Windows too
+
+# use Colorama to make Termcolor work on Windows too
+init (autoreset = True) 
 
 class BuyLeads(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome(service=s, options=options)
-        self.driver.implicitly_wait(4) # for so many seconds, he searches for the HTML element
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
         
-    # method (function) for printing filename, linenumber,
-    # line itself and exception descrpition (if exception)
+        # for so many seconds, he searches for the HTML element
+        self.driver.implicitly_wait(4) # implicit expectation
+        
+        # for so many seconds, he searches for the HTML element
+        self.wait = WebDriverWait(self.driver, 4) # explicit expectation
+        
+    # function for printing filename, linenumber, line itself, 
+    # exceptions descriptions (if suddenly will be exceptions)
     def PrintException(self):
         exc_type, exc_obj, tb = sys.exc_info()
         f = tb.tb_frame
@@ -52,35 +65,48 @@ class BuyLeads(unittest.TestCase):
         line = linecache.getline(filename, lineno, f.f_globals)
         # print("")
         print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
+        
+    # function used for checking is there element on page
+    def check_exists_by_xpath(self, xpath):
+        try:
+            self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
+        except (NoSuchElementException, TimeoutException) as e: return False
+        return True
     
     def test_buy_leads(self):
         try:
+            # driver-driver
+            driver = self.driver
+            
+            # var for exit
+            exit_1 = False
+            
             driver = self.driver
             # Go to the page to buy leads
             driver.get("https://advert.apileads.tech/lead/")
-            wait = WebDriverWait(driver, 4)
             time.sleep(1)
-    
-            # function used for checking is there element on page
-            def check_exists_by_xpath(xpath):
+            
+            while 1==1:
                 try:
-                    wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
-                except (NoSuchElementException, TimeoutException) as e: return False
-                return True
+                    authorization = driver.find_element(By.XPATH,"//*[contains(text(),'Авторизация')]")
+                    break
+                except NoSuchElementException:
+                    pass
 
-            # brand selection
-            N = 12  # number of times you want to press - [TAB]
-            actions = ActionChains(driver)
-            for _ in range(N):
-                actions = actions.send_keys(Keys.TAB)
-            actions.perform()
-            time.sleep(1)
-            ActionChains(driver).key_down(Keys.SHIFT).key_down(Keys.ENTER).perform()
-            time.sleep(1)
-            ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
-            time.sleep(1)
-            ActionChains(driver).key_down(Keys.ENTER).perform()
-            time.sleep(1)
+                    # brand selection
+                    N = 12  # number of times you want to press - [TAB]
+                    actions = ActionChains(driver)
+                    for _ in range(N):
+                        actions = actions.send_keys(Keys.TAB)
+                    actions.perform()
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.SHIFT).key_down(Keys.ENTER).perform()
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
+                    time.sleep(1)
+                    ActionChains(driver).key_down(Keys.ENTER).perform()
+                    time.sleep(1)     
+                    break
 
             # Vertical
             Select(driver.find_element(By.ID,"leads_leadType")).select_by_visible_text("General")
@@ -143,7 +169,7 @@ class BuyLeads(unittest.TestCase):
             try:
                 # write script
                 script = """alert(`10 - секунд вам даётся на проверку всех параметров вашего заказа!
-            Если что-то пошло не так, то остановите выполнение программы.`)"""
+Если что-то пошло не так, то остановите выполнение программы.`)"""
                 # generate a alert via javascript
                 driver.execute_script(script)
                 time.sleep(10)
@@ -169,14 +195,14 @@ class BuyLeads(unittest.TestCase):
             # 2 - second check
             while 1==1:
                 
-                element = check_exists_by_xpath("//*[contains(text(),'Заказ ID')]")
+                element = self.check_exists_by_xpath("//*[contains(text(),'Заказ ID')]")
 
                 if element is True:
                     try:
                         # write script
                         script = """alert(`Если вы нажали кнопку - [Подтвердить], то ваш заказ уже был
-                    создан и вы видите его ID. Вам осталось только оплатить ваш
-                    заказ, сейчас он находится в статусе: «Ожидает оплаты».`)"""
+создан и вы видите его ID. Вам осталось только оплатить ваш
+заказ, сейчас он находится в статусе: «Ожидает оплаты».`)"""
                         # generate a alert via javascript
                         driver.execute_script(script)
                         time.sleep(10)
@@ -213,7 +239,7 @@ class BuyLeads(unittest.TestCase):
             # 4 - fourth check
             while 1==1:
                 
-                element = check_exists_by_xpath("//*[contains(text(),'Заказ оплачен')]")
+                element = self.check_exists_by_xpath("//*[contains(text(),'Заказ оплачен')]")
 
                 if element is True:
                     try:
@@ -232,7 +258,8 @@ class BuyLeads(unittest.TestCase):
                     print("")
                     print(Fore.RED + "4 - fourth check = error!")
                     break
-
+                
+        # catch.. catch.. catch..
         ################################################################################################################################################################################
         except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException, ElementNotInteractableException) as ex:
             try:
@@ -259,12 +286,17 @@ class BuyLeads(unittest.TestCase):
             # for (.bat) file start / or alternative
             print("----------------------------------------------------------------------") 
             print("TEST FAILED (requested element was not found on page)") 
+            exit_1 = True 
             self.tearDown()
-            os._exit(0)
             
             # to see how test falls
             # sys.exit()
         ################################################################################################################################################################################
+        # ENDING (script execution)
+        
+        # exit-exit
+        if exit_1 == True:
+            os._exit(0)
         
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)

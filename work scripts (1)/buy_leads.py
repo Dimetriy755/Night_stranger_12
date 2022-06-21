@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 from asyncio import log
 import linecache
+import os
 import sys
 from tkinter import E
 import keyboard
@@ -23,56 +24,77 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import UnexpectedAlertPresentException
 
-options = webdriver.ChromeOptions() 
-options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
+# ChromiumService
 s = Service('C:\\chromedriver\\chromedriver.exe')
-driver = webdriver.Chrome(service=s, options=options)
-driver.implicitly_wait(4) # for so many seconds, he searches for the HTML element
+options = webdriver.ChromeOptions() 
+
+# if you authorized somewhere, then launch browser with your user session (just close your Chrome)
+options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
+
+# all necessary variables
 base_url = "https://www.google.com/"
-verificationErrors = []
-accept_next_alert = True
-wait = WebDriverWait(driver, 4)
+driver = webdriver.Chrome(service=s, options=options)
+
+# removing extra traceback
 sys.tracebacklimit = 0
-init (autoreset = True) # use Colorama to make Termcolor work on Windows too
+
+# for so many seconds, he searches for the HTML-element
+driver.implicitly_wait(3) # implicit expectation
+
+# for so many seconds, he searches for the HTML-element
+wait = WebDriverWait(driver, 3) # explicit expectation
+
+# use Colorama to make Termcolor work on Windows too
+init (autoreset = True)
+
+# var for exit
+exit_1 = False
+
+# function for printing filename, linenumber, line
+# itself and exception descrpition (if exception)
+def PrintException():
+    exc_type, exc_obj, tb = sys.exc_info()
+    f = tb.tb_frame
+    lineno = tb.tb_lineno
+    filename = f.f_code.co_filename
+    linecache.checkcache(filename)
+    line = linecache.getline(filename, lineno, f.f_globals)
+    # print("")
+    print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
+        
+# function used for checking is there element on page
+def check_exists_by_xpath(xpath):
+    try:
+        wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
+    except (NoSuchElementException, TimeoutException) as e: return False
+    return True
 
 try:
-
-    # function used for checking is there element on page
-    def check_exists_by_xpath(xpath):
-        try:
-            wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
-        except (NoSuchElementException, TimeoutException) as e: return False
-        return True
-    
-    # function for printing filename, linenumber, line
-    # itself and exception descrpition (if exception)
-    def PrintException():
-        exc_type, exc_obj, tb = sys.exc_info()
-        f = tb.tb_frame
-        lineno = tb.tb_lineno
-        filename = f.f_code.co_filename
-        linecache.checkcache(filename)
-        line = linecache.getline(filename, lineno, f.f_globals)
-        # print("")
-        print('EXCEPTION IN: =>\nPATH / FILE: {} =>\nLINE NUMBER: {} =>\nVARIABLE / ELEMENT: {}'.format(filename, lineno, line.strip()))
-
     # Go to the page to buy leads
     driver.get("https://advert.apileads.tech/lead/")
     time.sleep(1)
 
-    # brand selection
-    N = 12  # number of times you want to press - [TAB]
-    actions = ActionChains(driver)
-    for _ in range(N):
-        actions = actions.send_keys(Keys.TAB)
-    actions.perform()
-    time.sleep(1)
-    ActionChains(driver).key_down(Keys.SHIFT).key_down(Keys.ENTER).perform()
-    time.sleep(1)
-    ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
-    time.sleep(1)
-    ActionChains(driver).key_down(Keys.ENTER).perform()
-    time.sleep(1)
+    while 1==1:
+        try:
+            authorization = driver.find_element(By.XPATH,"//*[contains(text(),'Авторизация')]")
+            break
+        except NoSuchElementException:
+            pass
+
+            # brand selection
+            N = 12  # number of times you want to press - [TAB]
+            actions = ActionChains(driver)
+            for _ in range(N):
+                actions = actions.send_keys(Keys.TAB)
+            actions.perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.SHIFT).key_down(Keys.ENTER).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
+            time.sleep(1)
+            ActionChains(driver).key_down(Keys.ENTER).perform()
+            time.sleep(1)     
+            break
 
     # Vertical
     Select(driver.find_element(By.ID,"leads_leadType")).select_by_visible_text("General")
@@ -224,7 +246,9 @@ try:
             print("")
             print(Fore.RED + "4 - fourth check = error!")
             break
-
+        
+# catch.. catch.. catch..   
+################################################################################################################################################################################
 except (NoSuchElementException, TimeoutException) as ex:
     try:
         # write script
@@ -246,6 +270,20 @@ except (NoSuchElementException, TimeoutException) as ex:
     print(f"Exception message: {ex.msg}")
     # print("")
     # log.logger.exception(f"Exception message: {ex.msg}", exc_info=False)
+    
+    # for (.bat) file start / or alternative
+    print("----------------------------------------------------------------------") 
+    print("TEST FAILED (requested element was not found on page)") 
+    exit_1 = True
+    driver.close()
+    driver.quit()
+    # sys.exit()
+################################################################################################################################################################################
+# ENDING (script execution)
+
+# exit-exit
+if exit_1 == True:
+    os._exit(0)
 
 driver.close()
 driver.quit()

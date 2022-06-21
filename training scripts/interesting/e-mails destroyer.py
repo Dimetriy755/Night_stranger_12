@@ -64,6 +64,8 @@ class SpamDestroy(unittest.TestCase):
     def test_killers_email(self):
         while 1==1:
             try: 
+                exit_1 = False
+                
                 driver = self.driver
                 driver.get("https://www.google.com/")
                 driver.maximize_window()
@@ -251,17 +253,19 @@ class SpamDestroy(unittest.TestCase):
                 print("Exception type: %s" %ex_type.__name__)
                 print("")
                 print(f"Exception message: {ex.msg}")
-                
-                # for (.bat) file start / or alternative
                 print("----------------------------------------------------------------------") 
-                print("TEST FAILED (requested element was not found on page)") 
+                print("TEST FAILED (requested element was not found on page)")
+                exit_1 = True 
                 self.tearDown()
-                os._exit()
                 
                 # to see how test falls
                 # sys.exit()
             ################################################################################################################################################################################
             # FUNCTION END
+            
+        # exit-exit
+        if exit_1 == True:
+            os._exit(0)
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
