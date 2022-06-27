@@ -24,8 +24,8 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import ElementNotInteractableException
 
-# ChromiumService
-s = Service('C:\\chromedriver\\chromedriver.exe')
+# ChromiumService + ChromiumOptions
+# service = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 
@@ -38,12 +38,12 @@ sys.tracebacklimit = 0
 # go from zero to hero
 class SpamDestroy(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome(service=s, options=options)
+        self.driver = webdriver.Chrome(executable_path="C:\\chromedriver\\chromedriver.exe", options=options)
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
         self.driver.implicitly_wait(5)
-        self.wait = WebDriverWait(self.driver, 5) 
+        self.wait = WebDriverWait(self.driver, 5, 0.3) 
         
     def PrintException(self):
         exc_type, exc_obj, tb = sys.exc_info()
@@ -64,7 +64,7 @@ class SpamDestroy(unittest.TestCase):
     def test_killers_email(self):
         while 1==1:
             try: 
-                exit_1 = False
+                # exit_1 = False
                 
                 driver = self.driver
                 driver.get("https://www.google.com/")
@@ -106,11 +106,13 @@ class SpamDestroy(unittest.TestCase):
                 #         # check checkbox = [ALL] (necessary choice)
                 #         checkbox = driver.find_element(By.CSS_SELECTOR,"span[style='user-select: none;']")
                 #         checkbox.click()
+                #         checkbox = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,"span[style='user-select: none;']"))).click()
                 #         time.sleep(2)
                         
                 #         # press button - [delete] (main functionality)
                 #         delete = driver.find_element(By.CSS_SELECTOR,"div[aria-label='Удалить']")
                 #         delete.click()
+                #         delete = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,"div[aria-label='Удалить']"))).click()
                 #         time.sleep(2) 
                 #         break
             
@@ -255,8 +257,9 @@ class SpamDestroy(unittest.TestCase):
                 print(f"Exception message: {ex.msg}")
                 print("----------------------------------------------------------------------") 
                 print("TEST FAILED (requested element was not found on page)")
-                exit_1 = True 
+                # exit_1 = True 
                 self.tearDown()
+                os._exit(0)
                 
                 # to see how test falls
                 # sys.exit()
@@ -264,8 +267,8 @@ class SpamDestroy(unittest.TestCase):
             # FUNCTION END
             
         # exit-exit
-        if exit_1 == True:
-            os._exit(0)
+        # if exit_1 == True:
+        #     os._exit(0)
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
@@ -273,13 +276,13 @@ class SpamDestroy(unittest.TestCase):
         return True
     
     def is_alert_present(self):
-        try: self.driver.switch_to_alert()
+        try: self.driver.switch_to.alert()
         except (NoSuchElementException, TimeoutException) as e: return False
         return True
     
     def close_alert_and_get_its_text(self):
         try:
-            alert = self.driver.switch_to_alert()
+            alert = self.driver.switch_to.alert()
             alert_text = alert.text
             if self.accept_next_alert:
                 alert.accept()
