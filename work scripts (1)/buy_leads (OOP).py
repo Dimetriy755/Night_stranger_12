@@ -28,7 +28,7 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import ElementClickInterceptedException
 
-# ChromiumService
+# ChromiumService + ChromiumOptions
 s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions() 
 
@@ -300,17 +300,17 @@ class BuyLeads(unittest.TestCase):
         
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
-        except (NoSuchElementException, TimeoutException) as e: return False
+        except NoSuchElementException as e: return False
         return True
     
     def is_alert_present(self):
-        try: self.driver.switch_to_alert()
-        except (NoSuchElementException, TimeoutException) as e: return False
+        try: self.driver.switch_to.alert()
+        except NoAlertPresentException as e: return False
         return True
     
     def close_alert_and_get_its_text(self):
         try:
-            alert = self.driver.switch_to_alert()
+            alert = self.driver.switch_to.alert()
             alert_text = alert.text
             if self.accept_next_alert:
                 alert.accept()
@@ -323,7 +323,7 @@ class BuyLeads(unittest.TestCase):
         self.driver.close()
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
-
+        
 if __name__ == "__main__":
     unittest.main()
 

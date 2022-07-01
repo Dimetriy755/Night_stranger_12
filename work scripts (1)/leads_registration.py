@@ -23,7 +23,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import UnexpectedAlertPresentException
 
-# ChromiumService
+# ChromiumService + ChromiumOptions
 s = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions() 
 

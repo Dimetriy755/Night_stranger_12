@@ -40,7 +40,7 @@ product = str("Масло трансмиссионное Nissan")
 seller = str("официальный дилер NISSAN") 
 
 # changing class (иногда)
-changing_class = str("ui-ac6")
+changing_class = str("ui-ab5")
 
 # verifiable counter (can have any number, but will be
 # caught if 0, and if not 1 or 3, then it will be an error)
@@ -64,7 +64,7 @@ class ProductStore(unittest.TestCase):
         self.driver.implicitly_wait(3)
         
         # явное ожидание (когда нужно дождаться выполнения неких условий прежде чем идти дальше)
-        self.wait = WebDriverWait(self.driver, 3)
+        self.wait = WebDriverWait(self.driver, 3, 0.3)
         
     # function for highlighting elements
     def highlight(self, element):
@@ -153,10 +153,12 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # selects necessary check-box №1
-                check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")
-                self.highlight(check_box)
+                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")
+                self.highlight(check_box_1)
                 time.sleep(2)
-                driver.execute_script("arguments[0].click();", check_box)
+                driver.execute_script("arguments[0].click();", check_box_1)
+                was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'NISSAN')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                self.assertTrue(was_is_checked_box_1.is_selected())
                 time.sleep(2)
                 
                 # setting product price (optional)
@@ -186,25 +188,29 @@ class ProductStore(unittest.TestCase):
                     except NoSuchElementException:
                         pass
                         break
-                
-                # down + down + down
-                actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_DOWN * 18)
-                actions.perform()
-                time.sleep(2)
 
                 # selects necessary check-box №2
-                check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{seller}')]")
-                self.highlight(check_box)
+                check_box_2 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{seller}')]")
+                driver.execute_script("arguments[0].scrollIntoView();", check_box_2)
+                
+                # up + up + up
+                actions = ActionChains(driver) 
+                actions.send_keys(Keys.ARROW_UP * 12)
+                actions.perform()
                 time.sleep(2)
-                driver.execute_script("arguments[0].click();", check_box)
+                
+                self.highlight(check_box_2)
+                time.sleep(2)
+                driver.execute_script("arguments[0].click();", check_box_2)
+                was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                self.assertTrue(was_is_checked_box_2.is_selected())
                 time.sleep(2)
                 
                 # selects toggle-switch №1 / this is extra toggle-switch (selects his optional)
                 while 1==1:
                     try:
-                        toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
-                        driver.execute_script("arguments[0].scrollIntoView();", toggle)
+                        toggle_1 = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
+                        driver.execute_script("arguments[0].scrollIntoView();", toggle_1)
                         
                         # up + up + up
                         actions = ActionChains(driver) 
@@ -212,7 +218,7 @@ class ProductStore(unittest.TestCase):
                         actions.perform()
                         time.sleep(2)
                         
-                        self.highlight(toggle)
+                        self.highlight(toggle_1)
                         time.sleep(2)
                         driver.find_element(By.XPATH,f"//div[@value='Товары со скидкой']//div[@class='{changing_class}']").click()
                         time.sleep(2)
@@ -225,8 +231,8 @@ class ProductStore(unittest.TestCase):
                 # selects one more toggle-switch №2 / this is extra toggle-switch (selects his optional)
                 while 1==1:
                     try:
-                        toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
-                        driver.execute_script("arguments[0].scrollIntoView();", toggle_1)
+                        toggle_2 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
+                        driver.execute_script("arguments[0].scrollIntoView();", toggle_2)
                         
                         # up + up + up
                         actions = ActionChains(driver) 
@@ -234,7 +240,7 @@ class ProductStore(unittest.TestCase):
                         actions.perform()
                         time.sleep(2)
                         
-                        self.highlight(toggle_1)
+                        self.highlight(toggle_2)
                         time.sleep(2)
                         driver.find_element(By.XPATH,f"//div[@value='Высокий рейтинг']//div[@class='{changing_class}']").click()
                         time.sleep(2)
@@ -248,7 +254,7 @@ class ProductStore(unittest.TestCase):
                 deliver = driver.find_element(By.XPATH,"//*[contains(text(),'доставит')]")
                 driver.execute_script("arguments[0].scrollIntoView();", deliver)
 
-                # up + up + up
+                # # up + up + up
                 actions = ActionChains(driver) 
                 actions.send_keys(Keys.ARROW_UP * 14)
                 actions.perform()
@@ -459,6 +465,8 @@ class ProductStore(unittest.TestCase):
                     print("The quantity of the required product on the website is only one unit!")
                     print("(required product quantity = 1 and 1 - first check cannot be passed)")
                     print("=====================================================================")
+                    
+                self.checking_basket()
                 break
             ################################################################################################################################################################################
             except (NoSuchElementException, StaleElementReferenceException, ElementClickInterceptedException, JavascriptException, TimeoutException, ElementNotInteractableException) as ex:
@@ -501,6 +509,7 @@ class ProductStore(unittest.TestCase):
                 # for (.bat) file start / or alternative
                 print("----------------------------------------------------------------------") 
                 print("TEST FAILED (requested element was not found on page)") 
+                # break
                 self.tearDown()
                 os._exit(0)
                 
@@ -509,16 +518,55 @@ class ProductStore(unittest.TestCase):
             ################################################################################################################################################################################
             except WebDriverException:
                 pass
-                continue    
+                continue 
+    
+    # function for checking basket        
+    def checking_basket(self):
+        repeat = 5
+        for i in range(repeat):
+            try:
+                # driver-driver
+                driver = self.driver
+            
+                # goes to the basket
+                driver.get('https://www.ozon.ru/cart')
+                
+                # сhecking the title of the basket
+                self.assertEqual(self.driver.title,'OZON.ru - Моя корзина')
+                
+                # the statement that the product is in the basket
+                self.assertTrue(self.is_element_present(By.XPATH,f"//*[contains(text(),'{seller}')]"))
+                
+                # button-1
+                del_1 = str("//*[contains(text(),'Удалить выбранные')]")
+
+                # button-2
+                del_2 = str("//span[@style='border-radius: 8px;']/span[text()='Удалить']")
+                
+                # checks if there is + presses button - [delete ALL] (opens modal window)
+                self.assertTrue(self.is_element_present(By.XPATH, del_1))
+                delete_ALL = self.wait.until(EC.presence_of_element_located((By.XPATH, del_1))).click()
+
+                # checks if there is + presses button - [delete] (removes all products and counter)
+                self.assertTrue(self.is_element_present(By.XPATH, del_2))
+                delete_2 = driver.find_element(By.XPATH, del_2).click()
+                
+                # delete_2 = self.wait.until(EC.element_to_be_clickable((By.XPATH, del_2))).click()
+                
+                # checking that the basket is empty
+                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))
+                break
+            except WebDriverException:
+                pass
     
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
-        except (NoSuchElementException, TimeoutException) as e: return False
+        except NoSuchElementException as e: return False
         return True
     
     def is_alert_present(self):
         try: self.driver.switch_to.alert()
-        except (NoSuchElementException, TimeoutException) as e: return False
+        except NoAlertPresentException as e: return False
         return True
     
     def close_alert_and_get_its_text(self):
