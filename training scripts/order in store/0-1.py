@@ -61,10 +61,10 @@ class ProductStore(unittest.TestCase):
         self.accept_next_alert = True
         
         # неявное ожидание (когда страница ещё только загружается и элемента на ней может ещё не быть)
-        self.driver.implicitly_wait(3)
+        self.driver.implicitly_wait(5)
         
         # явное ожидание (когда нужно дождаться выполнения неких условий прежде чем идти дальше)
-        self.wait = WebDriverWait(self.driver, 3, 0.3)
+        self.wait = WebDriverWait(self.driver, 5, 0.3)
         
     # function for highlighting elements
     def highlight(self, element):
@@ -111,6 +111,9 @@ class ProductStore(unittest.TestCase):
                 # how to deploy screen
                 driver.maximize_window()
                 time.sleep(2)
+                
+                # сhecking the title of the home page
+                self.assertEqual(driver.title,'OZON — интернет-магазин. Миллионы товаров по выгодным ценам')
 
                 # enters select product category mode (opens modal window)
                 select = driver.find_element(By.XPATH,"//form[@action='/search']//span[@title='Везде']")
@@ -153,12 +156,18 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # selects necessary check-box №1
-                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")
+                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")                
                 self.highlight(check_box_1)
                 time.sleep(2)
                 driver.execute_script("arguments[0].click();", check_box_1)
-                was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'NISSAN')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                self.assertTrue(was_is_checked_box_1.is_selected())
+                while 1==1:
+                    try:
+                        was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'NISSAN')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        self.assertTrue(was_is_checked_box_1.is_selected())
+                        break
+                    except StaleElementReferenceException:
+                        pass
+                        continue
                 time.sleep(2)
                 
                 # setting product price (optional)
@@ -183,6 +192,9 @@ class ProductStore(unittest.TestCase):
                         self.highlight(input)
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                         time.sleep(2)
+                        
+                        new_value = driver.find_element(By.XPATH,"//div[@unit='[object Object]']//p[contains(text(),'до')]/preceding-sibling::input").get_attribute("value")
+                        self.assertIn('2000', new_value)
                         break
                     # if missing input, then script goes on 
                     except NoSuchElementException:
@@ -202,8 +214,14 @@ class ProductStore(unittest.TestCase):
                 self.highlight(check_box_2)
                 time.sleep(2)
                 driver.execute_script("arguments[0].click();", check_box_2)
-                was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                self.assertTrue(was_is_checked_box_2.is_selected())
+                while 1==1:
+                    try:
+                        was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        self.assertTrue(was_is_checked_box_2.is_selected())
+                        break
+                    except StaleElementReferenceException:
+                        pass
+                        continue
                 time.sleep(2)
                 
                 # selects toggle-switch №1 / this is extra toggle-switch (selects his optional)
@@ -532,7 +550,7 @@ class ProductStore(unittest.TestCase):
                 driver.get('https://www.ozon.ru/cart')
                 
                 # сhecking the title of the basket
-                self.assertEqual(self.driver.title,'OZON.ru - Моя корзина')
+                self.assertEqual(driver.title,'OZON.ru - Моя корзина')
                 
                 # the statement that the product is in the basket
                 self.assertTrue(self.is_element_present(By.XPATH,f"//*[contains(text(),'{seller}')]"))
@@ -549,9 +567,9 @@ class ProductStore(unittest.TestCase):
 
                 # checks if there is + presses button - [delete] (removes all products and counter)
                 self.assertTrue(self.is_element_present(By.XPATH, del_2))
-                delete_2 = driver.find_element(By.XPATH, del_2).click()
-                
-                # delete_2 = self.wait.until(EC.element_to_be_clickable((By.XPATH, del_2))).click()
+                delete_2 = self.wait.until(EC.element_to_be_clickable((By.XPATH, del_2)))
+                driver.execute_script("arguments[0].click();", delete_2)
+                time.sleep(1)
                 
                 # checking that the basket is empty
                 self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))
