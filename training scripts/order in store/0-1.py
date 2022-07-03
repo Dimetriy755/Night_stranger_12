@@ -141,6 +141,8 @@ class ProductStore(unittest.TestCase):
                 self.highlight(text_box)
                 text_box.send_keys(product)
                 time.sleep(2)
+                entered_value = driver.find_element(By.NAME,"text").get_attribute("value")
+                self.assertIn(product, entered_value)
 
                 # button highlighting - [search] + presses key - [enter]
                 search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
@@ -354,6 +356,9 @@ class ProductStore(unittest.TestCase):
                 self.highlight(basket)
                 basket.click()
                 time.sleep(2)
+                
+                # сhecking the title of the basket
+                self.assertEqual(driver.title,'OZON.ru - Моя корзина')
 
                 # removes extra modal window (if advertisement)
                 ActionChains(driver).key_down(Keys.ESCAPE).perform()

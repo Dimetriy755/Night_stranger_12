@@ -105,6 +105,9 @@ class ProductStore(unittest.TestCase):
                 # how to deploy screen
                 driver.maximize_window()
                 time.sleep(2)
+                
+                # сhecking the title of the home page
+                self.assertEqual(driver.title,'OZON — интернет-магазин. Миллионы товаров по выгодным ценам')
 
                 # enters select product category mode (opens modal window)
                 select = driver.find_element(By.XPATH,"//span[@title='Везде']")
@@ -340,6 +343,9 @@ Error! Error! Такого не должно быть, данный тест н�
                 self.highlight(basket)
                 basket.click()
                 time.sleep(2)
+                
+                # сhecking the title of the basket
+                self.assertEqual(driver.title,'OZON.ru - Моя корзина')
 
                 # removes extra modal window (if advertisement) (1)
                 ActionChains(driver).key_down(Keys.ESCAPE).perform()
@@ -360,7 +366,10 @@ Error! Error! Такого не должно быть, данный тест н�
                 delete_1 = driver.find_element(By.XPATH,"//div[@class='vue-portal-target']//button[@type='button']//span[text()='Удалить']")
                 self.highlight(delete_1)
                 delete_1.click()
-                time.sleep(2)            
+                time.sleep(2)   
+                
+                # checking that the basket is empty (1)
+                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))         
 
                 # 4 - fourth check (that again, counter was removed)
                 while 1==1:
@@ -449,6 +458,9 @@ Error! Error! Такого не должно быть, данный тест н�
                 self.highlight(delete_2)
                 delete_2.click()
                 time.sleep(2)
+                
+                # checking that the basket is empty (2)
+                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))
 
                 # 6 - sixth check (that again-again, counter was removed)
                 while 1==1:
