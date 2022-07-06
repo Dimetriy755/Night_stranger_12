@@ -33,9 +33,15 @@ options = webdriver.ChromeOptions()
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 
 # product name
-product = str("Трансмиссионное масло NISSAN CVT NS-2, 5л")
+product = str("Масло трансмиссионное NISSAN NS-2 CVT FLUID 5л")
 
-# changing class
+# product brand (смена редко)
+brand = str("Nissan auto")
+
+# seller name (часто будет меняться)
+seller = str("SMART")
+
+# changing class (меняется редко)
 changing_class = str("ui-ab5")
 
 # verifiable counter (in this test always must quantity counter = 1)
@@ -135,6 +141,8 @@ class ProductStore(unittest.TestCase):
                 self.highlight(text_box)
                 text_box.send_keys(product)
                 time.sleep(2)
+                entered_value = driver.find_element(By.NAME,"text").get_attribute("value")
+                self.assertIn(product, entered_value)
 
                 # button highlighting - [search] + presses key - [enter]
                 search = driver.find_element(By.XPATH,"//div[@id='stickyHeader']//form[@action='/search']//button")
@@ -148,12 +156,20 @@ class ProductStore(unittest.TestCase):
                 actions.send_keys(Keys.ARROW_DOWN * 8)
                 actions.perform()
                 time.sleep(2)
-
+ 
                 # selects necessary check-box №1
-                check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")
-                self.highlight(check_box)
+                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{brand}')]")                
+                self.highlight(check_box_1)
                 time.sleep(2)
-                driver.execute_script("arguments[0].click();", check_box)
+                driver.execute_script("arguments[0].click();", check_box_1)
+                while 1==1:
+                    try:
+                        was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'{brand}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        self.assertTrue(was_is_checked_box_1.is_selected())
+                        break
+                    except StaleElementReferenceException:
+                        pass
+                        continue
                 time.sleep(2)
                 
                 # down + down + down
@@ -163,24 +179,40 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # selects necessary check-box №2
-                check_box = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'Ойл бар')]")
-                self.highlight(check_box)
+                check_box_2 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{seller}')]")
+                self.highlight(check_box_2)
                 time.sleep(2)
-                driver.execute_script("arguments[0].click();", check_box)
+                driver.execute_script("arguments[0].click();", check_box_2)
+                while 1==1:
+                    try:
+                        was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        self.assertTrue(was_is_checked_box_2.is_selected())
+                        break
+                    except StaleElementReferenceException:
+                        pass
+                        continue
                 time.sleep(2)
 
                 # selects necessary toggle-switch №1
-                toggle = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
-                self.highlight(toggle)
+                toggle_1 = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
+                self.highlight(toggle_1)
                 time.sleep(2)
                 driver.find_element(By.XPATH,f"//div[@value='Товары со скидкой']//div[@class='{changing_class}']").click()
+                while 1==1:
+                    try:
+                        toggle_1_was_ON = driver.find_element(By.XPATH,f"//span[contains(text(),'Товары со скидкой')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        self.assertTrue(toggle_1_was_ON.is_selected())
+                        break
+                    except StaleElementReferenceException:
+                        pass
+                        continue
                 time.sleep(2)
                 
                 # selects one more toggle-switch №2 / this is extra toggle-switch (selects his optional)
                 while 1==1:
                     try:
-                        toggle_1 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
-                        self.highlight(toggle_1)
+                        toggle_2 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
+                        self.highlight(toggle_2)
                         time.sleep(2)
                         driver.find_element(By.XPATH,f"//div[@value='Высокий рейтинг']//div[@class='{changing_class}']").click()
                         time.sleep(2)
@@ -246,8 +278,7 @@ class ProductStore(unittest.TestCase):
     def test_check(self):
             
         # FUNCTION STARTING (method for creating ordering)
-        self.creating_order() # first starting
-        
+        self.creating_order() # first starting  
         ###############################################################################################################################################
         # ALL MAIN CHECKS START
         while 1==1:    
@@ -352,7 +383,7 @@ Error! Error! Такого не должно быть, данный тест н�
                 time.sleep(2)
 
                 # product highlighting on page (1)
-                item = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{product}')]")
+                item = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{seller}')]")
                 self.highlight(item)
                 time.sleep(1)
 
@@ -417,6 +448,29 @@ Error! Error! Такого не должно быть, данный тест н�
                 ###############################################################################################################################################
                 # FUNCTION STARTING (method for creating ordering)
                 self.creating_order() # second starting
+                
+                """
+                Конечно здесь для ускорения процесса тестирования можно было бы воспользоваться и URL,
+                где уже были бы выбраны: нужная категория товара + название товара + все нуж. фильтры:
+                """
+                # self.driver.get('https://www.ozon.ru/category/transmissionnye-masla-8516/nissan-136021052/?from_global=true&isdiscount=t&rating=t&seller=38479&text=трансмиссионное+масло+nissan+cvt+ns-2%2C+5л')
+                # deliver_0 = driver.find_element(By.XPATH,"//*[contains(text(),'доставит')]")
+                # driver.execute_script("arguments[0].scrollIntoView();", deliver_0)
+                
+                # actions = ActionChains(driver) 
+                # actions.send_keys(Keys.ARROW_UP * 14).perform()
+                # time.sleep(1)
+                
+                # add_0 = driver.find_element(By.XPATH,"//*[contains(text(),'В корзину')]")
+                # self.highlight(add_0)
+                # driver.execute_script("arguments[0].click();", add_0)
+                
+                """
+                Но с помощью функции creating_order() проверяется, что пользователь используя только
+                веб-элементы управления сайтом (GUI) имеет возможность полностью повторить свой сценарий
+                выбора всех характеристик товара и его выбор будет полностью идентичен предыдущему его выбору 
+                (что никаких ошибок при повторном выборе тех же характеристик для товара не будет, ну и т. д.).
+                """
 
                 # quantity highlighting (3)
                 quantity_2 = driver.find_element(by=By.XPATH, value=counter)
@@ -443,7 +497,7 @@ Error! Error! Такого не должно быть, данный тест н�
                 # time.sleep(2)
 
                 # product highlighting on page (2)
-                item_1 = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{product}')]")
+                item_1 = driver.find_element(by=By.XPATH, value=f"//*[contains(text(),'{seller}')]")
                 self.highlight(item_1)
                 time.sleep(1)
 
