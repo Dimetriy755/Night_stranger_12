@@ -255,6 +255,16 @@ Sub TestCase1()
     Range("A10:Q10").Interior.Color = RGB(214, 220, 228)
     Range("A15:Q15").Interior.Color = RGB(214, 220, 228)
     Range("A24:Q24").Interior.Color = RGB(214, 220, 228)
+
+    ' выравнивание текста по центру ячейки
+    ' (установка на некий диапазон ряда ячеек)
+    '
+    ' Range("L11:Q26").Select
+    ' With Selection
+        ' .HorizontalAlignment = xlCenter
+        ' .VerticalAlignment = xlCenter
+        ' .ReadingOrder = xlContext
+    ' End With
     
     ' установка определённых условий на всю таблицу
     ' (у определённых слов сразу будут меняться цвета)
@@ -557,7 +567,9 @@ Sub TestCase1()
     ' для заведения выпадающих списков
     ' + список присваивается переменной
     '
-    Worksheets.Add
+    Dim List As Object
+    Set List = Worksheets.Add
+    List.Name = "spisok1"
 
     Range("A1:A5").Select
     Selection.Borders(xlDiagonalDown).LineStyle = xlNone
@@ -650,6 +662,32 @@ Sub TestCase1()
         .Delete
         .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Operator:= _
         xlBetween, Formula1:="=list1"
+    End With
+
+    ' создание специальных кнопок
+    ' для активации двух макросов
+    ' нужных для добавления строк
+    '
+    ActiveSheet.Buttons.Add(681, 5.25, 129, 19.5).Select
+    ' Selection.OnAction = "add_row_1"
+    Selection.Characters.Text = "ADD STEP"
+    With Selection.Characters(Start:=1, Length:=17).Font
+        .Size = 11
+        .ColorIndex = 1
+        .Name = "Calibri"
+        .FontStyle = "обычный"
+        .Underline = xlUnderlineStyleNone
+    End With
+    
+    ActiveSheet.Buttons.Add(547.33, 5.25, 129, 19.5).Select
+    ' Selection.OnAction = "add_row_2"
+    Selection.Characters.Text = "add prerequisites"
+    With Selection.Characters(Start:=1, Length:=17).Font
+        .Size = 11
+        .ColorIndex = 1
+        .Name = "Calibri"
+        .FontStyle = "обычный"
+        .Underline = xlUnderlineStyleNone
     End With
     
 End Sub
