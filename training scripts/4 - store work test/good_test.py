@@ -32,6 +32,9 @@ options = webdriver.ChromeOptions()
 # if you authorized somewhere, then launch browser with your user session (just close your Chrome)
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 
+# removes unnecessary system logs and warnings
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
 # product name
 product = str("Масло трансмиссионное NISSAN NS-2 CVT FLUID 5л")
 
@@ -223,7 +226,7 @@ class ProductStore(unittest.TestCase):
                         break
                     
                 # down to this element:
-                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'доставит')]")
+                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'оставит')]")
                 driver.execute_script("arguments[0].scrollIntoView();", deliver)
 
                 # up + up + up
@@ -568,10 +571,12 @@ Error! Error! Такого не должно быть, данный тест н�
                     print("TEST FAILURE (some of checks were not passed)")
                     print("Some control elements (UI) for removing an item\nfrom basket not delete quantity counter of the item.")
                 
-                # test data / all checks
+                # test data / all checks 
                 print("")
                 print("")        
                 print("What values were used:")
+                print(f"seller = {seller}")
+                print(f"brand = {brand}")
                 print(f"product = {product}")
                 print("")
                 print("+ What was checked:") 

@@ -33,6 +33,9 @@ options = webdriver.ChromeOptions()
 # if you authorized somewhere, then launch browser with your user session (just close your Chrome)
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 
+# removes unnecessary system logs and warnings
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
 # product name (часто будет заканчиваться)
 product = str("Масло трансмиссионное Nissan")
 
@@ -271,7 +274,7 @@ class ProductStore(unittest.TestCase):
                         break
                     
                 # down to this element:
-                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'доставит')]")
+                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'оставит')]")
                 driver.execute_script("arguments[0].scrollIntoView();", deliver)
 
                 # # up + up + up
@@ -436,6 +439,7 @@ class ProductStore(unittest.TestCase):
                     print(Fore.RESET + "----------------------------------------------------------------------")
                     print("")
                     print(Fore.RESET + "What values were used:")
+                    print(f"seller = {seller}")
                     print(f"product = {product}") 
                     print("it is expected that quantity-1 = 2 (first check)")
                     print("it is expected that quantity-2 = 1 (third check)")
@@ -451,6 +455,7 @@ class ProductStore(unittest.TestCase):
                     print(Fore.RESET + "----------------------------------------------------------------------")
                     print("")
                     print(Fore.RESET + "What values were used:")
+                    print(f"seller = {seller}")
                     print(f"product = {product}") 
                     print("it is expected that quantity-1 = 2 (first check)")
                     print("it is expected that quantity-2 = 3 (third check)")
@@ -466,6 +471,7 @@ class ProductStore(unittest.TestCase):
                     print(Fore.RESET + "----------------------------------------------------------------------")
                     print("")
                     print("What values were used:")
+                    print(f"seller = {seller}")
                     print(f"product = {product}")
                     print("it is expected that quantity-1 = 2 (first check)")
                     print(f"it is expected that quantity-2 = 1 or 3,\nbut quantity-2 = {quantity_2.text} and it error (third check)")
