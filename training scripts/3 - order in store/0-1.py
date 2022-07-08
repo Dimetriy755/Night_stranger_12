@@ -39,6 +39,9 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 # product name (часто будет заканчиваться)
 product = str("Масло трансмиссионное Nissan")
 
+# product brand (смена редко)
+brand = str("NISSAN")
+
 # seller name (часто будет меняться)
 seller = str("официальный дилер NISSAN") 
 
@@ -161,7 +164,7 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # selects necessary check-box №1
-                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'NISSAN')]")                
+                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{brand}')]")                
                 self.highlight(check_box_1)
                 time.sleep(2)
                 driver.execute_script("arguments[0].click();", check_box_1)
@@ -169,6 +172,29 @@ class ProductStore(unittest.TestCase):
                     try:
                         was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'NISSAN')]/ancestor::div[@class='{changing_class}']/parent::label/input")
                         self.assertTrue(was_is_checked_box_1.is_selected())
+                        break
+                    except StaleElementReferenceException:
+                        pass
+                        continue
+                time.sleep(2)
+                
+                # selects necessary check-box №2
+                check_box_2 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{seller}')]")
+                driver.execute_script("arguments[0].scrollIntoView();", check_box_2)
+                
+                # up + up + up
+                actions = ActionChains(driver) 
+                actions.send_keys(Keys.ARROW_UP * 12)
+                actions.perform()
+                time.sleep(2)
+                
+                self.highlight(check_box_2)
+                time.sleep(2)
+                driver.execute_script("arguments[0].click();", check_box_2)
+                while 1==1:
+                    try:
+                        was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        self.assertTrue(was_is_checked_box_2.is_selected())
                         break
                     except StaleElementReferenceException:
                         pass
@@ -205,29 +231,6 @@ class ProductStore(unittest.TestCase):
                     except NoSuchElementException:
                         pass
                         break
-
-                # selects necessary check-box №2
-                check_box_2 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{seller}')]")
-                driver.execute_script("arguments[0].scrollIntoView();", check_box_2)
-                
-                # up + up + up
-                actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_UP * 12)
-                actions.perform()
-                time.sleep(2)
-                
-                self.highlight(check_box_2)
-                time.sleep(2)
-                driver.execute_script("arguments[0].click();", check_box_2)
-                while 1==1:
-                    try:
-                        was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                        self.assertTrue(was_is_checked_box_2.is_selected())
-                        break
-                    except StaleElementReferenceException:
-                        pass
-                        continue
-                time.sleep(2)
                 
                 # selects toggle-switch №1 / this is extra toggle-switch (selects his optional)
                 while 1==1:
@@ -439,6 +442,7 @@ class ProductStore(unittest.TestCase):
                     print(Fore.RESET + "----------------------------------------------------------------------")
                     print("")
                     print(Fore.RESET + "What values were used:")
+                    print(f"brand = {brand}")
                     print(f"seller = {seller}")
                     print(f"product = {product}") 
                     print("it is expected that quantity-1 = 2 (first check)")
@@ -455,6 +459,7 @@ class ProductStore(unittest.TestCase):
                     print(Fore.RESET + "----------------------------------------------------------------------")
                     print("")
                     print(Fore.RESET + "What values were used:")
+                    print(f"brand = {brand}")
                     print(f"seller = {seller}")
                     print(f"product = {product}") 
                     print("it is expected that quantity-1 = 2 (first check)")
@@ -471,6 +476,7 @@ class ProductStore(unittest.TestCase):
                     print(Fore.RESET + "----------------------------------------------------------------------")
                     print("")
                     print("What values were used:")
+                    print(f"brand = {brand}")
                     print(f"seller = {seller}")
                     print(f"product = {product}")
                     print("it is expected that quantity-1 = 2 (first check)")
