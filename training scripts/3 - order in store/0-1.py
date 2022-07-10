@@ -170,7 +170,7 @@ class ProductStore(unittest.TestCase):
                 driver.execute_script("arguments[0].click();", check_box_1)
                 while 1==1:
                     try:
-                        was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'NISSAN')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'{brand}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
                         self.assertTrue(was_is_checked_box_1.is_selected())
                         break
                     except StaleElementReferenceException:
