@@ -282,15 +282,15 @@ class ProductStore(unittest.TestCase):
 
                 # # up + up + up
                 actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_UP * 14)
+                actions.send_keys(Keys.ARROW_UP * 15)
                 actions.perform()
                 time.sleep(2)
                 
                 # shows selected categories (these elements is optional to show)
                 categories = [
-                "//button[@type='button']//span[contains(text(),'Цена: от')]",         
-                "//button[@type='button']//span[contains(text(),'Бренды: NISSAN')]",                
-                "//button[@type='button']//span[contains(text(),'Высокий рейтинг')]",   
+                "//button[@type='button']//span[contains(text(),'Цена: от')]",
+                f"//button[@type='button']//span[contains(text(),'Бренды: {brand}')]",                         
+                "//button[@type='button']//span[contains(text(),'Высокий рейтинг')]",
                 "//button[@type='button']//span[contains(text(),'Товары со скидкой')]",  
                 f"//button[@type='button']//span[contains(text(),'Продавец: {seller}')]"             
                 ]            
