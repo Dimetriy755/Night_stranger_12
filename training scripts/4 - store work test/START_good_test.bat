@@ -9,7 +9,7 @@ TIMEOUT /T 2 /NOBREAK
 echo.
 echo START: good_test.py
 
-CMD /c > ./my_good_test_results.txt "C:\Users\User\Desktop\2\my_experiments\good_test.py"
+CMD /c > ./my_good_test_results.txt "C:\Users\User\Desktop\2\my_experiments\всякое\good_test.py"
 
 echo.
 echo END: good_test.py

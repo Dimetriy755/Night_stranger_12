@@ -1,4 +1,5 @@
-п»ї----------------------------------------------------------------------
+
+----------------------------------------------------------------------
 
 1 - first check  = done!  (necessary quantity product is in basket)
 
@@ -8,7 +9,9 @@
 ----------------------------------------------------------------------
 
 What values were used:
-product = РўСЂР°РЅСЃРјРёСЃСЃРёРѕРЅРЅРѕРµ РјР°СЃР»Рѕ Nissan CVT NS-2
+brand = NISSAN
+seller = официальный дилер NISSAN
+product = Масло трансмиссионное Nissan
 it is expected that quantity-1 = 2 (first check)
 it is expected that quantity-2 = 3 (third check)
 ----------------------------------------------------------------------
