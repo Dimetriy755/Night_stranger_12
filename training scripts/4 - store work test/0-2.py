@@ -168,7 +168,7 @@ class ProductStore(unittest.TestCase):
                 while 1==1:
                     try:
                         was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'{brand}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                        self.assertTrue(was_is_checked_box_1.is_selected())
+                        self.assertTrue(was_is_checked_box_1.is_selected(), 'selected necessary check-box #1')
                         break
                     except StaleElementReferenceException:
                         pass
@@ -189,7 +189,7 @@ class ProductStore(unittest.TestCase):
                 while 1==1:
                     try:
                         was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                        self.assertTrue(was_is_checked_box_2.is_selected())
+                        self.assertTrue(was_is_checked_box_2.is_selected(), 'selected necessary check-box #2')
                         break
                     except StaleElementReferenceException:
                         pass
@@ -204,7 +204,7 @@ class ProductStore(unittest.TestCase):
                 while 1==1:
                     try:
                         toggle_1_was_ON = driver.find_element(By.XPATH,f"//span[contains(text(),'Товары со скидкой')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                        self.assertTrue(toggle_1_was_ON.is_selected())
+                        self.assertTrue(toggle_1_was_ON.is_selected(), 'selected necessary toggle-switch #1')
                         break
                     except StaleElementReferenceException:
                         pass
@@ -403,7 +403,7 @@ Error! Error! Такого не должно быть, данный тест н�
                 time.sleep(2)   
                 
                 # checking that the basket is empty (1)
-                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))         
+                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"), 'that the basket is empty')         
 
                 # 4 - fourth check (that again, counter was removed)
                 while 1==1:
@@ -517,7 +517,7 @@ Error! Error! Такого не должно быть, данный тест н�
                 time.sleep(2)
                 
                 # checking that the basket is empty (2)
-                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))
+                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"), 'that the basket is empty')
 
                 # 6 - sixth check (that again-again, counter was removed)
                 while 1==1:

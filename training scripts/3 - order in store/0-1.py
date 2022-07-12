@@ -120,6 +120,11 @@ class ProductStore(unittest.TestCase):
                 
                 # сhecking the title of the home page
                 self.assertEqual(driver.title,'OZON — интернет-магазин. Миллионы товаров по выгодным ценам')
+                
+                # if basket is not empty then deletes everything
+                # quantity_0 = driver.find_element(by=By.XPATH, value=counter)
+                # if quantity_0.text != "0":
+                #     self.checking_basket()
 
                 # enters select product category mode (opens modal window)
                 select = driver.find_element(By.XPATH,"//form[@action='/search']//span[@title='Везде']")
@@ -171,7 +176,7 @@ class ProductStore(unittest.TestCase):
                 while 1==1:
                     try:
                         was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'{brand}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                        self.assertTrue(was_is_checked_box_1.is_selected())
+                        self.assertTrue(was_is_checked_box_1.is_selected(), 'selected necessary check-box #1')
                         break
                     except StaleElementReferenceException:
                         pass
@@ -194,7 +199,7 @@ class ProductStore(unittest.TestCase):
                 while 1==1:
                     try:
                         was_is_checked_box_2 = driver.find_element(By.XPATH,f"//span[contains(text(),'{seller}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
-                        self.assertTrue(was_is_checked_box_2.is_selected())
+                        self.assertTrue(was_is_checked_box_2.is_selected(), 'selected necessary check-box #2')
                         break
                     except StaleElementReferenceException:
                         pass
@@ -570,7 +575,7 @@ class ProductStore(unittest.TestCase):
                 self.assertEqual(driver.title,'OZON.ru - Моя корзина')
                 
                 # the statement that the product is in the basket
-                self.assertTrue(self.is_element_present(By.XPATH,f"//*[contains(text(),'{seller}')]"))
+                self.assertTrue(self.is_element_present(By.XPATH,f"//*[contains(text(),'{seller}')]"), 'product inside the basket')
                 
                 # button-1
                 del_1 = str("//*[contains(text(),'Удалить выбранные')]")
@@ -579,17 +584,17 @@ class ProductStore(unittest.TestCase):
                 del_2 = str("//span[@style='border-radius: 8px;']/span[text()='Удалить']")
                 
                 # checks if there is + presses button - [delete ALL] (opens modal window)
-                self.assertTrue(self.is_element_present(By.XPATH, del_1))
+                self.assertTrue(self.is_element_present(By.XPATH, del_1), 'is available button - [delete ALL]')
                 delete_ALL = self.wait.until(EC.presence_of_element_located((By.XPATH, del_1))).click()
 
                 # checks if there is + presses button - [delete] (removes all products and counter)
-                self.assertTrue(self.is_element_present(By.XPATH, del_2))
+                self.assertTrue(self.is_element_present(By.XPATH, del_2), 'is available button - [delete]')
                 delete_2 = self.wait.until(EC.element_to_be_clickable((By.XPATH, del_2)))
                 driver.execute_script("arguments[0].click();", delete_2)
                 time.sleep(1)
                 
                 # checking that the basket is empty
-                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"))
+                self.assertTrue(self.is_element_present(By.XPATH,"//h1[text()='Корзина пуста']"), 'that the basket is empty')
                 break
             except WebDriverException:
                 pass
