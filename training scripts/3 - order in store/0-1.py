@@ -393,7 +393,9 @@ class ProductStore(unittest.TestCase):
                             # generate a alert via javascript
                             driver.execute_script(script)
                             time.sleep(8)
-                            ActionChains(driver).key_down(Keys.ENTER).perform()
+                            # ActionChains(driver).key_down(Keys.ENTER).perform()
+                            alert_obj = driver.switch_to.alert 
+                            alert_obj.dismiss()
                         except UnexpectedAlertPresentException as e:
                             pass
                         print("")
