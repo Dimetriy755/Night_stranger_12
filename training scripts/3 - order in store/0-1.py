@@ -26,6 +26,9 @@ from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import ElementNotInteractableException
 from selenium.common.exceptions import WebDriverException
 
+# for PowerShell
+# python -u "c:\Users\User\Desktop\2\my_experiments\0-1.py"
+
 # ChromiumService + ChromiumOptions
 # service = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
@@ -40,13 +43,13 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 product = str("Масло трансмиссионное Nissan")
 
 # product brand (смена редко)
-brand = str("NISSAN")
+brand = str("Nissan")
 
 # seller name (часто будет меняться)
 seller = str("официальный дилер NISSAN") 
 
 # changing class (иногда)
-changing_class = str("ui-ab5")
+changing_class = str("ui-ac6")
 
 # verifiable counter (can have any number, but will be
 # caught if 0, and if not 1 or 3, then it will be an error)
@@ -134,9 +137,9 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # goes down up to highlighted categories
-                discount = driver.find_element(By.XPATH,"//div[contains(text(),'Уценённые товары')]")
-                driver.execute_script("arguments[0].scrollIntoView();", discount)
-                self.highlight(discount)
+                auto = driver.find_element(By.XPATH,"//div[contains(text(),'Автомобили')]")
+                driver.execute_script("arguments[0].scrollIntoView();", auto)
+                self.highlight(auto)
                 time.sleep(2)
 
                 # selects specific category
@@ -169,13 +172,13 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # selects necessary check-box №1
-                check_box_1 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{brand}')]")                
+                check_box_1 = driver.find_element(By.XPATH,f"//*[@id='layoutPage']//a[3]//div[@class='{changing_class}']//span[contains(text(),'{brand}')]")                
                 self.highlight(check_box_1)
                 time.sleep(2)
                 driver.execute_script("arguments[0].click();", check_box_1)
                 while 1==1:
                     try:
-                        was_is_checked_box_1 = driver.find_element(By.XPATH,f"//span[contains(text(),'{brand}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
+                        was_is_checked_box_1 = driver.find_element(By.XPATH,f"//*[@id='layoutPage']//a[3]//span[contains(text(),'{brand}')]/ancestor::div[@class='{changing_class}']/parent::label/input")
                         self.assertTrue(was_is_checked_box_1.is_selected(), 'selected necessary check-box #1')
                         break
                     except StaleElementReferenceException:
@@ -206,7 +209,7 @@ class ProductStore(unittest.TestCase):
                         continue
                 time.sleep(2)
                 
-                # setting product price (optional)
+                # setting product price (this is optional)
                 while 1==1:
                     try:
                         input = driver.find_element(By.XPATH,"//div[@unit='[object Object]']//p[contains(text(),'до')]/preceding-sibling::input")
@@ -237,7 +240,7 @@ class ProductStore(unittest.TestCase):
                         pass
                         break
                 
-                # selects toggle-switch №1 / this is extra toggle-switch (selects his optional)
+                # selects toggle-switch №1 / this is extra toggle-switch (this is optional)
                 while 1==1:
                     try:
                         toggle_1 = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
@@ -259,7 +262,7 @@ class ProductStore(unittest.TestCase):
                         pass
                         break
                 
-                # selects one more toggle-switch №2 / this is extra toggle-switch (selects his optional)
+                # selects one more toggle-switch №2 / this is extra toggle-switch (this is optional)
                 while 1==1:
                     try:
                         toggle_2 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
@@ -282,12 +285,12 @@ class ProductStore(unittest.TestCase):
                         break
                     
                 # down to this element:
-                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'оставит')]")
+                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'отзыв')]")
                 driver.execute_script("arguments[0].scrollIntoView();", deliver)
 
                 # # up + up + up
                 actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_UP * 15)
+                actions.send_keys(Keys.ARROW_UP * 13)
                 actions.perform()
                 time.sleep(2)
                 
@@ -394,7 +397,7 @@ class ProductStore(unittest.TestCase):
                             driver.execute_script(script)
                             time.sleep(8)
                             # ActionChains(driver).key_down(Keys.ENTER).perform()
-                            alert_obj = driver.switch_to.alert 
+                            alert_obj = driver.switch_to.alert
                             alert_obj.dismiss()
                         except UnexpectedAlertPresentException as e:
                             pass
@@ -450,8 +453,8 @@ class ProductStore(unittest.TestCase):
                     print("")
                     print(Fore.RESET + "What values were used:")
                     print(f"brand = {brand}")
-                    print(f"seller = {seller}")
-                    print(f"product = {product}") 
+                    print(f"seller = {seller}").encode('utf-16le')
+                    print(f"product = {product}").encode('utf-16le') 
                     print("it is expected that quantity-1 = 2 (first check)")
                     print("it is expected that quantity-2 = 1 (third check)")
                     # for (.bat) file start

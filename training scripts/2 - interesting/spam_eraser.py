@@ -29,6 +29,9 @@ from selenium.common.exceptions import ElementNotInteractableException
 options = webdriver.ChromeOptions()
 options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data')
 
+# removes unnecessary system logs and warnings
+options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
 # disable protection pyautogui
 pyautogui.FAILSAFE = False
 
@@ -147,6 +150,14 @@ class SpamDestroy(unittest.TestCase):
                         time.sleep(1)
                         ActionChains(driver).key_down(Keys.ENTER).perform()
                         time.sleep(2)
+                        
+                        # delete ALL (visible if > 50)
+                        try:
+                            delete_ALL = driver.find_element(By.XPATH,"//span[contains(text(),'Выбрать все цепочки')]")
+                            delete_ALL.click()
+                            time.sleep(2)
+                        except NoSuchElementException:
+                            pass
                 
                         # hover pointer and press button - [delete]
                         pyautogui.move(-1275, 0, duration=0.25) # left
@@ -163,8 +174,17 @@ class SpamDestroy(unittest.TestCase):
 
                         pyautogui.click(button='left') # left-click
                         time.sleep(2)
-                        break
-            
+                    
+                        # confirmation of deleting everything
+                        try:
+                            ok = driver.find_element(By.NAME,"ok")
+                            ok.click()
+                            time.sleep(2)
+                            break
+                        except NoSuchElementException:
+                            pass
+                            break
+                    
                 more = driver.find_element(By.XPATH,"//div[@role='navigation']//span[@role='button']//span[contains(text(),'Ещё')]")
                 more.click()
                 time.sleep(2)

@@ -25,6 +25,9 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import WebDriverException
 
+# for PowerShell
+# python -u "c:\Users\User\Desktop\2\my_experiments\0-2.py"
+
 # ChromiumService + ChromiumOptions
 # service = Service('C:\\chromedriver\\chromedriver.exe')
 options = webdriver.ChromeOptions()
@@ -36,16 +39,16 @@ options.add_argument('--user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\C
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 # product name
-product = str("Масло трансмиссионное NISSAN NS-2 CVT FLUID 5л")
+product = str("Масло трансмиссионное синтетическое Nissan")
 
 # product brand (смена редко)
 brand = str("Nissan auto")
 
 # seller name (часто будет меняться)
-seller = str("SMART")
+seller = str("SpaceParts")
 
 # changing class (меняется редко)
-changing_class = str("ui-ab5")
+changing_class = str("ui-ac6")
 
 # verifiable counter (in this test always must quantity counter = 1)
 counter = str("//a[@href='/cart']//span[contains(@class,'tsCaptionBold') and contains(text(),'1')]")
@@ -126,9 +129,9 @@ class ProductStore(unittest.TestCase):
                 time.sleep(2)
 
                 # goes down up to highlighted categories
-                discount = driver.find_element(By.XPATH,"//div[contains(text(),'Уценённые товары')]")
-                driver.execute_script("arguments[0].scrollIntoView();", discount)
-                self.highlight(discount)
+                auto = driver.find_element(By.XPATH,"//div[contains(text(),'Автомобили')]")
+                driver.execute_script("arguments[0].scrollIntoView();", auto)
+                self.highlight(auto)
                 time.sleep(2)
 
                 # selects specific category
@@ -177,10 +180,23 @@ class ProductStore(unittest.TestCase):
                 
                 # down + down + down
                 actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_DOWN * 14)
+                actions.send_keys(Keys.ARROW_DOWN * 12)
                 actions.perform()
                 time.sleep(2)
-
+                
+                # opens list of sellers (this is optional)
+                while 1==1:
+                    try:
+                        view_all = self.wait.until(EC.presence_of_element_located((By.XPATH,"//*[@id='layoutPage']//aside/div[7]//span[contains(text(),'Посмотреть все')]")))
+                        self.highlight(view_all)
+                        webdriver.ActionChains(driver).move_to_element(view_all).click(view_all).perform()
+                        time.sleep(2)
+                        break
+                    # if missing UI-element, then script goes on
+                    except NoSuchElementException:
+                        pass
+                        break
+                
                 # selects necessary check-box №2
                 check_box_2 = driver.find_element(By.XPATH,f"//div[@class='{changing_class}']//span[contains(text(),'{seller}')]")
                 self.highlight(check_box_2)
@@ -198,6 +214,14 @@ class ProductStore(unittest.TestCase):
 
                 # selects necessary toggle-switch №1
                 toggle_1 = driver.find_element(By.XPATH,"//div[@value='Товары со скидкой']")
+                driver.execute_script("arguments[0].scrollIntoView();", toggle_1)
+                
+                # up + up + up
+                actions = ActionChains(driver) 
+                actions.send_keys(Keys.ARROW_UP * 12)
+                actions.perform()
+                time.sleep(2)
+                
                 self.highlight(toggle_1)
                 time.sleep(2)
                 driver.find_element(By.XPATH,f"//div[@value='Товары со скидкой']//div[@class='{changing_class}']").click()
@@ -211,7 +235,7 @@ class ProductStore(unittest.TestCase):
                         continue
                 time.sleep(2)
                 
-                # selects one more toggle-switch №2 / this is extra toggle-switch (selects his optional)
+                # selects one more toggle-switch №2 / this is extra toggle-switch (this is optional)
                 while 1==1:
                     try:
                         toggle_2 = driver.find_element(By.XPATH,"//div[@value='Высокий рейтинг']")
@@ -226,12 +250,12 @@ class ProductStore(unittest.TestCase):
                         break
                     
                 # down to this element:
-                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'оставит')]")
+                deliver = driver.find_element(By.XPATH,"//*[contains(text(),'отзыв')]")
                 driver.execute_script("arguments[0].scrollIntoView();", deliver)
 
                 # up + up + up
                 actions = ActionChains(driver) 
-                actions.send_keys(Keys.ARROW_UP * 14)
+                actions.send_keys(Keys.ARROW_UP * 13)
                 actions.perform()
                 time.sleep(2)
 
