@@ -141,7 +141,7 @@ class ProductStore(unittest.TestCase):
         current_time = int(current_time)
         return current_time
     
-    # function for creating a screenshot
+    # function for creating a screenshot (+ their indexing)
     def makes_screenshot(self):
         # n = str(random.randint(1, 10))
         global pics_index
@@ -243,9 +243,8 @@ class ProductStore(unittest.TestCase):
                 
                 # declaring global variables 
                 # (basket_is_empty and product)
-                global basket_is_empty
+                global basket_is_empty, product
                 basket_is_empty = True
-                global product
                 
                 # if basket is not empty then deletes everything
                 quantity_0 = driver.find_element(by=By.XPATH, value=counter) 
@@ -696,7 +695,7 @@ class ProductStore(unittest.TestCase):
                 # 2 - second check (that there is an order for a product and this product is in the basket)
                 while 1==1:
             
-                    element_1 = self.check_exists_by_xpath(f"//*[contains(text(),'{product}')]")
+                    element_1 = self.check_exists_by_xpath(f"//hr/parent::a/span/span[contains(text(),'{product}')]")
                     # element_2 = self.check_exists_by_xpath(f"//*[contains(text(),'{seller}')]")
 
                     if element_1 is True: # and element_2 is True:
@@ -775,7 +774,7 @@ class ProductStore(unittest.TestCase):
                     time.sleep(1)
                     ActionChains(driver).key_down(Keys.ENTER).perform()
                     time.sleep(2)
-                #    
+                    #    
                 # alternative choice goes at - 3 (by counter quantity_2 = 3) / adds more products 
                 elif random_number == 2 or random_number == 1:
                     ActionChains(driver).key_down(Keys.ARROW_DOWN).perform()
