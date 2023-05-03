@@ -144,7 +144,7 @@ MySQL (server)
 как администратора БД:
 
 Password:
-P}**s2sD2t5M 
+R}*^s1sD1t6M 
 
 Username:
 Demetriusz
