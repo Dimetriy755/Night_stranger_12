@@ -85,8 +85,8 @@ transform position_4:
 transform position_5:
     xalign 0.30
     yalign 0.62
-    
-    # yalign 1.17
+#
+# ================================
 
 # ================================
 # For shows mermans:
