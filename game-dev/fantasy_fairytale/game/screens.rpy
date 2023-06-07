@@ -4,7 +4,6 @@
 
 init offset = -1
 
-
 ################################################################################
 ## Styles
 ################################################################################
@@ -253,14 +252,14 @@ screen quick_menu():
             xalign 0.5
             yalign 0.99
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            # textbutton _("Back") action Rollback()
+            # textbutton _("History") action ShowMenu('history')
+            # textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            # textbutton _("Auto") action Preference("auto-forward", "toggle")
+            # textbutton _("Save") action ShowMenu('save')
+            # textbutton _("Q.Save") action QuickSave()
+            # textbutton _("Q.Load") action QuickLoad()
+            textbutton _("Preferences") action ShowMenu('preferences')
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -343,10 +342,6 @@ screen navigation():
                 ## The quit button is banned on iOS and unnecessary on Android and
                 ## Web.
                 textbutton _("Quit") action Quit(confirm=not main_menu)
-
-
-
-
 
 
 style navigation_button is gui_button
@@ -657,8 +652,6 @@ screen about():
         text _("\nTemplate created by Skolaztika")
 
 
-
-
 style about_label is gui_label
 style about_label_text is gui_label_text
 style about_text is gui_text
@@ -710,7 +703,6 @@ screen load:
         hotspot (1055, 620, 393, 207) action FileAction(4):
             use load_save_slot(number=4)
 
-
         hotspot (85, 263, 233, 90) action ShowMenu('history')
         hotspot (1584, 245, 239, 91) action ShowMenu('about')
         hotspot (1584, 411, 242, 98) action ShowMenu('help')
@@ -721,9 +713,7 @@ screen load:
         hotspot (1584, 537, 254, 91) action MainMenu()
         hotspot (1601, 698, 229, 96) action Quit()
 
-
         hotspot (1448, 183, 64, 65) action Return()
-
 
 
 screen save:
@@ -754,8 +744,6 @@ screen save:
             use load_save_slot(number=3)
         hotspot (1055, 620, 393, 207) action FileAction(4):
             use load_save_slot(number=4)
-
-
 
         hotspot (85, 263, 233, 90) action ShowMenu('history')
         hotspot (1584, 245, 239, 91) action ShowMenu('about')
@@ -804,13 +792,10 @@ screen preferences():
         hotspot (547, 718, 266, 59) action Preference('after choices', 'skip')
         hotspot (547, 794, 129, 55) action Preference('after choices', 'stop')
 
-
-
         hotbar (1053, 291, 372, 37) value Preference('text speed')
         hotbar (1053, 466, 372, 37) value Preference('music volume')
         hotbar (1053, 640, 372, 37) value Preference('sound volume')
         hotbar (1053, 816, 372, 37) value Preference('auto-forward time')
-
 
         hotspot (85, 263, 233, 90) action ShowMenu('history')
         hotspot (1584, 245, 239, 91) action ShowMenu('about')
@@ -865,7 +850,7 @@ screen history():
         viewport id "vpgrid":
             yinitial 1.0
             #draggable True
-            mousewheel True
+            mousewheel False
             xmaximum 500
             ymaximum 620
             yfill True
@@ -882,10 +867,6 @@ screen history():
                     add "gui/abouthistory/divider.png" xalign 0.5
                 if not _history_list:
                     label _("The dialogue history is empty.")
-
-
-
-
 
 
 ## This determines what tags are allowed to be displayed on the history screen.
@@ -925,8 +906,7 @@ screen help():
     default device = "keyboard"
 
     fixed:
-
-
+    
         fixed:
             imagebutton auto "gui/HelpButtons/keyboard_%s.png" xpos 472 ypos 176 focus_mask True action SetScreenVariable("device", "keyboard")
             imagebutton auto "gui/HelpButtons/mouse_%s.png" xpos 700 ypos 176 focus_mask True action SetScreenVariable("device", "mouse")
@@ -940,8 +920,6 @@ screen help():
             use mouse_help
         elif device == "gamepad":
             use gamepad_help
-
-
 
 screen keyboard_help():
     vbox:
@@ -963,10 +941,7 @@ screen keyboard_help():
         vbox:
             label _("Tab")
             text _("Toggles dialogue skipping.")
-
-
-
-
+            
     vbox:
         xpos 0.55
         ypos 0.23
@@ -986,7 +961,6 @@ screen keyboard_help():
         vbox:
             label "V"
             text _("Toggles assistive {a=https://www.renpy.org/l/voicing}self-voicing{/a}.")
-
 
 screen mouse_help():
     vbox:

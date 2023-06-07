@@ -1,20 +1,22 @@
-﻿# Вы можете расположить сценарий своей игры в этом файле.
-
+﻿
 # [SHIFT] + [R] - reloading script (перезагрузить сценарий)
 
 # Определение всех персонажей игры:
 define k = Character('Кэтрин', color="#d71009", image="catherine")
 define d = Character('Деметрий', color="#660066", image="demetriy")
+define f = Character('дедушка Журфе', color="#aa7d35")
 define be = Character('Азакорс', color="#d71009")
 
 # Специфические свойства персонажей (нужны для различных ситуаций):
 image benal_blink = Animation("images/benal/benal smile.png", 2.99, "images/benal/benal smile2.png", 0.11)
+image kyuzi_game = Animation("images/kyuzi/kyuzi game_1.png", 0.15, "images/kyuzi/kyuzi game_2.png", 0.15, "images/kyuzi/kyuzi game_3.png", 0.15,)
+
 define dim = Character(what_italic=True, what_bold=True, window_background=None, what_outlines=[(4,"#d900d9",0,0)])
 define kat = Character(what_outlines=[(4,"#d71009",0,0)], what_size=44, what_bold=True, what_xalign=0.9, window_background=None)
 define beast = Character(what_color="#d71009", what_size=64, window_background=None)
 
 # blabbering (catherine)
-# image blabbering = Animation("images/catherine/catherine smirk.png", 0.11, "images/catherine/catherine smile2.png", 0.11)
+# image blabbering = Animation("images/catherine/catherine smirk.png", 0.11, "images/catherine/catherine smile2.png", 0.11,)
 
 # Отдельный персонаж игры это некий невидимый рассказчик:
 define narrator = Character(what_italic=True, what_bold=True, window_background=None, what_outlines=[(4,"#00ff00",0,0)])
@@ -27,32 +29,42 @@ define n = Character(None, what_color="#006600", what_outlines=[(0,"#00d900",6,6
 # Этот скрипт по идее подгоняет нужное разрешение для изображения:
 # stairs_1 = Composite((960,800),(0,0),"images/castle/bg stairs.png")
 
-# Определение перехода:
+# ================================
+# Определение всех переходов:
 define dissolve = Dissolve(1.0)
+define SUPER_fastdissolve = Dissolve(0.01)
 define fastdissolve = Dissolve(0.37)
 define slowdissolve = Dissolve(2.22)
-
+define SUPER_slowdissolve = Dissolve(4.44)
 # Какими ещё могут быть переходы: fade, move, dissolve
 
+# ================================
 # Музыка и звуки:
 define audio.dark = "music/Dark Atmosphere to Synth.wav"
 define audio.azathoth = "sounds/Azathoth-sounds.mp3"
 define audio.growl = "sounds/Monster-growl.mp3"
+define audio.hornet_2 = "sounds/hornet_2.mp3"
+define audio.hornet_1 = "sounds/hornet_1.mp3"
 define audio.horror = "music/Horror13.mp3"
 define audio.horror_1 = "music/HorrorMusic.mp3"
 define audio.dystopian = "music/Dystopian.wav"
 define audio.mystery = "music/Mystery Unsolved.ogg"
 define audio.cold = "music/ColdMorning.mp3"
 
+# ================================
 # Фиксация некоторых позиций 
 # для персонажей на переменных:
 transform screen_end:
     xalign 0.99
-    yalign 1.0
+    yalign 1.00
      
 transform offensive:
     xalign 0.70
-    yalign 1.0
+    yalign 1.00
+    
+transform inspection:
+    xalign 0.10
+    yalign 1.00
      
 transform position_1:
     xalign 0.40
@@ -72,12 +84,62 @@ transform position_4:
     
 transform position_5:
     xalign 0.30
-    yalign 1.17
+    yalign 0.62
+    
+    # yalign 1.17
 
-# Вместо использования оператора image можете просто
-# складывать все ваши файлы изображений в папку images.
-# Например, сцену bg room можно вызвать файлом "bg room.png",
-# а eileen happy — "eileen happy.webp", и тогда они появятся в игре.
+# ================================
+# For shows mermans:
+#
+transform position_6:
+    xalign 0.00
+    yalign 1.66
+    
+transform position_7:
+    xalign 0.50
+    yalign 0.75
+#
+# ================================
+
+# ================================
+# For shows wasps:
+#
+transform position_8:
+    xalign 0.37
+    yalign 0.00
+    
+transform position_9:
+    xalign 0.75
+    yalign 0.55
+
+transform position_10:
+    xalign 1.00
+    yalign 1.59
+    
+transform position_11:
+    xalign 1.08
+    yalign 0.48
+#
+# ================================
+# For shows wasps:
+#
+transform position_12:
+    xalign 0.45
+    yalign 0.15
+
+transform position_13:
+    xalign 0.85
+    yalign 0.50
+    
+transform position_14:
+    xalign 1.17
+    yalign 0.67
+    
+transform position_15:
+    xalign 0.55
+    yalign 0.75
+#
+# ================================
 
 # Игра начинается здесь:
 label start:
@@ -91,17 +153,17 @@ label start:
     
     nvl show slowdissolve
     n """{cps=12}
-    По неширокой дорожке лихо уходящий в заболоченную чащобу
+    По неширокой дорожке, лихо уходящий в заболоченную чащобу,
     насторожённо шла маленькая девочка. Звали сию девочку — Кюзи. 
-    \nНа вид ей было где-то лет девять-десять и ей явно не следовало 
+    \nНа вид ей было где-то лет девять-десять, и ей явно не следовало 
     находиться в подобном месте в одиночестве и без кого-либо из 
     старших. Странные намерения Кюзи покинуть родной дом и одной 
     уйти куда-то в глушь и топи привели бы в полнейший ужас любого 
     здравомыслящего человека. Ведь дети сих лет абсолютно точно 
     должны избегать такого рода мест, а не стремиться искать здесь
     приключений на свою голову. Но наша безрассудная и отчаянная
-    Кюзи как ни в чём не бывало шла вперёд по бесконечно петляющей
-    тропке убегающей в глубь лесной чащи. А местность вокруг идущей
+    Кюзи, как ни в чём не бывало, шла вперёд по бесконечно петляющей
+    тропке, убегающей в глубь лесной чащи. А местность вокруг идущей
     в том же направлении Кюзи становилась постепенно всё более и более
     неприветливой и пугающей...{/cps}"""
     
@@ -114,6 +176,11 @@ label start:
     dim ""
     
     show kyuzi frown at offensive
+    with slowdissolve
+
+    dim ""
+
+    hide kyuzi
     with slowdissolve
     
     dim ""
@@ -136,15 +203,15 @@ label start:
     scene bg cattails
     with slowdissolve
     
-    narrator "А наша Кюзи всё шла и шла дальше... {w}{cps=8}в самую-самую глушь непроходимых лесов и топких болот...{/cps}"
+    narrator "А наша Кюзи всё шла и шла дальше... {w}{cps=8}В самую-самую глушь непроходимых лесов и топких болот...{/cps}"
     
     play music mystery fadeout 5
     
     scene bg road_1
     with dissolve
 
-    narrator "А тем временем... {w}где-то в тех же местах..."
-    narrator "{cps=14}Одинокий, уставший и порядком измученный тяжёлой дорогой Деметрий шёл по заболоченной лесной местности вот уже который битый час...{/cps}"
+    narrator "А тем временем... {w}Где-то в тех же местах..."
+    narrator "{cps=14}Одинокий, уставший и порядком измученный тяжёлой дорогой, Деметрий шёл по заболоченной лесной местности, вот уже который битый час...{/cps}"
 
     show demetriy angry
     with dissolve
@@ -153,11 +220,11 @@ label start:
 
     show demetriy sigh
 
-    d "Похоже, что я заблудился... Есть ли здесь кто-нибудь?!"
+    d "{cps=7}Похоже, что я заблудился...{/cps} {w}{cps=8}Есть ли здесь кто-нибудь?!{/cps}"
 
     show demetriy worry
 
-    dim "{w}{cps=7}Аау! Аау! ... {/cps}{w}{cps=25}Ну ответьте мне хоть кто-нибудь!{/cps}{w}{cps=3} Эх...{/cps}"
+    dim "{w}{cps=7}Аау! Аау! ... {/cps}{w}{cps=25}Ну ответьте мне хоть кто-нибудь!?{/cps}{w}{cps=4} Эх...{/cps}"
 
     scene bg road_2
     with dissolve
@@ -173,7 +240,7 @@ label start:
 
     show catherine smirk
 
-    k "{w}И таки да! {w}Здесь действительно кто-то есть... {w}Меня зовут Кэтрин."
+    k "{cps=9}{w}И таки да!{/cps} {cps=8}{w}Здесь действительно кто-то есть...{/cps} {cps=7}{w}Меня зовут Кэтрин.{/cps}"
 
     scene bg road_1
     with dissolve
@@ -185,7 +252,7 @@ label start:
 
     show demetriy neutral
 
-    dim "{w}{cps=6}Хм... Кто она такая? И откуда она здесь взялась? Интересно...{/cps}"
+    dim "{cps=6}{w}Хм...{/cps} {cps=6}{w}Кто она такая?{/cps} {cps=6}{w}И откуда она здесь взялась?{/cps} {cps=5}{w}Интересно...{/cps}"
 
     scene bg road_2
     with dissolve
@@ -197,7 +264,7 @@ label start:
 
     show catherine happy
 
-    k "Я смотрю вы заблудились в наших болотах. {w}Не правда ли здесь немного жутковатенько?"
+    k "{cps=7}Я смотрю, вы заблудились в наших болотах.{/cps} {cps=6}{w}Не правда ли, здесь немного жутковатенько?{/cps}"
 
     scene bg road_1
     with dissolve
@@ -209,11 +276,11 @@ label start:
 
     show demetriy tsun
 
-    d "Ммм... Да вы правы, я заблудился. {w}И в этом месте просто веет какой-то жутью."
+    d "{cps=6}Ммм... Да, вы правы, я заблудился.{/cps} {cps=7}{w}И в этом месте просто веет какой-то жутью.{/cps}"
 
     show demetriy blush
 
-    d "Эээ... извините меня за подобный вопрос, {w}но неужели вы здесь живёте?"
+    d "{cps=7}Эээ... Извините меня за подобный вопрос,{/cps} {cps=6}{w}но неужели вы здесь живёте?{/cps}"
 
     scene bg road_2
     with dissolve
@@ -281,9 +348,9 @@ label start:
     
     kat ""
     
-    d disgust "Я... я... простите, но откуда вам известно моё имя?!\nОткровенно говоря К-к-этрин... Вы меня пугаете..."
+    d disgust "{cps=4}{w}Я...{/cps} {cps=4}{w}я...{/cps} {cps=6}{w}Простите, но откуда вам известно моё имя?!{/cps}{cps=5}{w}\nОткровенно говоря К-к-этрин...{/cps} {cps=4}{w}Вы меня пугаете...{/cps}"
     
-    d tsun "И это место пугает меня не меньше, чем вы... К-к-этрин\nВедь здесь пропало без вести множество людей и животных."
+    d tsun "{cps=7}{w}И это место пугает меня не меньше,{/cps} {cps=6}{w}чем вы...{/cps} {cps=5}{w}К-к-этрин{/cps}{cps=7}{w}\nВедь здесь пропало без вести множество людей и животных.{/cps}"
     
     d sigh "Искренне прошу вас Кэтрин выслушать меня и не причинять\nмне никакого вреда! Я пришёл на эти болота не просто так,\nчтобы здесь сгинуть."
 
@@ -293,16 +360,17 @@ label start:
 
     k tsun "Вы же полагаю хорошо понимаете, что такому знатному дворянину как вы, ну совсем не место на этих болотах..."
     
-    k tsun "{cps=7}Ведь здесь у нас... все похожие на вас люди... как вы уже ранее очень точно выразились... {/cps}{w}{cps=4}пропадают без вести...{/cps}"
+    k tsun "{cps=7}Ведь здесь у нас...{/cps} {cps=6}{w}все похожие на вас люди...{/cps} {cps=5}{w}как вы уже ранее очень точно выразились...{/cps} {cps=4}{w}пропадают без вести...{/cps}"
     
     show catherine angry 
     
     kat ""
     
     # Начало рассказа Деметрия:
-    d sigh "Эх... {w}я-я понимаю, о чём вы говорите..."
-    d neutral2 "Всё дело в том Кэтрин, что я оказался можно сказать в заложниках тех людей, которые находятся у меня в услужении."
-    d sigh "Мои люди относятся к местным лесам и болотам с невероятным суеверием. Они боятся даже посматривать в их сторону, не то\nчтобы появляться в этих местах самим."
+    d sigh "{cps=5}{w}Эх...{/cps} {cps=6}{w}Я-я понимаю,{/cps} {cps=6}{w}о чём вы говорите...{/cps}"
+    d worry "{cps=9}{w}И всё же донельзя прошу вас выслушать меня, Кэтрин.{/cps} {cps=7}{w}Это крайне для меня важно.{/cps}"
+    d neutral2 "Всё дело в том, Кэтрин, что я оказался, можно сказать, в заложниках тех людей, которые находятся у меня в услужении."
+    d sigh "Мои люди относятся к местным лесам и болотам с невероятным суеверием. Они боятся даже посматривать в их сторону, не то,\nчтобы появляться в этих местах самим."
     
     show catherine happy 
     
@@ -312,7 +380,7 @@ label start:
     
     kat ""
     
-    d worry "Но в одном из моих крестьянских селений последовательно случилась целая череда чудовищных и зловещих трагедий..."
+    d worry "{cps=6}Но в одном из моих крестьянских селений последовательно случилась целая череда чудовищных и зловещих трагедий...{/cps}"
     
     show catherine neutral2
     
@@ -327,7 +395,7 @@ label start:
     d worry "Но на этом бедствия этого места не закончились... Крестьяне из других моих селений не были готовы заселять стылые дома сгинувших мирян своими детьми из-за своих суеверий и страха перед неведомой заразой."
     d worry "А большую часть полей и наделов моих погибших крестьян затопило внезапно разлившейся по весне рекой."
     d sigh "Из всего небольшого поселения остался лишь один дом с ещё живыми людьми, где ютились и доживали свой срок жизни остатки некогда большой семьи."
-    d sigh "{cps=3}{size=47}{color=#535362}Бэгхвиль{/size}{/color} ... {/cps}{cps=8}{w}Вот название той злополучной деревеньки... И даже сейчас звучание этого злосчастного слова вызывает у меня содрогание... {/cps}"
+    d sigh "{cps=3}{size=47}{color=#535362}Бэгхвиль{/size}{/color} ...{/cps} {cps=6}{w}Вот название той злополучной деревеньки...{/cps} {cps=7}{w}И даже сейчас звучание этого злосчастного слова вызывает у меня содрогание... {/cps}"
     
     show catherine shock
     
@@ -523,9 +591,95 @@ label start:
     d "В подобной же крепости она вызывает мороки, наисильнейшие видения, и при этом такая её величина уже повадлива умертвить старика, ребёнка или сильно истощенного зрелого смертного."
     d "Чакорша, принятая в большой концентрации, приводит вначале к омрачнению дыхания, а затем и к сердечному параличу."
     d sigh "А перед своим концом человек пребывает в состоянии наиглубочайшего наваждения. И видит он всё что угодно, но не эмпирическую нашу реальность."
-    d "..."
-    d "..."
-    d "..."
+    
+    show catherine shock
+    kat ""
+    k worry "Ох-ох Деметрий..."
+    show demetriy tsun
+    dim ""
+    k sad "{cps=8}Я начинаю осознавать, что воистину жестокие деяния творились в оном людском поселении...{/cps}"
+    k tsun "{cps=8}И, конечно же, я отменно осведомлена о влиянии сей чародейственной травы на человеческий организм.{/cps}"
+    k "{cps=8}Всё наше болотное племя использует чакоршу в своих колдовских обрядах.{/cps}{w}{cps=8} Как и я сама...{/cps}"
+    show catherine frown
+    kat ""
+    k default "Не взыщите, что ненадолго прервала ваше повествование. Продолжайте же свой рассказ, Деметрий."
+    
+    d neutral2 "Но обитатели Бэгхвиля также хорошо осознавали, что запасы чакорши крайне малы. А сами её на болотах они не найдут. Да и понимали селяне, что уже никак не преодолеют такой долгий путь."
+    d sigh "Потому как были оные ни живы и ни мертвы, а буквально\nеле ноги волочили, мучаясь от постоянных головокружений,\nтошноты, слабости, сверлящих болей в желудке и в печени."
+    d disgust "И тогда собрались всё ещё живые миряне на последний свой совет и решили, что воспользоваться дурманом можно только тем, кто в нём крайне нуждается. Тем, кому нельзя будет умирать в муках страшных."
+    d sigh "...\n{w}{cps=7} А это все дети и старики Бэгхвиля...{/cps}"
+    d disgust "Конечно же, старичье Бэгхвиля и так всё прекрасно понимало.\n{w}{cps=7}А вот дети...{/cps}"
+    d sigh "Для детей своих пришлось поселянам вымудрить неведомый никому прежде благодатный мир, о котором, Кэтрин, я уже вам рассказывал."
+    d "{cps=7}Мне мучительно больно об этом говорить, Кэтрин,{/cps}{w}{cps=7} но это всё действительно происходило в Бэгхвиле...{/cps}"
+    d tsun "В общем, жители злополучной деревушки варили зелье из некогда собранной ведуньями на окраинах болот дурман-травы, а затем давали уже подхватившим злую хворь детям принять смертоносную для них концентрацию оного снадобья."
+    d sigh "Перед своей кончиной несчастные детушки созерцали фантасмагорические грёзы, вызванные одурманивающей\nих измученный разум чакоршей."
+    d "И многие из них и впрямь лицезрели небывалый,\nдивный и сказочный иной мир."
+    d tsun "Кроме того, некоторые из детей Бэгхвиля воочию узрели, как их братцы либо сестрицы «покидают» наш бренный мир и «переходят» в небесный блаженный покой."
+    d sigh "Увидевшие подобное успели поведать это и другим детям из их деревушки, тем самым окончательно убедив своих собратьев в «истинности» мифа, вымышленного их отчаянными родителями."
+    d tsun "Об этих необычных фактах, касающихся детей Бэгхвиля, мы с Беналем узнали из прощальной записки, написанной рукой малышки Кюзи."
+    d disgust "Также нас особенно тревожит тот факт, что и сама Кюзи отчаянно верит в небылицу о благословенном переходе в благостный иномир."
+    d worry "Конечно, всё это звучит в высшей степени безумно и дико. Но лично меня успокаивает лишь тот факт, что в наших краях практически всяческое врачевательство перед беспощадной лихорадкой Пикума, очевидно, будет бессильно."
+    d "И несчастные детишки и старички Бэгхвиля скоропостижно отошли на тот свет, не терзаясь и изнывая от непостижимых мук, злейшего из всех возможных недугов."
+    d "Но вместе с тем меня также не покидают чувства отчаяния и некой обречённости после всего, что произошло с моей многострадальной деревушкой."
+    d disgust "Мнится мне, что многих из этих несчастных, обречённых на смерть мирян можно было каким-то непостижимым, чудодейственным образом исцелить, спасти от этой адской хвори."
+    
+    show catherine frown
+    kat ""
+    k default "Да, вы правы, Деметрий. {cps=6}{w}И вам сие не кажется, а так и есть на самом деле.{/cps}"
+    k "Моё болотное племя искуснейшим образом способно\nврачевать сию злостную, лихую немочь."
+    k worry "Мы называем её «чёрной корчей», поскольку оная хвороба вызывает\nу нехитрых мирян невыносимые плотские терзанья и мученья."
+    k tsun "{cps=7}Но лишь с величайшим трудом нам удавалось полностью исцелить смертного от этой напасти.{/cps}"
+    
+    show demetriy sigh
+    dim ""
+    
+    show catherine worry
+    kat ""
+    
+    show demetriy tsun
+    dim ""
+    
+    d sigh "Мне непомерно горько слышать от вас об этом, Кэтрин."
+    d angry "Но я также осознаю и то, что люди в моей провинции до крайности суеверны."
+    d "И они ни за что на свете не сунутся на «вашу» территорию,\nсостоящую из неприступных лесов и топких болот."
+    d "Они называют всю огромную область Нэранитии, заполненную мрачными чащобами и топями, «Погибельным Заболотьем»."
+    d angry2 "И я бесконечно слышу от них про окутанного мистической аурой некого тёмного хозяина всех лесов и болот."
+    d "Я даже не знаю, кто это такой: колдун ли, тёмный он? дух ли? демон ли? иль, может, оный сумрачное божество?"
+    
+    show demetriy angry
+    dim ""
+    
+    show catherine tsun
+    kat ""
+    k angry2 "Имя нашего темнейшего повелителя - Косадрокс!\nИ он - суровый и грозный владыка всего «Гиблого Заболотья»."
+    
+    show demetriy blush
+    dim ""
+    
+    k tsun "Мы же называем свою землю «Тремудримье» и редко\nкогда заходим к каким-либо мирянам Нэранитии."
+    k "Доподлинно же из нас, из Тремудриан, никто не ведает,\nкем же в действительности является наш властелин."
+    k worry "Но и у нас, Тремудриан, да и, по слухам, также и у жителей\nНэранитии, ходит средь смертных стоящая внимания легенда."
+    k tsun "И легенда эта повествует об могущественном, ужасающем, свирепствующем, но также и справедливом властителе лесов и болот."
+    k angry2 "В мифе же сём говорится, что это древние боги послали\nна нашу бренную землю неудержимого Косадрокса."
+    k "Как некое наказание смертным за их невежественное посягательство\nна первозданную, дивную и ранее никем не тронутую природу."
+    k "Спустя некоторое время необычайное влияние тёмного и мрачного Косадрокса распространилось на всю восточную местность Нэранитии."
+    k "И почти весь восточный участок обширного материка\nпокрылся непроходимым для человеческих созданий\nвечнозеленым заболоченными адом."
+    k "Теперь там кругом восставали ощетинившиеся ядовитыми злыми колючками рослые ветвистые кустарники, а с поверхности топких, вязких, омерзительно нечистых болот кверху поднимались удушливые, едкие токсичные пары."
+    k "А непролазные мрачные чащобы были наполнены совсем\nуж диковинными и раннее никогда и никем не виданными: беспощадными, лютыми и кровожадными полуночными хищниками."
+    k "Многочисленные и неохватные глазом болотные топи, трясины, зыбуны, мороквы и прочие непреодолимые преграды - всё это не давало какому-либо человеку ни малейшего шанса пройти сквозь это зелёное месиво."
+    k "И дополнял весь этот вышеперечисленный кошмар: рой бесчисленных разносящих чумную заразу, нещадно жалящих насекомых."
+    
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    k "..."
+    
     d "..."
     d "..."
     d "..."
@@ -644,6 +798,8 @@ label start:
         
     label choice1_done:
     
+        $ renpy.block_rollback()
+    
         play sound growl
     
         scene bg swamp_5
@@ -679,6 +835,10 @@ label start:
 
         be "ПРАВИЛЬНО, это [answer]!"
 
+        # В конструкции ниже переменная «a» получает своё значение внутри 
+        # цикла for, а цикл for находится внутри цикла while. И поэтому если 
+        # условие для выхода из цикла while будет не выполнено, то значение для 
+        # переменной «a» будет вновь равным одному (в начале каждого цикла a = 1).
         python:
             r = 0
             d = True
@@ -727,1665 +887,525 @@ label start:
         with slowdissolve
     
         dim ""
-
-        # ... the game continues here.
         
+        scene bg les_14
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg les_8
+        with slowdissolve
+        
+        dim ""
+        
+        # ================================
+        # shows chupakabras
+        #
+        scene bg les_3
+        show chupakabras
+        with slowdissolve
+        
+        dim ""
+        #
+        # ends shows chupakabras
+        # ================================
+        
+        scene bg les_15
+        with slowdissolve
+        
+        dim ""
+        
+        # ================================
+        # shows mermans
+        #
+        scene bg les_16
+        show merman_1 at position_7
+        show merman_2 at position_6
+        with slowdissolve
+        
+        dim ""
+        #
+        # ends shows mermans
+        # ================================
+        
+        
+        # ================================
+        # shows chamelion
+        #
+        # Оператор - [scene] при повторном его использовании полностью 
+        # обновляет картинку на экране. И поэтому здесь его так много, 
+        # т. к. именно в этом месте он необходим.
+        
+        scene bg footpath_1
+        show chamelion_dark
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg footpath_1
+        show chamelion_green
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg footpath_1
+        show chamelion_white
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg footpath_1
+        show chamelion_ghost
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg footpath_1
+        # hide chamelion_ghost
+        with SUPER_slowdissolve
+        
+        dim ""
+        #
+        # ends shows chamelion
+        # ================================
+        
+        scene bg les_4
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg les_5
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg les_6
+        show kaduk at position_6
+        with slowdissolve
+        
+        dim ""
+        
+        # ================================
+        # shows wasps + flowers
+        #
+        scene bg flowers_3
+        with slowdissolve
+        
+        play music hornet_2
+        
+        # У четырёх ос никак не могут повторяться 
+        # позиции в цикле - это приводит к багу.
+        # Все их позиции должны быть уникальны.
+        $ S = True
+        $ G = 0
+        while S == True:
+            $ i = 0
+            while i < 34:
+                $ i = i + 1
+                if i < 2:
+                    show wasp_1 at position_8
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 3:
+                        show wasp_2 at position_8
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 4:
+                            show wasp_3 at position_8
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 5:
+                                show wasp_4 at position_8
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 6:
+                    show wasp_1 at position_9
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 7:
+                        show wasp_2 at position_9
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 8:
+                            show wasp_3 at position_9
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 9:
+                                show wasp_4 at position_9
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 10:
+                    show wasp_1 at position_10
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 11:
+                        show wasp_2 at position_10
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 12:
+                            show wasp_3 at position_10
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 13:
+                                show wasp_4 at position_10
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 14:
+                    show wasp_1 at position_11
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 15:
+                        show wasp_2 at position_11
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 16:
+                            show wasp_3 at position_11
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 17:
+                                show wasp_4 at position_11
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 18:
+                    show wasp_1 at position_12
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 19:
+                        show wasp_2 at position_12
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 20:
+                            show wasp_3 at position_12
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 21:
+                                show wasp_4 at position_12
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 22:
+                    show wasp_1 at position_13
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 23:
+                        show wasp_2 at position_13
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 24:
+                            show wasp_3 at position_13
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 25:
+                                show wasp_4 at position_13
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 26:
+                    show wasp_1 at position_14
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 27:
+                        show wasp_2 at position_14
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 28:
+                            show wasp_3 at position_14
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 29:
+                                show wasp_4 at position_14
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif i < 30:
+                    show wasp_1 at position_15
+                    with SUPER_fastdissolve
+                    hide wasp_1
+                    with SUPER_fastdissolve
+                    if i < 31:
+                        show wasp_2 at position_15
+                        with SUPER_fastdissolve
+                        hide wasp_2
+                        with SUPER_fastdissolve
+                        if i < 32:
+                            show wasp_3 at position_15
+                            with SUPER_fastdissolve
+                            hide wasp_3
+                            with SUPER_fastdissolve
+                            if i < 33:
+                                show wasp_4 at position_15
+                                with SUPER_fastdissolve
+                                hide wasp_4
+                                with SUPER_fastdissolve
+                elif G < 160:
+                    $ G = G + 1
+                    if G >= 160:
+                        $ S = False
+                        stop music
+        dim ""
+        $ S = False
+        stop music
+        #
+        # ends shows wasps
+        # ================================
+        
+        
+        scene bg les_8
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg les_9
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg les_12
+        with slowdissolve
+        
+        dim ""
+        
+        scene bg les_15
+        with slowdissolve
+        
+        dim ""
+        
+        # ================================
+        # ... the game continues here.
+        #
         scene bg home_1
-        show kyuzi smile at position_2
+        show kyuzi smile at inspection
         with slowdissolve
         
         ""
         scene bg interior_1 
-        show kyuzi smile at position_2
+        show kyuzi smile at inspection
         with slowdissolve
         
         ""
-        d "{glitch=2}{fi=25-5-100}{sc=2}Я отправляюсь в мир грёз... {/sc}{/fi}{/glitch}"
-        d "{glitch=2}{fi=25-5-100}{sc=2}Прощай моя внучка... {/sc}{/fi}{/glitch}"
+        # ================================
+        # shows grandpa
+        #
+        $ _skipping = False
+        show grandpa sad at position_5
+        show textbox_1 
+        with SUPER_slowdissolve
 
-        show grandpa sad at position_5 
-        with slowdissolve
-        
-        ""
-        hide grandpa with slowdissolve
-        
+        f "{glitch=2}{fi=25-5-100}{sc=2}Я отправляюсь в мир грёз... {/sc}{/fi}{/glitch}"
+        f "{glitch=2}{fi=25-5-100}{sc=2}Прощай моя дорогая внучка... {/sc}{/fi}{/glitch}"
+
+        hide grandpa 
+        hide textbox_1 
+        with SUPER_slowdissolve
+        #
+        # ends shows grandpa 
+        # ================================
+
         ""
         scene bg interior_2
-        show kyuzi smile at position_2
+        show kyuzi smile at inspection
         with slowdissolve
 
         ""
         scene bg interior_3
-        show kyuzi smile at position_2
+        show kyuzi smile at inspection
         with slowdissolve
 
         ""
+        
+        # ================================
+        # The beginning of the dice game.
+        #
         scene bg interior_4
-        show kyuzi smile at position_2
+        show kyuzi_game at position_3
         with slowdissolve
 
+        ""
+        hide kyuzi_game
+        show kyuzi game_4 at position_3
+        with SUPER_fastdissolve
+
+        $ H = True
+        $ dice = "dice_" + (str(random.randint(1, 12)))
+        while H == True:
+            $ j = 0
+            while j < 18:
+                $ j = j + 1
+                
+                if j < 2:
+                    show cube_0:
+                        xalign 0.32
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_0
+                    with SUPER_fastdissolve
+                    if j < 3:
+                        show cube_1:
+                            xalign 0.32
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_1
+                        with SUPER_fastdissolve
+                                                
+                elif j < 4:
+                    show cube_2:
+                        xalign 0.34
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_2
+                    with SUPER_fastdissolve
+                    if j < 5:
+                        show cube_3:
+                            xalign 0.34
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_3
+                        with SUPER_fastdissolve
+                        
+                elif j < 6:
+                    show cube_4:
+                        xalign 0.36
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_4
+                    with SUPER_fastdissolve
+                    if j < 7:
+                        show cube_5:
+                            xalign 0.36
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_5
+                        with SUPER_fastdissolve
+                        
+                elif j < 8:
+                    show cube_6:
+                        xalign 0.38
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_6
+                    with SUPER_fastdissolve
+                    if j < 9:
+                        show cube_7:
+                            xalign 0.38
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_7
+                        with SUPER_fastdissolve
+                        
+                elif j < 10:
+                    show cube_8:
+                        xalign 0.40
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_8
+                    with SUPER_fastdissolve
+                    if j < 11:
+                        show cube_9:
+                            xalign 0.40
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_9
+                        with SUPER_fastdissolve
+                        
+                elif j < 12:
+                    show cube_10:
+                        xalign 0.42
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_10
+                    with SUPER_fastdissolve
+                    if j < 13:
+                        show cube_11:
+                            xalign 0.42
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_11
+                        with SUPER_fastdissolve
+                        
+                elif j < 14:
+                    show cube_12:
+                        xalign 0.44
+                        yalign 0.93
+                    with SUPER_fastdissolve
+                    hide cube_12
+                    with SUPER_fastdissolve
+                    if j < 15:
+                        show cube_13:
+                            xalign 0.44
+                            yalign 0.93
+                        with SUPER_fastdissolve
+                        hide cube_13
+                        with SUPER_fastdissolve
+                        
+                elif j < 16:
+                    show cube_14
+                    with SUPER_fastdissolve
+                    hide cube_14
+                    with SUPER_fastdissolve
+                    if j < 17:
+                        $ renpy.show(dice)
+                        with SUPER_fastdissolve
+                        $ H = False
+                        
+        $ renpy.block_rollback()
+                       
+        dim ""
+        
+        python:
+            start = 5 # dice_1 or dice_11
+            stop = 7
+            slice_str = slice(start, stop)
+            fortune = dice[slice_str]
+            fortune_num = int(fortune)
+            renpy.say(be,"[fortune]")
+            if fortune_num < 8:
+                renpy.jump("fortune_2")
+            elif fortune_num >= 8:
+                renpy.jump("fortune_1")
+                
+        dim ""
+        #        
+        # The end of the dice game.
+        # ================================
+                
+                
+    label fortune_2:
+        
+        dim "НЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕЕТ!!!!!!!!!!!!" 
+        
+        ""
+        # Для конца игры нужно будет создать метку ведущую на "Game Over".
+        
+        # Примеры: n "КОНЕЦ..." / "Game Over"
+        
+    label fortune_1:
+     
+        dim "ДАААААААААААААААААААААААААААААААА!!!!!!!!!!!!"
+        
         ""
     return
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

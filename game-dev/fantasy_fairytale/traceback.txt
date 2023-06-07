@@ -1,41 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/script.rpy", line 661, in script
-    init python:
-  File "game/script.rpy", line 661, in script
-    init python:
-  File "game/script.rpy", line 664, in <module>
-    answer = renpy.input("Как это называется?", length=12, allow="АаБбВвГгДдЕЁёеЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя").strip()
-Exception: ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?
-Stack was 
+  File "game/script.rpy", line 1359, in script
+    python:
+  File "game/script.rpy", line 1371, in <module>
+    renpy.say(d,"[fortune]")
+TypeError: 'bool' object is not callable
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "C:\Users\User\Desktop\3\game-dev\renpy-8.0.3-sdk\renpy\bootstrap.py", line 277, in bootstrap
-    renpy.main.main()
-  File "C:\Users\User\Desktop\3\game-dev\renpy-8.0.3-sdk\renpy\main.py", line 558, in main
-    renpy.game.context().run(node)
-  File "game/script.rpy", line 661, in script
-    init python:
-  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python3.9/site-packages/future/utils/__init__.py", line 441, in raise_
-  File "game/script.rpy", line 661, in script
-    init python:
-  File "C:\Users\User\Desktop\3\game-dev\renpy-8.0.3-sdk\renpy\ast.py", line 1131, in execute
+  File "game/script.rpy", line 1359, in script
+    python:
+  File "C:\Users\User\Desktop\3\game-dev\renpy-8.1.0-sdk\renpy\ast.py", line 1138, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
-  File "C:\Users\User\Desktop\3\game-dev\renpy-8.0.3-sdk\renpy\python.py", line 1061, in py_exec_bytecode
+  File "C:\Users\User\Desktop\3\game-dev\renpy-8.1.0-sdk\renpy\python.py", line 1122, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/script.rpy", line 664, in <module>
-    answer = renpy.input("Как это называется?", length=12, allow="АаБбВвГгДдЕЁёеЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя").strip()
-  File "C:\Users\User\Desktop\3\game-dev\renpy-8.0.3-sdk\renpy\exports.py", line 885, in input
-    rv = renpy.ui.interact(mouse='prompt', type="input", roll_forward=roll_forward)
-  File "C:\Users\User\Desktop\3\game-dev\renpy-8.0.3-sdk\renpy\ui.py", line 293, in interact
-    raise Exception("ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?\nStack was " + ('\n'.join([str(item) for item in stack])))
-Exception: ui.interact called with non-empty widget/layer stack. Did you forget a ui.close() somewhere?
-Stack was 
+  File "game/script.rpy", line 1371, in <module>
+    renpy.say(d,"[fortune]")
+  File "C:\Users\User\Desktop\3\game-dev\renpy-8.1.0-sdk\renpy\exports.py", line 1473, in say
+    who(what, *args, **kwargs)
+TypeError: 'bool' object is not callable
 
 Windows-8.1-6.3.9600 AMD64
-Ren'Py 8.0.3.22090809
+Ren'Py 8.1.0.23051307
 Fantasy Ren'py GUI template 1.0
-Sun Apr  2 02:30:33 2023
+Mon Jun  5 07:44:32 2023

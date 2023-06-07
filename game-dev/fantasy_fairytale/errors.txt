@@ -2,10 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 671: invalid syntax
-            elif variant != answer or answer == "":
-             ^
-    
+File "game/script.rpy", line 1374: invalid syntax
+        jump fortune_1
+              ^
 
-Ren'Py Version: Ren'Py 8.0.3.22090809
-Sun Apr  2 15:31:36 2023
+Ren'Py Version: Ren'Py 8.1.0.23051307
+Mon Jun  5 07:10:59 2023
